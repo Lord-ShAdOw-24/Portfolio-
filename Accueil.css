@@ -71,7 +71,7 @@ body.accueil {
 }
 
 .divider {
-  width: 60%;
+  width: 80%%;
   height: 2px;
   background-color: #000;
   margin: 10px 0 0;
@@ -93,7 +93,6 @@ body.accueil {
   transform: scale(1.2);
 }
 
-/* Right side */
 .card-right {
   flex: 1;
   background-color: #f3e5d0;
@@ -166,4 +165,19 @@ body.accueil {
 
 .social-icons a:hover {
   transform: scale(1.2);
+}
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: block;
+  background: #f5f5f5;
+  border: 3px solid #ccc;
+  overflow: hidden;
+}
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
