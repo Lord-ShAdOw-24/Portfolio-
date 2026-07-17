@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "contact.bottomText": "You can also follow my updates on WhatsApp, Discord, and GitHub.",
       "footer.brandTitle": "Le JUSTE",
       "footer.brandText": "Web developer and graphic designer, oriented towards modern interfaces and useful solutions.",
-      "footer.copy": "© By NALJ. All rights reserved."
+      "footer.copy": "© By LJ. All rights reserved."
     }
   };
 
