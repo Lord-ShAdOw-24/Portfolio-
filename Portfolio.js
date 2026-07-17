@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "contact.bottomText": "Tu peux aussi suivre mes actus sur WhatsApp, Discord et GitHub.",
       "footer.brandTitle": "Le JUSTE",
       "footer.brandText": "Développeur web et designer graphique, orienté interfaces modernes et solutions utiles.",
-      "footer.copy": "© By LJ. Tous droits réservés."
+      "footer.copy": "© By NALJ. Tous droits réservés."
     },
     en: {
       "nav.about": "About",
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "contact.bottomText": "You can also follow my updates on WhatsApp, Discord, and GitHub.",
       "footer.brandTitle": "Le JUSTE",
       "footer.brandText": "Web developer and graphic designer, oriented towards modern interfaces and useful solutions.",
-      "footer.copy": "© By LJ. All rights reserved."
+      "footer.copy": "© By NALJ. All rights reserved."
     }
   };
 
@@ -391,84 +391,4 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', updateCardStep);
   updateCardStep();
   requestAnimationFrame(autoScrollLoop);
-});});
-}
-
-scrollContainer.addEventListener('pointerdown', (e) => {
-state.pointerDown = true;
-state.startX = e.clientX;
-state.startScrollLeft = scrollContainer.scrollLeft;
-state.lastMoveX = e.clientX;
-pauseAuto();
-scrollContainer.classList.add('dragging');
-if (scrollContainer.setPointerCapture) {
-scrollContainer.setPointerCapture(e.pointerId);
-}
-});
-
-scrollContainer.addEventListener('pointermove', (e) => {
-if (!state.pointerDown) return;
-const dx = e.clientX - state.startX;
-scrollContainer.scrollLeft = state.startScrollLeft - dx;
-state.lastMoveX = e.clientX;
-});
-
-function endPointerDrag() {
-if (!state.pointerDown) return;
-const dx = state.lastMoveX - state.startX;
-
-if (Math.abs(dx) > 8) {
-  state.direction = dx < 0 ? -1 : 1;
-}
-
-state.pointerDown = false;
-scrollContainer.classList.remove('dragging');
-pauseAuto();
-
-}
-
-scrollContainer.addEventListener('pointerup', endPointerDrag);
-scrollContainer.addEventListener('pointercancel', endPointerDrag);
-scrollContainer.addEventListener('pointerleave', () => {
-if (state.pointerDown) endPointerDrag();
-});
-
-window.addEventListener('keydown', (e) => {
-if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
-
-if (e.key === 'ArrowLeft') {
-  const requestedDirection = -1;
-  const sameDirection = state.direction === requestedDirection;
-  setDirection(requestedDirection, sameDirection);
-}
-
-if (e.key === 'ArrowRight') {
-  const requestedDirection = 1;
-  const sameDirection = state.direction === requestedDirection;
-  setDirection(requestedDirection, sameDirection);
-}
-
-if (e.key === 'ArrowUp') {
-  const requestedDirection = -1;
-  const sameDirection = state.direction === requestedDirection;
-  setDirection(requestedDirection, sameDirection);
-}
-
-if (e.key === 'ArrowDown') {
-  const requestedDirection = 1;
-  const sameDirection = state.direction === requestedDirection;
-  setDirection(requestedDirection, sameDirection);
-}
-
-if (e.key === ' ') {
-  pauseAuto();
-  e.preventDefault();
-}
-
-});
-
-window.addEventListener('resize', updateCardStep);
-
-updateCardStep();
-autoScrollLoop();
 });
