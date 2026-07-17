@@ -1,0 +1,2222 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEMOVE — Solutions en Mouvement</title>
+<link rel="icon" type="image/png" href="wemove1.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wemove-proto.netlify.app/">
+<meta property="og:title" content="WEMOVE - Solutions en Mouvement">
+<meta property="og:description" content="We Move Together.">
+<meta property="og:image" content="https://wemove-proto.netlify.app/wemove1.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WEMOVE - Solutions en Mouvement">
+<meta name="twitter:description" content="We Move Together.">
+<meta name="twitter:image" content="https://wemove-proto.netlify.app/wemove1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #6D28D9;
+  --pink: #EC4999;
+  --orange: #F97514;
+  --bg-dark: #1F0F14;
+  --bg-card: #1C1C22;
+  --bg-card2: #2A2A33;
+  --text-light: #E5E7EB;
+  --text-muted: #8B8FA8;
+  --white: #ffffff;
+  --grad: linear-gradient(135deg, var(--purple), var(--pink), var(--orange));
+  --grad2: linear-gradient(90deg, var(--purple), var(--pink));
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+  --transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="light"] {
+  --bg-dark: #f4f0ff;
+  --bg-card: #ffffff;
+  --bg-card2: #ede9f7;
+  --text-light: #1a1a2e;
+  --text-muted: #6b6b8a;
+  --glass: rgba(0,0,0,0.03);
+  --glass-border: rgba(0,0,0,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg-dark);
+  color:var(--text-light);
+  overflow-x:hidden;
+  transition:background 0.5s ease, color 0.5s ease;
+}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--grad);border-radius:10px;}
+
+#cosmos-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;opacity:1;
+  transition:opacity 0.5s;
+}
+[data-theme="light"] #cosmos-canvas{opacity:0.25;}
+
+.page{
+  display:none;min-height:100vh;
+  position:relative;z-index:1;
+  animation:fadeIn 0.6s ease forwards;
+}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    background: rgba(31, 15, 20, 0.85);
+    backdrop-filter: blur(24px) saturate(160%);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] nav {
+    background: rgba(244, 240, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-logo-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--grad);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(109, 40, 217, 0.4);
+}
+
+.nav-logo-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    background: var(--grad2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.nav-links a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 50px;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--text-light);
+    background: var(--glass);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+}
+
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 24px;border-radius:50px;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;
+  cursor:pointer;border:none;text-decoration:none;
+  transition:var(--transition);
+  letter-spacing:0.01em;
+}
+.btn-primary{
+  background:var(--grad);color:#fff;
+  box-shadow:0 4px 24px rgba(236,73,153,0.3);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(236,73,153,0.45);}
+.btn-glass{
+  background:var(--glass);color:var(--text-light);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(10px);
+}
+.btn-glass:hover{background:rgba(255,255,255,0.08);}
+.btn-sm{padding:7px 16px;font-size:0.8rem;}
+
+.lang-btn{
+  background:var(--glass);border:1px solid var(--glass-border);
+  color:var(--text-light);padding:6px 14px;border-radius:50px;
+  font-size:0.78rem;font-weight:600;cursor:pointer;
+  transition:var(--transition);font-family:'Syne',sans-serif;
+}
+.lang-btn:hover{background:rgba(255,255,255,0.1);}
+.theme-toggle{
+  width:44px;height:26px;border-radius:50px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  cursor:pointer;position:relative;transition:var(--transition);
+  display:flex;align-items:center;padding:3px;
+}
+.theme-dot{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--grad);transition:var(--transition);
+  box-shadow:0 2px 8px rgba(109,40,217,0.4);
+  display:flex;align-items:center;justify-content:center;font-size:11px;
+}
+[data-theme="light"] .theme-dot{transform:translateX(18px);}
+.hamburger{
+  display:none;background:none;border:none;color:var(--text-light);
+  font-size:1.4rem;cursor:pointer;padding:4px;
+}
+
+.mobile-menu{
+  position:fixed;inset:0;z-index:999;
+  background:rgba(31,15,20,0.97);
+  backdrop-filter:blur(30px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2rem;
+  transform:translateX(100%);
+  transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.mobile-menu.open{transform:none;}
+.mobile-menu a{
+  font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;
+  color:var(--text-light);text-decoration:none;
+  transition:var(--transition);cursor:pointer;
+}
+.mobile-menu a:hover{
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.close-menu{
+  position:absolute;top:28px;right:28px;
+  background:none;border:none;color:var(--text-light);
+  font-size:2rem;cursor:pointer;
+}
+
+.section{padding:100px 5vw 60px;}
+.section-label{
+  font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:16px;display:block;
+}
+.section-title{
+  font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);
+  font-weight:800;line-height:1.1;letter-spacing:-0.03em;
+  margin-bottom:20px;
+}
+.section-sub{
+  font-size:1rem;color:var(--text-muted);
+  max-width:560px;line-height:1.7;margin-bottom:48px;
+}
+.grad-text{
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+.card{
+  background:var(--bg-card);
+  border:1px solid var(--glass-border);
+  border-radius:24px;
+  transition:var(--transition);
+  overflow:hidden;
+}
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(236,73,153,0.2);
+  box-shadow:0 20px 60px rgba(109,40,217,0.12);
+}
+
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;align-items:center;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;padding:120px 5vw 80px;
+  position:relative;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:50px;padding:7px 18px;
+  font-size:0.8rem;font-weight:500;color:var(--text-muted);
+  margin-bottom:32px;width:fit-content;
+  backdrop-filter:blur(10px);
+}
+.hero-badge-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--grad);animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(3rem,8vw,7rem);
+  font-weight:800;line-height:1.0;letter-spacing:-0.04em;
+  margin-bottom:28px;max-width:900px;
+}
+.hero-sub{
+  font-size:1.1rem;color:var(--text-muted);
+  max-width:520px;line-height:1.75;margin-bottom:48px;
+}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;}
+.hero-scroll{
+  position:absolute;bottom:40px;left:5vw;
+  display:flex;align-items:center;gap:12px;
+  font-size:0.75rem;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;
+}
+.scroll-line{
+  width:40px;height:1px;background:var(--grad);
+  position:relative;overflow:hidden;
+}
+.scroll-line::after{
+  content:'';position:absolute;left:-100%;top:0;
+  width:100%;height:100%;background:#fff;
+  animation:scrollLine 2s ease infinite;
+}
+@keyframes scrollLine{to{left:100%;}}
+
+.ticker-wrap{
+  overflow:hidden;padding:20px 0;
+  border-top:1px solid var(--glass-border);
+  border-bottom:1px solid var(--glass-border);
+  margin:80px 0;background:var(--glass);
+}
+.ticker{
+  display:flex;gap:60px;
+  animation:ticker 20s linear infinite;
+  width:max-content;
+}
+.ticker:hover{animation-play-state:paused;}
+@keyframes ticker{to{transform:translateX(-50%);}}
+.ticker-item{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;
+  color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;
+  display:flex;align-items:center;gap:20px;white-space:nowrap;
+}
+.ticker-item span{
+  width:5px;height:5px;border-radius:50%;background:var(--pink);
+}
+
+.service-card{
+  padding:36px 32px;position:relative;
+}
+.service-icon{
+  width:52px;height:52px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:24px;
+  position:relative;overflow:hidden;
+}
+.service-icon::before{
+  content:'';position:absolute;inset:0;
+  background:var(--grad);opacity:0.15;
+}
+.service-card h4{
+  font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;
+  margin-bottom:12px;
+}
+.service-card p{font-size:0.9rem;color:var(--text-muted);line-height:1.65;}
+.service-arrow{
+  margin-top:24px;display:inline-flex;align-items:center;gap:8px;
+  font-size:0.8rem;font-weight:600;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  cursor:pointer;
+}
+.service-arrow svg{transition:var(--transition);}
+.service-card:hover .service-arrow svg{transform:translateX(4px);}
+
+.stats-row{
+  display:flex;gap:0;
+  border:1px solid var(--glass-border);border-radius:24px;
+  overflow:hidden;background:var(--bg-card);
+  margin:60px 0;
+}
+.stat-item{
+  flex:1;padding:40px 32px;text-align:center;
+  border-right:1px solid var(--glass-border);
+}
+.stat-item:last-child{border-right:none;}
+.stat-num{
+  font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+}
+.stat-label{font-size:0.82rem;color:var(--text-muted);margin-top:6px;display:block;}
+
+.about-visual{
+  position:relative;height:400px;border-radius:24px;overflow:hidden;
+}
+.about-canvas{width:100%;height:100%;}
+.about-badge{
+  position:absolute;bottom:24px;left:24px;
+  background:rgba(31,15,20,0.85);backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);border-radius:16px;padding:16px 20px;
+}
+.about-badge strong{
+  font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+}
+.about-badge span{font-size:0.75rem;color:var(--text-muted);}
+.value-item{
+  display:flex;align-items:flex-start;gap:16px;margin-bottom:24px;
+}
+.value-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--grad);margin-top:6px;flex-shrink:0;
+}
+.value-item h5{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;}
+.value-item p{font-size:0.85rem;color:var(--text-muted);}
+
+.team-card{
+  padding:32px 24px;text-align:center;
+}
+.team-avatar{
+  width:80px;height:80px;border-radius:50%;
+  background:var(--grad);margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:#fff;
+  position:relative;
+}
+.team-avatar::after{
+  content:'';position:absolute;inset:-3px;border-radius:50%;
+  background:var(--grad);z-index:-1;opacity:0.3;
+  animation:ringPulse 3s ease infinite;
+}
+@keyframes ringPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+.team-card h5{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;}
+.team-role{
+  font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+.project-card{
+  border-radius:24px;overflow:hidden;
+  position:relative;height:320px;
+  cursor:pointer;
+}
+.project-bg{
+  width:100%;height:100%;
+  background:var(--grad);
+  transition:transform 0.5s ease;
+  display:flex;align-items:center;justify-content:center;font-size:4rem;
+}
+.project-card:hover .project-bg{transform:scale(1.04);}
+.project-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(31,15,20,0.95) 0%, transparent 60%);
+  padding:24px;display:flex;flex-direction:column;justify-content:flex-end;
+}
+.project-tag{
+  display:inline-block;
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:50px;padding:4px 12px;font-size:0.72rem;
+  font-weight:600;text-transform:uppercase;letter-spacing:0.08em;
+  margin-bottom:10px;width:fit-content;backdrop-filter:blur(10px);
+}
+.project-card h4{
+  font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;
+}
+.project-card p{font-size:0.83rem;color:var(--text-muted);margin-top:6px;}
+
+.slideshow{position:relative;overflow:hidden;border-radius:28px;height:480px;}
+.slide{
+  position:absolute;inset:0;
+  transition:opacity 0.9s ease, transform 0.9s ease;
+  opacity:0;transform:scale(1.03);
+  display:flex;align-items:center;
+  padding:60px;
+}
+.slide.active{opacity:1;transform:none;}
+.slide-dots{
+  display:flex;gap:8px;justify-content:center;margin-top:20px;
+}
+.slide-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--glass-border);cursor:pointer;transition:var(--transition);
+}
+.slide-dot.active{
+  width:24px;border-radius:4px;
+  background:var(--grad);
+  background-size:100%;
+}
+
+.process-steps{
+  display:flex;flex-direction:column;gap:0;
+  border:1px solid var(--glass-border);border-radius:24px;
+  overflow:hidden;background:var(--bg-card);
+}
+.process-step{
+  display:flex;align-items:center;gap:32px;
+  padding:32px 40px;
+  border-bottom:1px solid var(--glass-border);
+  transition:var(--transition);cursor:default;
+}
+.process-step:last-child{border-bottom:none;}
+.process-step:hover{background:var(--glass);}
+.step-num{
+  font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  min-width:60px;
+}
+.step-content h4{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;}
+.step-content p{font-size:0.87rem;color:var(--text-muted);}
+
+/* CONTACT */
+.contact-form{
+  background:var(--bg-card);border:1px solid var(--glass-border);
+  border-radius:28px;padding:48px;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+.form-group{display:flex;flex-direction:column;gap:8px;}
+.form-group label{font-size:0.82rem;font-weight:600;color:var(--text-muted);}
+.form-group input,
+.form-group textarea,
+.form-group select{
+  background:var(--bg-dark);border:1px solid var(--glass-border);
+  border-radius:14px;padding:14px 18px;
+  color:var(--text-light);font-family:'DM Sans',sans-serif;font-size:0.9rem;
+  transition:var(--transition);outline:none;resize:vertical;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(236,73,153,0.1);}
+.form-group textarea{min-height:130px;}
+.contact-info{display:flex;flex-direction:column;gap:24px;}
+.contact-item{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:24px;border-radius:20px;
+  background:var(--bg-card);border:1px solid var(--glass-border);
+}
+.contact-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  flex-shrink:0;
+}
+.contact-item h5{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;}
+.contact-item p{font-size:0.85rem;color:var(--text-muted);}
+
+footer{
+  background:var(--bg-card);
+  border-top:1px solid var(--glass-border);
+  padding:80px 5vw 40px;
+  position:relative;z-index:1;
+}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;
+  gap:48px;margin-bottom:60px;
+}
+.footer-brand p{
+  font-size:0.88rem;color:var(--text-muted);
+  line-height:1.7;margin-top:16px;max-width:280px;
+}
+.footer-col h6{
+  font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.12em;
+  margin-bottom:20px;color:var(--text-light);
+}
+.footer-col a{
+  display:block;font-size:0.875rem;color:var(--text-muted);
+  text-decoration:none;margin-bottom:12px;cursor:pointer;
+  transition:var(--transition);
+}
+.footer-col a:hover{color:var(--text-light);}
+.footer-newsletter{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:16px;padding:20px;
+}
+.footer-newsletter h6{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:8px;font-size:0.88rem;}
+.footer-newsletter p{font-size:0.78rem;color:var(--text-muted);margin-bottom:14px;}
+.newsletter-input{
+  display:flex;gap:8px;
+}
+.newsletter-input input{
+  flex:1;background:var(--bg-dark);border:1px solid var(--glass-border);
+  border-radius:10px;padding:10px 14px;color:var(--text-light);
+  font-size:0.82rem;outline:none;font-family:'DM Sans',sans-serif;
+}
+.newsletter-input button{
+  background:var(--grad);border:none;border-radius:10px;
+  padding:10px 16px;color:#fff;font-size:0.8rem;
+  font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;
+}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:32px;border-top:1px solid var(--glass-border);
+  flex-wrap:wrap;gap:16px;
+}
+.footer-bottom p{font-size:0.78rem;color:var(--text-muted);}
+.footer-bottom-links{display:flex;gap:24px;}
+.footer-bottom-links a{
+  font-size:0.78rem;color:var(--text-muted);text-decoration:none;cursor:pointer;
+  transition:var(--transition);
+}
+.footer-bottom-links a:hover{color:var(--text-light);}
+.social-links{display:flex;gap:12px;margin-top:20px;}
+.social-link{
+  width:38px;height:38px;border-radius:10px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-muted);text-decoration:none;font-size:0.9rem;
+  transition:var(--transition);cursor:pointer;
+}
+.social-link:hover{background:var(--grad);color:#fff;border-color:transparent;}
+
+.legal-content{
+  max-width:780px;margin:0 auto;padding:120px 5vw 80px;
+}
+.legal-content h1{
+  font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;
+  margin-bottom:8px;
+}
+.legal-content .last-updated{
+  font-size:0.82rem;color:var(--text-muted);margin-bottom:48px;
+  padding-bottom:24px;border-bottom:1px solid var(--glass-border);
+}
+.legal-content h2{
+  font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700;
+  margin:36px 0 12px;
+}
+.legal-content p,.legal-content li{
+  font-size:0.92rem;color:var(--text-muted);line-height:1.8;margin-bottom:12px;
+}
+.legal-content ul{padding-left:20px;}
+.legal-content li{margin-bottom:8px;}
+
+.cookie-banner{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  z-index:2000;width:min(640px,90vw);
+  background:rgba(28,28,34,0.95);backdrop-filter:blur(24px);
+  border:1px solid var(--glass-border);border-radius:20px;
+  padding:24px 28px;
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+  box-shadow:0 20px 80px rgba(0,0,0,0.5);
+  animation:slideUp 0.5s ease forwards;
+}
+@keyframes slideUp{from{transform:translateX(-50%) translateY(20px);opacity:0;}to{transform:translateX(-50%) translateY(0);opacity:1;}}
+.cookie-banner.hidden{display:none;}
+.cookie-text{flex:1;min-width:200px;}
+.cookie-text p{font-size:0.82rem;color:var(--text-muted);line-height:1.5;}
+.cookie-text a{color:var(--pink);cursor:pointer;}
+.cookie-actions{display:flex;gap:10px;flex-shrink:0;}
+
+.testimonial-card{padding:32px;position:relative;}
+.testimonial-quote{
+  font-size:2.5rem;font-family:'Syne',sans-serif;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;margin-bottom:16px;
+}
+.testimonial-card p{font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:24px;}
+.testimonial-author{display:flex;align-items:center;gap:12px;}
+.testimonial-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--grad);display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;color:#fff;
+}
+.testimonial-author strong{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;display:block;}
+.testimonial-author span{font-size:0.78rem;color:var(--text-muted);}
+
+.page-header{
+  padding:140px 5vw 60px;text-align:center;
+  position:relative;
+}
+.page-header::after{
+  content:'';position:absolute;
+  bottom:0;left:50%;transform:translateX(-50%);
+  width:80px;height:2px;
+  background:var(--grad);border-radius:2px;
+}
+
+.notif{
+  position:fixed;top:90px;right:24px;z-index:3000;
+  background:rgba(28,28,34,0.95);backdrop-filter:blur(20px);
+  border:1px solid rgba(109,40,217,0.3);border-radius:14px;
+  padding:16px 20px;max-width:300px;
+  display:flex;align-items:center;gap:12px;
+  transform:translateX(120%);transition:transform 0.4s ease;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+}
+.notif.show{transform:none;}
+.notif-icon{font-size:1.2rem;}
+.notif p{font-size:0.82rem;color:var(--text-light);line-height:1.4;}
+
+@media(max-width:1024px){
+  .grid-4{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:block;}
+  .grid-3,.grid-2{grid-template-columns:1fr;}
+  .grid-4{grid-template-columns:repeat(2,1fr);}
+  .stats-row{flex-direction:column;}
+  .stat-item{border-right:none;border-bottom:1px solid var(--glass-border);}
+  .stat-item:last-child{border-bottom:none;}
+  .footer-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+  .process-step{flex-direction:column;gap:12px;}
+  .hero-title{font-size:clamp(2.4rem,10vw,4rem);}
+  .slide{padding:30px;}
+}
+@media(max-width:480px){
+  .grid-4{grid-template-columns:1fr 1fr;}
+  .cookie-banner{flex-direction:column;}
+}
+
+.nav-links a{position:relative;}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:2px;background:var(--grad);border-radius:1px;
+  transform:scaleX(0);transition:transform 0.3s ease;
+}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+
+.accent-line{
+  display:inline-flex;align-items:center;gap:12px;
+}
+.accent-line::before{
+  content:'';width:32px;height:2px;
+  background:var(--grad);border-radius:1px;
+}
+
+.orb{
+  position:absolute;border-radius:50%;
+  filter:blur(120px);opacity:0.18;pointer-events:none;
+}
+
+.clients-row{
+  display:flex;gap:48px;align-items:center;justify-content:center;
+  flex-wrap:wrap;padding:48px 0;
+  border-top:1px solid var(--glass-border);
+  border-bottom:1px solid var(--glass-border);
+  margin:60px 0;
+}
+.client-logo{
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;
+  color:var(--text-muted);letter-spacing:0.05em;
+  display:flex;align-items:center;gap:8px;
+  transition:var(--transition);
+}
+.client-logo:hover{color:var(--text-light);}
+.client-logo-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--grad);
+}
+
+.faq-item{
+  border-bottom:1px solid var(--glass-border);
+  padding:24px 0;
+}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  cursor:pointer;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;
+  gap:16px;
+}
+.faq-icon{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--glass);border:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;transition:var(--transition);
+}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--grad);border-color:transparent;color:#fff;}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height 0.4s ease;
+  font-size:0.88rem;color:var(--text-muted);line-height:1.7;
+}
+.faq-item.open .faq-a{max-height:200px;padding-top:14px;}
+
+.pricing-card{
+  padding:40px 32px;text-align:center;position:relative;
+}
+.pricing-card.featured{
+  border-color:rgba(109,40,217,0.4);
+  background:linear-gradient(135deg,rgba(109,40,217,0.08),rgba(236,73,153,0.06));
+}
+.pricing-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--grad);padding:4px 16px;border-radius:50px;
+  font-size:0.72rem;font-weight:700;color:#fff;letter-spacing:0.08em;
+  font-family:'Syne',sans-serif;white-space:nowrap;
+}
+.pricing-name{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:12px;}
+.pricing-price{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;line-height:1;}
+.pricing-price sup{font-size:1.2rem;vertical-align:super;}
+.pricing-price span{font-size:0.9rem;color:var(--text-muted);font-weight:400;}
+.pricing-divider{height:1px;background:var(--glass-border);margin:24px 0;}
+.pricing-features{list-style:none;text-align:left;margin-bottom:32px;}
+.pricing-features li{
+  font-size:0.87rem;color:var(--text-muted);padding:8px 0;
+  display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid var(--glass-border);
+}
+.pricing-features li:last-child{border-bottom:none;}
+.pricing-features li::before{
+  content:'✓';color:var(--pink);font-weight:700;flex-shrink:0;
+}
+ 
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 28px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 992px) {
+    .hamburger {
+        display: block; 
+    }
+
+    .cta-btn {
+        display: none; 
+    }
+
+    .nav-links {
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 80px; 
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-card); 
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 15px 0;
+        list-style: none;
+    }
+
+    .nav-links a {
+        font-size: 18px;
+        color: var(--text-light);
+        cursor: pointer;
+    }
+}
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+@media (max-width: 992px) {
+    .pc-only { display: none; }
+    
+    .hamburger { display: block; }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        
+        background: rgba(15, 15, 20, 0.7); 
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        
+        transition: all 0.4s ease;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 20px 0;
+    }
+
+    .nav-links a {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--white);
+    }
+}
+
+.logo-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-logo-container, .nav-logo-name {
+    text-decoration: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+}
+
+.logo-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.main-logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+    mix-blend-mode: screen;
+}
+
+[data-theme="light"] .main-logo {
+    mix-blend-mode: multiply;
+    filter: contrast(1.2) brightness(0.9);
+}
+
+.neon-line {
+    position: absolute;
+    bottom: -5px; 
+    left: 0;
+    width: 100%;
+    height: 1.8px;
+    background: linear-gradient(90deg, #6D28D9, #EC4999, #F97514, #6D28D9);
+    background-size: 300% 100%;
+    animation: neonFlow 2s linear infinite;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(236, 73, 153, 0.6);
+}
+
+@keyframes neonFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+@media (max-width: 992px) {
+    .mobile-controls {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        gap: 2px;
+    }
+    
+    .lang-btn {
+        background: transparent;
+        border: 1px solid var(--glass-border);
+        color: var(--text-light);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 11px;
+        cursor: pointer;
+    }
+}
+
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.mobile-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+@media (max-width: 992px) {
+    nav {
+        justify-content: space-between;
+        padding: 0 15px;
+        height: 70px;
+    }
+
+    .nav-logo-container {
+        flex: 1;
+    }
+
+    .mobile-controls {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .lang-btn, .theme-toggle {
+        transform: scale(0.8); 
+        margin: 0;
+    }
+
+    .hamburger-wrapper {
+        display: flex;
+        z-index: 1002;
+        margin-left: 5px;
+    }
+}
+.main-logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+    mix-blend-mode: screen;
+    border-radius: 8px;
+}
+
+[data-theme="light"] .main-logo {
+    mix-blend-mode: multiply;
+    filter: contrast(1.2) brightness(0.9);
+    border-radius: 8px;
+}
+
+.lang-btn {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-light);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.lang-btn:hover {
+    background: var(--glass);
+    border-color: var(--purple);
+}
+
+@media (max-width: 992px) {
+    .lang-btn {
+        padding: 2px 8px;
+        font-size: 10px;
+        border-radius: 8px;
+    }
+}
+#cookieBanner {
+    background-color: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] #cookieBanner {
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] #cookieBanner p {
+    color: #1f2937;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+[data-theme="light"] .btn-outline {
+    border-color: #374151;
+    color: #1f2937 !important; 
+}
+
+[data-theme="light"] .btn-outline:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+@media (min-width: 769px) {
+nav {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0 5%;
+height: 72px;
+}
+#navLinks {
+display: flex !important;
+position: static !important;
+flex-direction: row !important;
+background: transparent !important;
+padding: 0 !important;
+margin: 0 !important;
+gap: 6px !important;
+height: auto !important;
+width: auto !important;
+opacity: 1 !important;
+transform: none !important;
+visibility: visible !important;
+box-shadow: none !important;
+border: none !important;
+backdrop-filter: none !important;
+justify-content: center !important;
+flex: 1 !important;
+}
+#navLinks a {
+display: inline-block;
+padding: 8px 18px;
+border-radius: 50px;
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.08);
+color: var(--text-light);
+font-size: 0.88rem;
+white-space: nowrap;
+transition: all 0.3s ease;
+}
+#navLinks a:hover {
+background: var(--grad2);
+color: #fff;
+transform: translateY(-2px);
+border-color: transparent;
+box-shadow: 0 6px 18px rgba(109,40,217,0.25);
+}
+.hamburger { display: none !important; }
+.hamburger-wrapper { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+nav {
+display: flex !important;
+justify-content: space-between !important;
+align-items: center !important;
+padding: 0 6% !important;
+height: 72px !important;
+position: fixed !important;
+top: 0 !important;
+left: 0 !important;
+width: 100% !important;
+z-index: 1000 !important;
+background: rgba(31,15,20,0.88) !important;
+backdrop-filter: blur(28px) saturate(180%) !important;
+border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+box-shadow: 0 4px 24px rgba(0,0,0,0.3) !important;
+}
+#navLinks {
+display: flex !important;
+position: static !important;
+flex-direction: row !important;
+background: transparent !important;
+padding: 0 !important;
+margin: 0 !important;
+gap: 6px !important;
+height: auto !important;
+width: auto !important;
+list-style: none !important;
+opacity: 1 !important;
+transform: none !important;
+visibility: visible !important;
+box-shadow: none !important;
+border: none !important;
+backdrop-filter: none !important;
+flex: 1 !important;
+justify-content: center !important;
+}
+#navLinks li { margin: 0; padding: 0; }
+#navLinks a {
+display: inline-block;
+padding: 8px 20px;
+border-radius: 50px;
+color: var(--text-light);
+font-weight: 500;
+font-size: 0.9rem;
+text-decoration: none;
+transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+border: 1px solid rgba(255,255,255,0.08);
+background: rgba(255,255,255,0.05);
+white-space: nowrap;
+}
+#navLinks a:hover {
+background: var(--grad2);
+color: #fff;
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(109,40,217,0.28);
+border-color: transparent;
+}
+.hamburger { display: none !important; }
+.hamburger-wrapper { display: none !important; }
+.menu-toggle { display: none !important; }
+}
+
+body { padding-top: 72px; }
+</style>
+</head>
+<body>
+
+<canvas id="cosmos-canvas"></canvas>
+
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-text">
+    <p>Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre <a onclick="navigate('cookies')">politique de cookies</a>.</p>
+  </div>
+  <div class="cookie-actions">
+    <button class="btn btn-glass btn-sm" onclick="rejectCookies()" data-i18n="cookieReject">Refuser</button>
+    <button class="btn btn-primary btn-sm" onclick="acceptCookies()" data-i18n="cookieAccept">Accepter</button>
+  </div>
+</div>
+
+<div class="notif" id="notif">
+  <span class="notif-icon">✅</span>
+  <p id="notifText">Message envoyé avec succès !</p>
+</div>
+
+<nav>
+  <a href="#" onclick="navigate('home')" class="nav-logo-container">
+    <div class="logo-wrapper">
+      <img src="wemove.jpg" alt="Logo wemove" class="main-logo">
+      <span class="nav-logo-name">we<span>move</span></span>
+      <div class="neon-line"></div>
+    </div>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="navigate('home'); toggleMenu()" data-i18n="navHome">Accueil</a></li>
+    <li><a onclick="navigate('services'); toggleMenu()" data-i18n="navServices">Services</a></li>
+    <li><a onclick="navigate('about'); toggleMenu()" data-i18n="navAbout">À Propos</a></li>
+    <li><a onclick="navigate('portfolio'); toggleMenu()" data-i18n="navPortfolio">Projets</a></li>
+    <li><a onclick="navigate('contact'); toggleMenu()" data-i18n="navContact">Contact</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="mobile-controls">
+      <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <div class="theme-dot">☀️</div>
+      </button>
+    </div>
+    <button class="btn btn-primary btn-sm pc-only" onclick="navigate('contact')" data-i18n="navCTA">Démarrer un projet</button>
+    <div class="hamburger-wrapper">
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" onclick="toggleMenu()">✕</button>
+  <a onclick="navigate('home');toggleMenu()" data-i18n="navHome">Accueil</a>
+  <a onclick="navigate('services');toggleMenu()" data-i18n="navServices">Services</a>
+  <a onclick="navigate('about');toggleMenu()" data-i18n="navAbout">À Propos</a>
+  <a onclick="navigate('portfolio');toggleMenu()" data-i18n="navPortfolio">Projets</a>
+  <a onclick="navigate('contact');toggleMenu()" data-i18n="navContact">Contact</a>
+</div>
+
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="orb" style="width:600px;height:600px;background:radial-gradient(var(--purple),transparent);top:-100px;right:-200px;"></div>
+    <div class="orb" style="width:400px;height:400px;background:radial-gradient(var(--pink),transparent);bottom:0;left:-100px;"></div>
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span data-i18n="heroBadge">L'Afrique Numérique est en marche</span>
+    </div>
+    <h1 class="hero-title">
+      <span data-i18n="heroLine1">Nous créons</span><br>
+      <span class="grad-text" data-i18n="heroLine2">le mouvement</span><br>
+      <span data-i18n="heroLine3">qui vous propulse.</span>
+    </h1>
+    <p class="hero-sub" data-i18n="heroSub">Wemove accompagne les marques et entreprises dans leur croissance grâce à des solutions créatives, innovantes et performantes — de la stratégie au produit fini.</p>
+    <div class="hero-cta">
+      <button class="btn btn-primary" onclick="navigate('contact')" data-i18n="heroCTA1">Démarrer un projet 🚀</button>
+      <button class="btn btn-glass" onclick="navigate('services')" data-i18n="heroCTA2">Explorer nos services →</button>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span data-i18n="heroScroll">Scroll</span>
+    </div>
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker" id="ticker"></div>
+  </div>
+
+  <div class="section">
+    <div style="text-align:center;max-width:700px;margin:0 auto 60px;">
+      <span class="section-label" data-i18n="servLabel">Nos Services</span>
+      <h2 class="section-title" data-i18n="servTitle">Des solutions sur mesure<br>pour des résultats concrets.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card service-card">
+        <div class="service-icon">🧭</div>
+        <h4 data-i18n="s1Title">Stratégie & Conseil</h4>
+        <p data-i18n="s1Desc">Nous analysons, structurons et définissons les meilleures stratégies pour votre croissance durable.</p>
+        <div class="service-arrow" onclick="navigate('services')"><span data-i18n="learnMore">En savoir plus</span> <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      </div>
+      <div class="card service-card">
+        <div class="service-icon">🎨</div>
+        <h4 data-i18n="s2Title">Branding & Design</h4>
+        <p data-i18n="s2Desc">Nous créons des identités fortes et des expériences visuelles qui marquent les esprits et fidélisent.</p>
+        <div class="service-arrow" onclick="navigate('services')"><span data-i18n="learnMore">En savoir plus</span> <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      </div>
+      <div class="card service-card">
+        <div class="service-icon">⚙️</div>
+        <h4 data-i18n="s3Title">Développement</h4>
+        <p data-i18n="s3Desc">Nous développons des solutions digitales performantes, évolutives et adaptées à vos besoins précis.</p>
+        <div class="service-arrow" onclick="navigate('services')"><span data-i18n="learnMore">En savoir plus</span> <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0;">
+    <div class="stats-row">
+      <div class="stat-item"><span class="stat-num" data-count="7">0</span><span class="stat-label" data-i18n="stat1">Projets lancés</span></div>
+      <div class="stat-item"><span class="stat-num" data-count="6">0</span><span class="stat-label" data-i18n="stat2">Membres experts</span></div>
+      <div class="stat-item"><span class="stat-num" data-count="3">0</span><span class="stat-label" data-i18n="stat3">Pays d'impact</span></div>
+      <div class="stat-item"><span class="stat-num" data-count="99,1">0</span><span class="stat-label" data-i18n="stat4">% Satisfaction</span></div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0;">
+    <div class="clients-row">
+      <div class="client-logo"><div class="client-logo-dot"></div>echo</div>
+      <div class="client-logo"><div class="client-logo-dot"></div>NOVA</div>
+      <div class="client-logo"><div class="client-logo-dot"></div>Cloudly.</div>
+      <div class="client-logo"><div class="client-logo-dot"></div>frame</div>
+      <div class="client-logo"><div class="client-logo-dot"></div>lightbox</div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0;">
+    <div class="grid-2">
+      <div>
+        <span class="section-label" data-i18n="aboutLabel">À Propos</span>
+        <h2 class="section-title" data-i18n="aboutTitle">Une firme qui crée des entreprises.</h2>
+        <p class="section-sub" data-i18n="aboutDesc">Wemove est bien plus qu'une agence. Nous sommes une firme hybride qui conçoit, incube et propulse des startups et entreprises innovantes — en Afrique et au-delà.</p>
+        <button class="btn btn-glass" onclick="navigate('about')" data-i18n="aboutCTA">Découvrir notre mission →</button>
+      </div>
+      <div class="about-visual">
+        <canvas class="about-canvas" id="aboutMiniCanvas"></canvas>
+        <div class="about-badge">
+          <strong>2024</strong>
+          <span data-i18n="founded">Fondé en Afrique</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <span class="section-label" data-i18n="testLabel">Témoignages</span>
+      <h2 class="section-title" data-i18n="testTitle">Ce que nos partenaires disent.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p data-i18n="t1">Wemove a transformé notre vision en produit concret. L'équipe est réactive, créative et vraiment investie dans le succès de nos projets.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SC</div>
+          <div><strong>Stephane Curry</strong><span>CEO, Sen Studio</span></div>
+        </div>
+      </div>
+      <div class="card testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p data-i18n="t2">Le branding qu'ils ont créé pour nous a tout changé. Notre identité est maintenant reconnue sur tous les marchés où nous opérons.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">KB</div>
+          <div><strong>Knut Bassogog</strong><span>COO, Kunt Tech</span></div>
+        </div>
+      </div>
+      <div class="card testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p data-i18n="t3">Une équipe hors pair. Leur approche stratégique nous a permis de lever des fonds et de structurer notre croissance nationale.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">FB</div>
+          <div><strong>Yoshi</strong><span>Fondateurs, Yoshi Labs</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0;text-align:center;">
+    <div style="background:var(--bg-card);border:1px solid var(--glass-border);border-radius:32px;padding:80px 40px;position:relative;overflow:hidden;">
+      <div class="orb" style="width:400px;height:400px;background:radial-gradient(var(--purple),transparent);top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.12;"></div>
+      <span class="section-label" data-i18n="ctaLabel">Prêt à démarrer ?</span>
+      <h2 class="section-title" style="max-width:600px;margin:0 auto 20px;" data-i18n="ctaTitle">Rejoignez le mouvement.</h2>
+      <p style="color:var(--text-muted);max-width:420px;margin:0 auto 40px;font-size:0.95rem;" data-i18n="ctaSub">Que vous ayez une idée ou un projet structuré, nous sommes là pour le mettre en mouvement.</p>
+      <button class="btn btn-primary" onclick="navigate('contact')" data-i18n="ctaBtn">Parlons de votre projet →</button>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-services">
+  <div class="page-header">
+    <span class="section-label" data-i18n="servLabel">Nos Services</span>
+    <h1 class="section-title" data-i18n="servPageTitle">Des solutions à chaque étape<br><span class="grad-text">de votre croissance.</span></h1>
+    <p style="color:var(--text-muted);max-width:520px;margin:0 auto;font-size:0.95rem;" data-i18n="servPageSub">De la stratégie au développement, nous couvrons l'ensemble du spectre pour transformer votre vision en réalité.</p>
+  </div>
+  <div class="section" style="padding-top:60px;">
+    <div class="grid-3">
+      <div class="card service-card"><div class="service-icon">🧭</div><h4 data-i18n="s1Title">Stratégie & Conseil</h4><p data-i18n="s1Full">Audit digital, positionnement marché, roadmap produit et accompagnement dans la prise de décision stratégique.</p></div>
+      <div class="card service-card"><div class="service-icon">🎨</div><h4 data-i18n="s2Title">Branding & Design</h4><p data-i18n="s2Full">Identité visuelle, chartes graphiques, UI/UX design, motion design et design de systèmes complets.</p></div>
+      <div class="card service-card"><div class="service-icon">⚙️</div><h4 data-i18n="s3Title">Développement</h4><p data-i18n="s3Full">Applications web, mobile, API, back-office, intégrations tierces et infrastructures cloud scalables.</p></div>
+      <div class="card service-card"><div class="service-icon">📣</div><h4 data-i18n="s4Title">Marketing Digital</h4><p data-i18n="s4Full">SEO, campagnes paid, réseaux sociaux, content marketing et growth hacking orienté résultats.</p></div>
+      <div class="card service-card"><div class="service-icon">🤖</div><h4 data-i18n="s5Title">IA & Automatisation</h4><p data-i18n="s5Full">Intégration d'IA générative, chatbots intelligents, automatisation de workflows et analyse de données.</p></div>
+      <div class="card service-card"><div class="service-icon">🚀</div><h4 data-i18n="s6Title">Incubation Startup</h4><p data-i18n="s6Full">Accompagnement de startups de l'idée au lancement — financement, legal, produit, go-to-market.</p></div>
+    </div>
+
+    <div style="margin-top:80px;">
+      <span class="section-label" data-i18n="processLabel">Notre Processus</span>
+      <h2 class="section-title" style="margin-bottom:40px;" data-i18n="processTitle">Un processus clair et efficace.</h2>
+      <div class="process-steps">
+        <div class="process-step"><div class="step-num">01</div><div class="step-content"><h4 data-i18n="p1T">Découverte</h4><p data-i18n="p1D">Audit de l'existant, compréhension des objectifs et identification des leviers de croissance.</p></div></div>
+        <div class="process-step"><div class="step-num">02</div><div class="step-content"><h4 data-i18n="p2T">Stratégie</h4><p data-i18n="p2D">Définition de la roadmap, des KPIs et du plan d'action détaillé adapté à vos contraintes.</p></div></div>
+        <div class="process-step"><div class="step-num">03</div><div class="step-content"><h4 data-i18n="p3T">Création</h4><p data-i18n="p3D">Design, développement et production avec des cycles courts et des livrables réguliers.</p></div></div>
+        <div class="process-step"><div class="step-num">04</div><div class="step-content"><h4 data-i18n="p4T">Lancement & Suivi</h4><p data-i18n="p4D">Déploiement, monitoring et optimisation continue pour maximiser l'impact durable.</p></div></div>
+      </div>
+    </div>
+
+    <div style="margin-top:80px;">
+      <span class="section-label" data-i18n="pricingLabel">Tarifs</span>
+      <h2 class="section-title" style="margin-bottom:48px;text-align:center;" data-i18n="pricingTitle">Transparent et flexible.</h2>
+      <div class="grid-3">
+        <div class="card pricing-card">
+          <div class="pricing-name" data-i18n="plan1N">Starter</div>
+          <div class="pricing-price"><sup>$</sup>800<span data-i18n="perProject">/projet</span></div>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li data-i18n="pf1a">Audit & Diagnostic</li>
+            <li data-i18n="pf1b">Identité visuelle de base</li>
+            <li data-i18n="pf1c">Landing page</li>
+            <li data-i18n="pf1d">Support 30 jours</li>
+          </ul>
+          <button class="btn btn-glass" style="width:100%;justify-content:center;" onclick="navigate('contact')" data-i18n="choosePlan">Choisir</button>
+        </div>
+        <div class="card pricing-card featured">
+          <div class="pricing-badge" data-i18n="popular">Populaire</div>
+          <div class="pricing-name" data-i18n="plan2N">Growth</div>
+          <div class="pricing-price"><sup>$</sup>2,500<span data-i18n="perProject">/projet</span></div>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li data-i18n="pf2a">Stratégie complète</li>
+            <li data-i18n="pf2b">Branding full</li>
+            <li data-i18n="pf2c">Web App custom</li>
+            <li data-i18n="pf2d">Marketing setup</li>
+            <li data-i18n="pf2e">Support 90 jours</li>
+          </ul>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="navigate('contact')" data-i18n="choosePlan">Choisir</button>
+        </div>
+        <div class="card pricing-card">
+          <div class="pricing-name" data-i18n="plan3N">Enterprise</div>
+          <div class="pricing-price" style="font-size:2rem;" data-i18n="custom">Sur devis</div>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li data-i18n="pf3a">Solution 360°</li>
+            <li data-i18n="pf3b">Équipe dédiée</li>
+            <li data-i18n="pf3c">Incubation startup</li>
+            <li data-i18n="pf3d">Partenariat long terme</li>
+            <li data-i18n="pf3e">Support illimité</li>
+          </ul>
+          <button class="btn btn-glass" style="width:100%;justify-content:center;" onclick="navigate('contact')" data-i18n="contactUs">Nous contacter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-about">
+  <div class="page-header">
+    <span class="section-label" data-i18n="aboutLabel">À Propos</span>
+    <h1 class="section-title">Wemove — <span class="grad-text" data-i18n="aboutPageTitle">Solutions en Mouvement</span></h1>
+    <p style="color:var(--text-muted);max-width:520px;margin:0 auto;font-size:0.95rem;" data-i18n="aboutPageSub">Nous créons, incubons et propulsons des entreprises innovantes depuis le cœur de l'Afrique.</p>
+  </div>
+  <div class="section" style="padding-top:60px;">
+    <div class="grid-2" style="margin-bottom:80px;">
+      <div>
+        <span class="section-label" data-i18n="missionLabel">Notre Mission</span>
+        <h2 class="section-title" data-i18n="missionTitle">Mettre en mouvement des idées qui comptent.</h2>
+        <p style="color:var(--text-muted);line-height:1.8;margin-bottom:24px;font-size:0.92rem;" data-i18n="missionText1">Wemove est une firme hybride qui combine agence digitale, studio créatif et incubateur de startups. Nous ne nous contentons pas d'exécuter des projets — nous les co-construisons avec vous.</p>
+        <p style="color:var(--text-muted);line-height:1.8;margin-bottom:32px;font-size:0.92rem;" data-i18n="missionText2">Notre modèle unique nous permet de créer des sous-projets autonomes, de les structurer en entreprises, et d'en faire des acteurs majeurs de leurs secteurs respectifs.</p>
+        <div class="value-item"><div class="value-dot"></div><div><h5 data-i18n="v1T">Excellence technique</h5><p data-i18n="v1D">Du code propre, des architectures robustes, des designs mémorables.</p></div></div>
+        <div class="value-item"><div class="value-dot"></div><div><h5 data-i18n="v2T">Vision panafricaine</h5><p data-i18n="v2D">Ancrés en Afrique, connectés au monde.</p></div></div>
+        <div class="value-item"><div class="value-dot"></div><div><h5 data-i18n="v3T">Impact mesurable</h5><p data-i18n="v3D">Chaque action est orientée vers des résultats concrets et durables.</p></div></div>
+      </div>
+      <div class="about-visual">
+        <canvas class="about-canvas" id="aboutCanvas2"></canvas>
+        <div class="about-badge">
+          <strong data-i18n="stat1">12+ Projets</strong>
+          <span data-i18n="stat2">6 Experts</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <span class="section-label" data-i18n="teamLabel">L'Équipe</span>
+      <h2 class="section-title" style="margin-bottom:48px;" data-i18n="teamTitle">Les esprits derrière le mouvement.</h2>
+      <div class="grid-3">
+        <div class="card team-card"><div class="team-avatar">ST</div><h5>Dev Stéphane</h5><div class="team-role" data-i18n="role1">Lead Designer</div><p style="font-size:0.82rem;color:var(--text-muted);margin-top:10px;" data-i18n="roleDesc1">Vision créative, UI/UX, identités visuelles.</p></div>
+        <div class="card team-card"><div class="team-avatar">WA</div><h5>Dev Walter</h5><div class="team-role" data-i18n="role2">Project Manager</div><p style="font-size:0.82rem;color:var(--text-muted);margin-top:10px;" data-i18n="roleDesc2">Coordination des équipes et livraisons.</p></div>
+        <div class="card team-card"><div class="team-avatar">YO</div><h5>Dev Yoshi</h5><div class="team-role" data-i18n="role3">Software Architect</div><p style="font-size:0.82rem;color:var(--text-muted);margin-top:10px;" data-i18n="roleDesc3">Architectures systèmes et infrastructures.</p></div>
+        <div class="card team-card"><div class="team-avatar">DA</div><h5>Dev Danscot</h5><div class="team-role" data-i18n="role4">Growth Marketer</div><p style="font-size:0.82rem;color:var(--text-muted);margin-top:10px;" data-i18n="roleDesc4">Stratégies d'acquisition et de croissance.</p></div>
+        <div class="card team-card"><div class="team-avatar">CR</div><h5>Dev Crazy</h5><div class="team-role" data-i18n="role5">Full-Stack Developer</div><p style="font-size:0.82rem;color:var(--text-muted);margin-top:10px;" data-i18n="roleDesc5">Développement front-end et back-end.</p></div>
+        <div class="card team-card"><div class="team-avatar">KN</div><h5>Dev Knut</h5><div class="team-role" data-i18n="role6">Community Manager</div><p style="font-size:0.82rem;color:var(--text-muted);margin-top:10px;" data-i18n="roleDesc6">Animation communauté et modération.</p></div>
+      </div>
+    </div>
+
+    <div style="margin-top:80px;">
+      <span class="section-label" data-i18n="faqLabel">FAQ</span>
+      <h2 class="section-title" style="margin-bottom:40px;" data-i18n="faqTitle">Questions fréquentes.</h2>
+      <div id="faqList">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq1Q">Qu'est-ce que Wemove exactement ?</span><div class="faq-icon">+</div></div><div class="faq-a" data-i18n="faq1A">Wemove est une firme hybride qui combine les fonctions d'une agence digitale, d'un studio créatif et d'un incubateur de startups. Nous créons, développons et propulsons des entreprises innovantes.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq2Q">Comment se passe une collaboration ?</span><div class="faq-icon">+</div></div><div class="faq-a" data-i18n="faq2A">Nous commençons par un appel de découverte gratuit, puis nous proposons une roadmap personnalisée avec devis. Après validation, nous travaillons en sprints agiles avec des points réguliers.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq3Q">Travaillez-vous avec des entreprises hors Afrique ?</span><div class="faq-icon">+</div></div><div class="faq-a" data-i18n="faq3A">Absolument. Si notre ancrage est africain, notre client s'étend à l'international. Nous avons accompagné des projets en Europe, en Amérique du Nord et au Moyen-Orient.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq4Q">Quels sont vos délais moyens ?</span><div class="faq-icon">+</div></div><div class="faq-a" data-i18n="faq4A">Un projet Starter est livré en 2-4 semaines, un projet Growth en 6-12 semaines. Les projets Enterprise ont des timelines personnalisées selon la complexité.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-portfolio">
+  <div class="page-header">
+    <span class="section-label" data-i18n="portLabel">Portfolio</span>
+    <h1 class="section-title" data-i18n="portTitle">Nos <span class="grad-text">réalisations.</span></h1>
+    <p style="color:var(--text-muted);max-width:500px;margin:0 auto;font-size:0.95rem;" data-i18n="portSub">Projets créés, incubés et propulsés par l'équipe Wemove.</p>
+  </div>
+  <div class="section" style="padding-top:60px;">
+    <div style="margin-bottom:60px;">
+      <div class="slideshow" id="mainSlideshow">
+        <div class="slide active" style="background:linear-gradient(135deg,#1a0533,#6D28D9,#EC4999);">
+          <div style="max-width:500px;">
+            <div class="project-tag" data-i18n="catBrand">Branding & Identité</div>
+            <h2 style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin:16px 0;" data-i18n="proj1T">Sen Studio</h2>
+            <p style="color:rgba(255,255,255,0.7);font-size:0.92rem;line-height:1.7;" data-i18n="proj1D">Identité visuelle complète, plateforme web offrant plusieurs services, parmis lesquels "abonnements premuim, designing-affiche</p>
+          </div>
+        </div>
+        <div class="slide" style="background:linear-gradient(135deg,#0f1a35,#1e40af,#F97514);">
+          <div style="max-width:500px;">
+            <div class="project-tag" data-i18n="catDev">Développement</div>
+            <h2 style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin:16px 0;" data-i18n="proj2T">E-Connect</h2>
+            <p style="color:rgba(255,255,255,0.7);font-size:0.92rem;line-height:1.7;" data-i18n="proj2D">Marketplace B2B connectant Vendeurs, Acheteurs et Distributeurs avec système de paiement mobile intégré.</p>
+          </div>
+        </div>
+        <div class="slide" style="background:linear-gradient(135deg,#1a0a2e,#831843,#F97514);">
+          <div style="max-width:500px;">
+            <div class="project-tag" data-i18n="catStrategy">Stratégie</div>
+            <h2 style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin:16px 0;" data-i18n="proj3T">DigiStore</h2>
+            <p style="color:rgba(255,255,255,0.7);font-size:0.92rem;line-height:1.7;" data-i18n="proj3D">Plateforme e-commerce sécurisé, avec IA intégré pour pour 15 000 étudiants actifs.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-dots" id="slideDots"></div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card project-card">
+        <div class="project-bg" style="background:linear-gradient(135deg,#6D28D9,#EC4999);">💳</div>
+        <div class="project-overlay"><div class="project-tag" data-i18n="catFintech">Fintech</div><h4>NexCliq</h4><p data-i18n="payflowDesc">  Site web complet et application mobile offrant des solution de paiement B2C pour PME africaines.</p></div>
+      </div>
+      <div class="card project-card">
+        <div class="project-bg" style="background:linear-gradient(135deg,#065f46,#10b981);">🌍</div>
+        <div class="project-overlay"><div class="project-tag" data-i18n="catPlatform">Plateforme</div><h4>GreenPath</h4><p data-i18n="greenpathDesc">Startup environnementale incubée par Wemove</p></div>
+      </div>
+      <div class="card project-card">
+        <div class="project-bg" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6);">🏥</div>
+        <div class="project-overlay"><div class="project-tag" data-i18n="catHealth">HealthTech</div><h4>MediLink</h4><p data-i18n="medilinkDesc">Télémédecine et dossiers patients numériques</p></div>
+      </div>
+      <div class="card project-card">
+        <div class="project-bg" style="background:linear-gradient(135deg,#7c2d12,#F97514);">📦</div>
+        <div class="project-overlay"><div class="project-tag" data-i18n="catLogistic">Logistique</div><h4>ShipFast</h4><p data-i18n="shipfastDesc">Traçabilité et livraison last-mile intelligente</p></div>
+      </div>
+      <div class="card project-card">
+        <div class="project-bg" style="background:linear-gradient(135deg,#4a044e,#a21caf);">🎓</div>
+        <div class="project-overlay"><div class="project-tag" data-i18n="catEdtech">EdTech</div><h4>KnowBase</h4><p data-i18n="knowbaseDesc">Outil de gestion des connaissances d'équipe</p></div>
+      </div>
+      <div class="card project-card">
+        <div class="project-bg" style="background:linear-gradient(135deg,#164e63,#0891b2);">🏘️</div>
+        <div class="project-overlay"><div class="project-tag" data-i18n="catProptech">PropTech</div><h4>Homez</h4><p data-i18n="homezDesc">Marketplace immobilière nouvelle génération</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="page" id="page-contact">
+  <div class="page-header">
+    <span class="section-label" data-i18n="navContact">Contact</span>
+    <h1 class="section-title" data-i18n="contactTitle">Parlons de votre<br><span class="grad-text">prochain projet.</span></h1>
+    <p style="color:var(--text-muted);max-width:500px;margin:0 auto;font-size:0.95rem;" data-i18n="contactSub">Une idée, un projet, un partenariat ? Nous sommes là pour vous accompagner.</p>
+  </div>
+  <div class="section" style="padding-top:60px;">
+    <div class="grid-2" style="align-items:start;">
+      <div class="contact-form">
+        <h3 style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:28px;" data-i18n="contactFormTitle">Envoyer un message</h3>
+        <div class="form-row">
+          <div class="form-group"><label data-i18n="fieldName">Nom complet</label><input type="text" id="f-name" placeholder="Walter Stéphane"></div>
+          <div class="form-group"><label data-i18n="fieldEmail">Email</label><input type="email" id="f-email" placeholder="stephane@exemple.com"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label data-i18n="fieldCompany">Entreprise</label><input type="text" id="f-company" placeholder="Votre entreprise"></div>
+          <div class="form-group"><label data-i18n="fieldService">Service souhaité</label>
+            <select id="f-service">
+              <option value="" data-i18n="selectOption">Sélectionner...</option>
+              <option data-i18n="s1Title">Stratégie & Conseil</option>
+              <option data-i18n="s2Title">Branding & Design</option>
+              <option data-i18n="s3Title">Développement</option>
+              <option data-i18n="s4Title">Marketing Digital</option>
+              <option data-i18n="s6Title">Incubation Startup</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:24px;"><label data-i18n="fieldMsg">Message</label><textarea id="f-msg" placeholder="Décrivez votre projet..."></textarea></div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="submitForm()" data-i18n="sendMsg">Envoyer le message 🚀</button>
+      </div>
+      <div class="contact-info">
+        <div class="contact-item"><div class="contact-icon">📧</div><div><h5>Email</h5><p>hello@wemove.tech</p></div></div>
+        <div class="contact-item"><div class="contact-icon">💬</div><div><h5>WhatsApp</h5><p>+237 6 94 16 75 82</p></div></div>
+        <div class="contact-item"><div class="contact-icon">🌍</div><div><h5 data-i18n="location">Localisation</h5><p data-i18n="locationVal">DOUALA, CAMEROUN— Remote worldwide</p></div></div>
+        <div class="contact-item"><div class="contact-icon">🕐</div><div><h5 data-i18n="hours">Disponibilité</h5><p data-i18n="hoursVal">Lun — Sam, 6h — 20h (WAT)</p></div></div>
+        <div style="padding:24px;background:var(--bg-card);border:1px solid var(--glass-border);border-radius:20px;">
+          <h5 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;" data-i18n="callTitle">Appel découverte gratuit</h5>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;" data-i18n="callDesc">Réservez un appel de 30 min pour discuter de votre projet sans engagement.</p>
+          <button class="btn btn-glass" style="width:100%;justify-content:center;" data-i18n="bookCall">Réserver un appel →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-cookies">
+  <div class="legal-content">
+    <h1 data-i18n="cookiePageTitle">Politique de Cookies</h1>
+    <p class="last-updated" data-i18n="lastUpdated">Dernière mise à jour : Janvier 2025</p>
+    <h2 data-i18n="c1T">Qu'est-ce qu'un cookie ?</h2>
+    <p data-i18n="c1P">Un cookie est un petit fichier texte stocké sur votre appareil lorsque vous visitez un site web. Ils permettent au site de mémoriser vos préférences et d'améliorer votre expérience de navigation.</p>
+    <h2 data-i18n="c2T">Types de cookies utilisés</h2>
+    <ul>
+      <li data-i18n="c2L1"><strong>Cookies essentiels :</strong> Nécessaires au fonctionnement du site.</li>
+      <li data-i18n="c2L2"><strong>Cookies analytiques :</strong> Nous aident à comprendre comment vous utilisez le site.</li>
+      <li data-i18n="c2L3"><strong>Cookies de préférence :</strong> Mémorisent vos paramètres (thème, langue).</li>
+    </ul>
+    <h2 data-i18n="c3T">Gestion des cookies</h2>
+    <p data-i18n="c3P">Vous pouvez configurer votre navigateur pour refuser tous les cookies. Notez que cela peut affecter certaines fonctionnalités du site.</p>
+    <h2 data-i18n="c4T">Contact</h2>
+    <p data-i18n="c4P">Pour toute question relative à notre politique de cookies, contactez-nous à : privacy@wemove.tech</p>
+  </div>
+</div>
+
+<div class="page" id="page-privacy">
+  <div class="legal-content">
+    <h1 data-i18n="privTitle">Politique de Confidentialité</h1>
+    <p class="last-updated" data-i18n="lastUpdated">Dernière mise à jour : Janvier 2025</p>
+    <h2 data-i18n="pr1T">Données collectées</h2>
+    <p data-i18n="pr1P">Nous collectons les données que vous nous fournissez directement (formulaires de contact, newsletters) ainsi que les données de navigation anonymisées via nos outils analytiques.</p>
+    <h2 data-i18n="pr2T">Utilisation des données</h2>
+    <p data-i18n="pr2P">Vos données sont utilisées uniquement pour répondre à vos demandes, améliorer nos services, et vous envoyer des communications auxquelles vous avez consenti.</p>
+    <h2 data-i18n="pr3T">Vos droits</h2>
+    <p data-i18n="pr3P">Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de suppression et de portabilité de vos données. Contactez-nous à privacy@wemove.tech.</p>
+    <h2 data-i18n="pr4T">Partage des données</h2>
+    <p data-i18n="pr4P">Nous ne vendons ni ne louons vos données personnelles à des tiers. Nous pouvons partager des données agrégées et anonymisées à des fins d'analyse.</p>
+  </div>
+</div>
+
+<div class="page" id="page-terms">
+  <div class="legal-content">
+    <h1 data-i18n="termsTitle">Conditions Générales d'Utilisation</h1>
+    <p class="last-updated" data-i18n="lastUpdated">Dernière mise à jour : Janvier 2025</p>
+    <h2 data-i18n="t1T">Acceptation des conditions</h2>
+    <p data-i18n="t1P">En utilisant notre site et nos services, vous acceptez les présentes conditions d'utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser nos services.</p>
+    <h2 data-i18n="t2T">Services proposés</h2>
+    <p data-i18n="t2P">Wemove propose des services de conseil en stratégie digitale, de branding, de développement logiciel, de marketing digital et d'incubation de startups.</p>
+    <h2 data-i18n="t3T">Propriété intellectuelle</h2>
+    <p data-i18n="t3P">L'ensemble du contenu du site (textes, images, logos, code) est protégé par les lois sur la propriété intellectuelle. Toute reproduction sans autorisation est interdite.</p>
+    <h2 data-i18n="t4T">Limitation de responsabilité</h2>
+    <p data-i18n="t4P">Wemove ne peut être tenu responsable des dommages indirects résultant de l'utilisation de nos services. Notre responsabilité est limitée au montant des sommes versées pour le service concerné.</p>
+    <h2 data-i18n="t5T">Droit applicable</h2>
+    <p data-i18n="t5P">Les présentes conditions sont régies par le droit sénégalais. Tout litige sera soumis aux juridictions compétentes de Dakar, Sénégal.</p>
+  </div>
+</div>
+
+<footer id="mainFooter">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="nav-logo" onclick="navigate('home')" style="display:inline-flex;margin-bottom:4px;">
+        <div class="nav-logo-icon" style="width:36px;height:36px;">
+          <svg viewBox="0 0 26 26" fill="none" width="22" height="22"><path d="M2 6L8 20L13 10L18 20L24 6" stroke="white" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14C11.5 12 14.5 12 16 14" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.7"/></svg>
+        </div>
+        <span class="nav-logo-name" style="font-size:1.1rem;">we<span>move</span></span>
+      </a>
+      <p data-i18n="footerAbout">Solutions créatives, innovantes et performantes pour propulser les entreprises africaines sur la scène mondiale.</p>
+      <div class="social-links">
+        <div class="social-link" title="LinkedIn">in</div>
+        <div class="social-link" title="Twitter">𝕏</div>
+        <div class="social-link" title="Instagram">◻</div>
+        <div class="social-link" title="YouTube">▶</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h6 data-i18n="footNav">Navigation</h6>
+      <a onclick="navigate('home')" data-i18n="navHome">Accueil</a>
+      <a onclick="navigate('services')" data-i18n="navServices">Services</a>
+      <a onclick="navigate('about')" data-i18n="navAbout">À Propos</a>
+      <a onclick="navigate('portfolio')" data-i18n="navPortfolio">Projets</a>
+      <a onclick="navigate('contact')" data-i18n="navContact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h6 data-i18n="footLegal">Légal</h6>
+      <a onclick="navigate('terms')" data-i18n="footTerms">CGU</a>
+      <a onclick="navigate('privacy')" data-i18n="footPrivacy">Confidentialité</a>
+      <a onclick="navigate('cookies')" data-i18n="footCookies">Cookies</a>
+    </div>
+    <div class="footer-col">
+      <h6 data-i18n="footNewsletter">Newsletter</h6>
+      <div class="footer-newsletter">
+        <p data-i18n="newsletterDesc">Les dernières actualités Wemove dans votre boîte.</p>
+        <div class="newsletter-input">
+          <input type="email" placeholder="votre@email.com" id="newsEmail">
+          <button onclick="subscribeNewsletter()" data-i18n="subscribe">OK →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Wemove — <span data-i18n="footerRights">Tous droits réservés.</span></p>
+    <div class="footer-bottom-links">
+      <a onclick="navigate('terms')" data-i18n="footTerms">CGU</a>
+      <a onclick="navigate('privacy')" data-i18n="footPrivacy">Confidentialité</a>
+      <a onclick="navigate('cookies')" data-i18n="footCookies">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+
+const i18n = {
+  fr: {
+    navHome:"Accueil",navServices:"Services",navAbout:"À Propos",navPortfolio:"Projets",navContact:"Contact",navCTA:"Démarrer un projet",
+    heroBadge:"L'Afrique Numérique est en marche",heroLine1:"Nous créons",heroLine2:"le mouvement",heroLine3:"qui vous propulse.",
+    heroSub:"Wemove accompagne les marques et entreprises dans leur croissance grâce à des solutions créatives, innovantes et performantes.",
+    heroCTA1:"Démarrer un projet 🚀",heroCTA2:"Explorer nos services →",heroScroll:"Scroll",
+    servLabel:"Nos Services",servTitle:"Des solutions sur mesure\npour des résultats concrets.",learnMore:"En savoir plus",
+    s1Title:"Stratégie & Conseil",s1Desc:"Nous analysons, structurons et définissons les meilleures stratégies pour votre croissance durable.",
+    s1Full:"Audit digital, positionnement marché, roadmap produit et accompagnement dans la prise de décision stratégique.",
+    s2Title:"Branding & Design",s2Desc:"Nous créons des identités fortes et des expériences visuelles qui marquent les esprits.",
+    s2Full:"Identité visuelle, chartes graphiques, UI/UX design, motion design et design de systèmes complets.",
+    s3Title:"Développement",s3Desc:"Nous développons des solutions digitales performantes, évolutives et adaptées à vos besoins.",
+    s3Full:"Applications web, mobile, API, back-office, intégrations tierces et infrastructures cloud scalables.",
+    s4Title:"Marketing Digital",s4Full:"SEO, campagnes paid, réseaux sociaux, content marketing et growth hacking orienté résultats.",
+    s5Title:"IA & Automatisation",s5Full:"Intégration d'IA générative, chatbots intelligents, automatisation de workflows et analyse de données.",
+    s6Title:"Incubation Startup",s6Full:"Accompagnement de startups de l'idée au lancement — financement, legal, produit, go-to-market.",
+    stat1:"Projets lancés",stat2:"Membres experts",stat3:"Pays d'impact",stat4:"% Satisfaction",
+    aboutLabel:"À Propos",aboutTitle:"Une firme qui crée des entreprises.",
+    aboutDesc:"Wemove est bien plus qu'une agence. Nous sommes une firme hybride qui conçoit, incube et propulse des startups et entreprises innovantes.",
+    aboutCTA:"Découvrir notre mission →",founded:"Fondé en Afrique",
+    testLabel:"Témoignages",testTitle:"Ce que nos partenaires disent.",
+    t1:"Wemove a transformé notre vision en produit concret. L'équipe est réactive, créative et vraiment investie.",
+    t2:"Le branding qu'ils ont créé pour nous a tout changé. Notre identité est maintenant reconnue partout.",
+    t3:"Une équipe hors pair. Leur approche stratégique nous a permis de lever des fonds.",
+    ctaLabel:"Prêt à démarrer ?",ctaTitle:"Rejoignez le mouvement.",ctaSub:"Que vous ayez une idée ou un projet structuré, nous sommes là.",ctaBtn:"Parlons de votre projet →",
+    servPageTitle:"Des solutions à chaque étape de votre croissance.",servPageSub:"De la stratégie au développement, nous couvrons l'ensemble du spectre.",
+    processLabel:"Notre Processus",processTitle:"Un processus clair et efficace.",
+    p1T:"Découverte",p1D:"Audit de l'existant, compréhension des objectifs et identification des leviers.",
+    p2T:"Stratégie",p2D:"Définition de la roadmap, des KPIs et du plan d'action détaillé.",
+    p3T:"Création",p3D:"Design, développement et production avec des cycles courts.",
+    p4T:"Lancement & Suivi",p4D:"Déploiement, monitoring et optimisation continue.",
+    pricingLabel:"Tarifs",pricingTitle:"Transparent et flexible.",
+    plan1N:"Starter",plan2N:"Growth",plan3N:"Enterprise",perProject:"/projet",popular:"Populaire",custom:"Sur devis",
+    pf1a:"Audit & Diagnostic",pf1b:"Identité visuelle de base",pf1c:"Landing page",pf1d:"Support 30 jours",
+    pf2a:"Stratégie complète",pf2b:"Branding full",pf2c:"Web App custom",pf2d:"Marketing setup",pf2e:"Support 90 jours",
+    pf3a:"Solution 360°",pf3b:"Équipe dédiée",pf3c:"Incubation startup",pf3d:"Partenariat long terme",pf3e:"Support illimité",
+    choosePlan:"Choisir",contactUs:"Nous contacter",
+    aboutPageTitle:"Solutions en Mouvement",aboutPageSub:"Nous créons, incubons et propulsons des entreprises innovantes depuis l'Afrique.",
+    missionLabel:"Notre Mission",missionTitle:"Mettre en mouvement des idées qui comptent.",
+    missionText1:"Wemove est une firme hybride qui combine agence digitale, studio créatif et incubateur de startups.",
+    missionText2:"Notre modèle unique permet de créer des sous-projets autonomes, de les structurer en entreprises.",
+    v1T:"Excellence technique",v1D:"Du code propre, des architectures robustes, des designs mémorables.",
+    v2T:"Vision panafricaine",v2D:"Ancrés en Afrique, connectés au monde.",
+    v3T:"Impact mesurable",v3D:"Chaque action est orientée vers des résultats concrets et durables.",
+    teamLabel:"L'Équipe",teamTitle:"Les esprits derrière le mouvement.",
+    role1:"Lead Designer",roleDesc1:"Vision créative, UI/UX, identités visuelles.",
+    role2:"Project Manager",roleDesc2:"Coordination des équipes et livraisons.",
+    role3:"Software Architect",roleDesc3:"Architectures systèmes et infrastructures.",
+    role4:"Growth Marketer",roleDesc4:"Stratégies d'acquisition et de croissance.",
+    role5:"Full-Stack Developer",roleDesc5:"Développement front-end et back-end.",
+    role6:"Community Manager",roleDesc6:"Animation communauté et modération.",
+    faqLabel:"FAQ",faqTitle:"Questions fréquentes.",
+    faq1Q:"Qu'est-ce que Wemove exactement ?",faq1A:"Wemove est une firme hybride qui combine les fonctions d'une agence digitale, d'un studio créatif et d'un incubateur de startups.",
+    faq2Q:"Comment se passe une collaboration ?",faq2A:"Nous commençons par un appel de découverte gratuit, puis nous proposons une roadmap personnalisée avec devis.",
+    faq3Q:"Travaillez-vous avec des entreprises hors Afrique ?",faq3A:"Absolument. Notre clientèle s'étend à l'international — Europe, Amérique du Nord, Moyen-Orient.",
+    faq4Q:"Quels sont vos délais moyens ?",faq4A:"Starter : 2-4 semaines. Growth : 6-12 semaines. Enterprise : timeline personnalisée.",
+    portLabel:"Portfolio",portTitle:"Nos réalisations.",portSub:"Projets créés, incubés et propulsés par l'équipe Wemove.",
+    catBrand:"Branding & Identité",catDev:"Développement",catStrategy:"Stratégie",catFintech:"Fintech",catPlatform:"Plateforme",catHealth:"HealthTech",catLogistic:"Logistique",catEdtech:"EdTech",catProptech:"PropTech",
+    proj1T:"Nova Finance",proj1D:"Identité visuelle complète, plateforme web et application mobile pour une fintech innovante.",
+    proj2T:"AgriConnect",proj2D:"Marketplace B2B connectant agriculteurs et distributeurs avec paiement mobile.",
+    proj3T:"EduHub Afrique",proj3D:"Plateforme e-learning multilingue avec IA de personnalisation pour 15 000 étudiants.",
+    payflowDesc:"Solution de paiement B2C pour PME africaines",greenpathDesc:"Startup environnementale incubée par Wemove",
+    medilinkDesc:"Télémédecine et dossiers patients numériques",shipfastDesc:"Traçabilité et livraison last-mile intelligente",
+    knowbaseDesc:"Outil de gestion des connaissances d'équipe",homezDesc:"Marketplace immobilière nouvelle génération",
+    contactTitle:"Parlons de votre prochain projet.",contactSub:"Une idée, un projet, un partenariat ? Nous sommes là.",
+    contactFormTitle:"Envoyer un message",fieldName:"Nom complet",fieldEmail:"Email",fieldCompany:"Entreprise",
+    fieldService:"Service souhaité",selectOption:"Sélectionner...",fieldMsg:"Message",sendMsg:"Envoyer le message 🚀",
+    location:"Localisation",locationVal:"Douala, Cameroun — Remote worldwide",hours:"Disponibilité",hoursVal:"Lun — Sam, 8h — 20h (WAT)",
+    callTitle:"Appel découverte gratuit",callDesc:"Réservez un appel de 30 min sans engagement.",bookCall:"Réserver un appel →",
+    cookiePageTitle:"Politique de Cookies",privTitle:"Politique de Confidentialité",termsTitle:"Conditions Générales d'Utilisation",
+    lastUpdated:"Dernière mise à jour : Janvier 2025",
+    c1T:"Qu'est-ce qu'un cookie ?",c1P:"Un cookie est un petit fichier texte stocké sur votre appareil lorsque vous visitez un site web.",
+    c2T:"Types de cookies utilisés",c2L1:"Cookies essentiels : Nécessaires au fonctionnement du site.",c2L2:"Cookies analytiques.",c2L3:"Cookies de préférence.",
+    c3T:"Gestion des cookies",c3P:"Vous pouvez configurer votre navigateur pour refuser tous les cookies.",
+    c4T:"Contact",c4P:"Pour toute question : privacy@wemove.tech",
+    pr1T:"Données collectées",pr1P:"Nous collectons les données que vous nous fournissez directement.",
+    pr2T:"Utilisation des données",pr2P:"Vos données sont utilisées uniquement pour répondre à vos demandes et améliorer nos services.",
+    pr3T:"Vos droits",pr3P:"Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression.",
+    pr4T:"Partage des données",pr4P:"Nous ne vendons ni ne louons vos données personnelles à des tiers.",
+    t1T:"Acceptation des conditions",t1P:"En utilisant notre site, vous acceptez les présentes conditions d'utilisation.",
+    t2T:"Services proposés",t2P:"Wemove propose des services de conseil, branding, développement et incubation.",
+    t3T:"Propriété intellectuelle",t3P:"L'ensemble du contenu est protégé par les lois sur la propriété intellectuelle.",
+    t4T:"Limitation de responsabilité",t4P:"Notre responsabilité est limitée au montant des sommes versées pour le service concerné.",
+    t5T:"Droit applicable",t5P:"Les présentes conditions sont régies par le droit sénégalais.",
+    cookieReject:"Refuser",cookieAccept:"Accepter",
+    footerAbout:"Solutions créatives et performantes pour propulser les entreprises africaines sur la scène mondiale.",
+    footNav:"Navigation",footLegal:"Légal",footNewsletter:"Newsletter",
+    footTerms:"CGU",footPrivacy:"Confidentialité",footCookies:"Cookies",
+    newsletterDesc:"Les dernières actualités Wemove dans votre boîte.",subscribe:"OK →",
+    footerRights:"Tous droits réservés.",notifSuccess:"Message envoyé ! Nous vous répondrons sous 24h.",
+  },
+  en: {
+    navHome:"Home",navServices:"Services",navAbout:"About",navPortfolio:"Projects",navContact:"Contact",navCTA:"Start a project",
+    heroBadge:"Digital Africa is on the move",heroLine1:"We create",heroLine2:"the momentum",heroLine3:"that propels you.",
+    heroSub:"Wemove helps brands and companies grow through creative, innovative and high-performance solutions.",
+    heroCTA1:"Start a project 🚀",heroCTA2:"Explore our services →",heroScroll:"Scroll",
+    servLabel:"Our Services",servTitle:"Tailored solutions\nfor concrete results.",learnMore:"Learn more",
+    s1Title:"Strategy & Consulting",s1Desc:"We analyze, structure and define the best strategies for your sustainable growth.",
+    s1Full:"Digital audit, market positioning, product roadmap and strategic decision-making support.",
+    s2Title:"Branding & Design",s2Desc:"We create strong identities and visual experiences that make lasting impressions.",
+    s2Full:"Visual identity, brand guidelines, UI/UX design, motion design and full design systems.",
+    s3Title:"Development",s3Desc:"We develop high-performance, scalable digital solutions tailored to your needs.",
+    s3Full:"Web apps, mobile, API, back-office, third-party integrations and scalable cloud infrastructures.",
+    s4Title:"Digital Marketing",s4Full:"SEO, paid campaigns, social media, content marketing and results-driven growth hacking.",
+    s5Title:"AI & Automation",s5Full:"Generative AI integration, intelligent chatbots, workflow automation and data analytics.",
+    s6Title:"Startup Incubation",s6Full:"Startup support from idea to launch — funding, legal, product, go-to-market.",
+    stat1:"Projects launched",stat2:"Expert members",stat3:"Countries impacted",stat4:"% Satisfaction",
+    aboutLabel:"About",aboutTitle:"A firm that builds companies.",
+    aboutDesc:"Wemove is more than an agency. We are a hybrid firm that designs, incubates and propels innovative startups and businesses.",
+    aboutCTA:"Discover our mission →",founded:"Founded in Africa",
+    testLabel:"Testimonials",testTitle:"What our partners say.",
+    t1:"Wemove transformed our vision into a concrete product. The team is responsive, creative and truly invested.",
+    t2:"The branding they created for us changed everything. Our identity is now recognized everywhere.",
+    t3:"An exceptional team. Their strategic approach helped us raise funds and structure our growth.",
+    ctaLabel:"Ready to start?",ctaTitle:"Join the movement.",ctaSub:"Whether you have an idea or a structured project, we're here to move it forward.",ctaBtn:"Let's talk about your project →",
+    servPageTitle:"Solutions at every stage of your growth.",servPageSub:"From strategy to development, we cover the full spectrum.",
+    processLabel:"Our Process",processTitle:"A clear and effective process.",
+    p1T:"Discovery",p1D:"Existing audit, objective understanding and growth lever identification.",
+    p2T:"Strategy",p2D:"Roadmap definition, KPIs and detailed action plan.",
+    p3T:"Creation",p3D:"Design, development and production with short cycles.",
+    p4T:"Launch & Follow-up",p4D:"Deployment, monitoring and continuous optimization.",
+    pricingLabel:"Pricing",pricingTitle:"Transparent and flexible.",
+    plan1N:"Starter",plan2N:"Growth",plan3N:"Enterprise",perProject:"/project",popular:"Popular",custom:"Custom quote",
+    pf1a:"Audit & Diagnosis",pf1b:"Basic visual identity",pf1c:"Landing page",pf1d:"30-day support",
+    pf2a:"Full strategy",pf2b:"Complete branding",pf2c:"Custom web app",pf2d:"Marketing setup",pf2e:"90-day support",
+    pf3a:"360° solution",pf3b:"Dedicated team",pf3c:"Startup incubation",pf3d:"Long-term partnership",pf3e:"Unlimited support",
+    choosePlan:"Choose",contactUs:"Contact us",
+    aboutPageTitle:"Solutions in Motion",aboutPageSub:"We create, incubate and propel innovative companies from Africa.",
+    missionLabel:"Our Mission",missionTitle:"Setting impactful ideas in motion.",
+    missionText1:"Wemove is a hybrid firm combining digital agency, creative studio and startup incubator.",
+    missionText2:"Our unique model allows us to create autonomous sub-projects, structure them into companies.",
+    v1T:"Technical excellence",v1D:"Clean code, robust architectures, memorable designs.",
+    v2T:"Pan-African vision",v2D:"Rooted in Africa, connected to the world.",
+    v3T:"Measurable impact",v3D:"Every action is geared toward concrete and lasting results.",
+    teamLabel:"The Team",teamTitle:"The minds behind the movement.",
+    role1:"Lead Designer",roleDesc1:"Creative vision, UI/UX, visual identities.",
+    role2:"Project Manager",roleDesc2:"Team coordination and deliveries.",
+    role3:"Software Architect",roleDesc3:"System architectures and infrastructures.",
+    role4:"Growth Marketer",roleDesc4:"Acquisition and growth strategies.",
+    role5:"Full-Stack Developer",roleDesc5:"Front-end and back-end development.",
+    role6:"Community Manager",roleDesc6:"Community management and moderation.",
+    faqLabel:"FAQ",faqTitle:"Frequently asked questions.",
+    faq1Q:"What exactly is Wemove?",faq1A:"Wemove is a hybrid firm combining a digital agency, creative studio and startup incubator.",
+    faq2Q:"How does a collaboration work?",faq2A:"We start with a free discovery call, then propose a personalized roadmap with a quote.",
+    faq3Q:"Do you work with companies outside Africa?",faq3A:"Absolutely. Our clientele spans internationally — Europe, North America, Middle East.",
+    faq4Q:"What are your average timelines?",faq4A:"Starter: 2-4 weeks. Growth: 6-12 weeks. Enterprise: custom timeline.",
+    portLabel:"Portfolio",portTitle:"Our work.",portSub:"Projects created, incubated and propelled by the Wemove team.",
+    catBrand:"Branding & Identity",catDev:"Development",catStrategy:"Strategy",catFintech:"Fintech",catPlatform:"Platform",catHealth:"HealthTech",catLogistic:"Logistics",catEdtech:"EdTech",catProptech:"PropTech",
+    proj1T:"Nova Finance",proj1D:"Complete visual identity, web platform and mobile app for an innovative fintech.",
+    proj2T:"AgriConnect",proj2D:"B2B marketplace connecting farmers and distributors with mobile payments.",
+    proj3T:"EduHub Africa",proj3D:"Multilingual e-learning platform with AI personalization for 15,000 active students.",
+    payflowDesc:"B2C payment solution for African SMEs",greenpathDesc:"Environmental startup incubated by Wemove",
+    medilinkDesc:"Telemedicine and digital patient records",shipfastDesc:"Smart last-mile tracking and delivery",
+    knowbaseDesc:"Team knowledge management tool",homezDesc:"Next-generation real estate marketplace",
+    contactTitle:"Let's talk about your next project.",contactSub:"An idea, a project, a partnership? We're here.",
+    contactFormTitle:"Send a message",fieldName:"Full name",fieldEmail:"Email",fieldCompany:"Company",
+    fieldService:"Desired service",selectOption:"Select...",fieldMsg:"Message",sendMsg:"Send message 🚀",
+    location:"Location",locationVal:"Dakar, Senegal — Remote worldwide",hours:"Availability",hoursVal:"Mon — Fri, 9am — 6pm (WAT)",
+    callTitle:"Free discovery call",callDesc:"Book a 30-min call to discuss your project with no obligation.",bookCall:"Book a call →",
+    cookiePageTitle:"Cookie Policy",privTitle:"Privacy Policy",termsTitle:"Terms of Service",
+    lastUpdated:"Last updated: January 2025",
+    c1T:"What is a cookie?",c1P:"A cookie is a small text file stored on your device when you visit a website.",
+    c2T:"Types of cookies used",c2L1:"Essential cookies: Required for the site to function.",c2L2:"Analytical cookies.",c2L3:"Preference cookies.",
+    c3T:"Managing cookies",c3P:"You can configure your browser to refuse all cookies.",
+    c4T:"Contact",c4P:"For any questions: privacy@wemove.tech",
+    pr1T:"Data collected",pr1P:"We collect data you provide directly to us.",
+    pr2T:"Data usage",pr2P:"Your data is used solely to respond to your requests and improve our services.",
+    pr3T:"Your rights",pr3P:"Under GDPR, you have the right to access, rectify and delete your data.",
+    pr4T:"Data sharing",pr4P:"We do not sell or rent your personal data to third parties.",
+    t1T:"Acceptance of terms",t1P:"By using our site, you accept these terms of service.",
+    t2T:"Services offered",t2P:"Wemove offers consulting, branding, development and incubation services.",
+    t3T:"Intellectual property",t3P:"All site content is protected by intellectual property laws.",
+    t4T:"Limitation of liability",t4P:"Our liability is limited to amounts paid for the service concerned.",
+    t5T:"Applicable law",t5P:"These terms are governed by Senegalese law.",
+    cookieReject:"Decline",cookieAccept:"Accept",
+    footerAbout:"Creative and high-performance solutions to propel African businesses onto the world stage.",
+    footNav:"Navigation",footLegal:"Legal",footNewsletter:"Newsletter",
+    footTerms:"Terms",footPrivacy:"Privacy",footCookies:"Cookies",
+    newsletterDesc:"The latest Wemove news in your inbox.",subscribe:"OK →",
+    footerRights:"All rights reserved.",notifSuccess:"Message sent! We'll get back to you within 24h.",
+  }
+};
+let lang = 'fr';
+
+function applyLang(l){
+  lang = l;
+  document.getElementById('langBtn').textContent = l === 'fr' ? 'EN' : 'FR';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if(i18n[l][k]) el.textContent = i18n[l][k];
+  });
+}
+function toggleLang(){applyLang(lang === 'fr' ? 'en' : 'fr');}
+
+const pages = ['home','services','about','portfolio','contact','cookies','privacy','terms'];
+function navigate(page){
+  pages.forEach(p => {
+    const el = document.getElementById('page-'+p);
+    if(el){el.classList.remove('active');}
+    const nav = document.querySelector(`[data-page="${p}"]`);
+    if(nav) nav.classList.remove('active');
+  });
+  const target = document.getElementById('page-'+page);
+  if(target){
+    target.classList.add('active');
+    window.scrollTo(0,0);
+  }
+  const navLink = document.querySelector(`[data-page="${page}"]`);
+  if(navLink) navLink.classList.add('active');
+  const footer = document.getElementById('mainFooter');
+  const isLegal = ['cookies','privacy','terms'].includes(page);
+  footer.style.display = 'block';
+}
+
+function toggleTheme(){
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.theme-dot').textContent = isDark ? '🌙' : '☀️';
+}
+
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+(function(){
+  const canvas = document.getElementById('cosmos-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], frame = 0;
+  const colors = ['#6D28D9','#EC4999','#F97514','#a855f7','#f43f8e'];
+  
+  function resize(){W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight;}
+  resize(); window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor(){this.reset();}
+    reset(){
+      this.x = Math.random()*W; this.y = Math.random()*H;
+      this.r = Math.random()*1.8+0.3;
+      this.vx = (Math.random()-0.5)*0.3; this.vy = (Math.random()-0.5)*0.3;
+      this.alpha = Math.random()*0.6+0.1;
+      this.color = colors[Math.floor(Math.random()*colors.length)];
+      this.life = Math.random()*300+100; this.age = 0;
+    }
+    update(){
+      this.x += this.vx; this.y += this.vy; this.age++;
+      if(this.age > this.life) this.reset();
+    }
+    draw(){
+      ctx.save();
+      ctx.globalAlpha = this.alpha * (1 - this.age/this.life);
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  class Comet {
+    constructor(){this.reset();}
+    reset(){
+      this.x = Math.random()*W; this.y = -50;
+      this.len = Math.random()*120+60;
+      this.speed = Math.random()*4+2;
+      this.alpha = Math.random()*0.4+0.1;
+      this.color = colors[Math.floor(Math.random()*colors.length)];
+      this.angle = Math.PI/4 + (Math.random()-0.5)*0.3;
+      this.active = false;
+      this.delay = Math.floor(Math.random()*500);
+      this.t = 0;
+    }
+    update(){
+      this.t++;
+      if(this.t < this.delay) return;
+      if(!this.active) this.active = true;
+      this.x += Math.cos(this.angle)*this.speed;
+      this.y += Math.sin(this.angle)*this.speed;
+      if(this.y > H+100) this.reset();
+    }
+    draw(){
+      if(!this.active) return;
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+      const grad = ctx.createLinearGradient(
+        this.x, this.y,
+        this.x - Math.cos(this.angle)*this.len,
+        this.y - Math.sin(this.angle)*this.len
+      );
+      grad.addColorStop(0, this.color);
+      grad.addColorStop(1, 'transparent');
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(this.x - Math.cos(this.angle)*this.len, this.y - Math.sin(this.angle)*this.len);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  for(let i=0;i<200;i++) particles.push(new Particle());
+  const comets = [new Comet(), new Comet(), new Comet()];
+
+  const nebulae = [
+    {x:0.2,y:0.15,r:300,c:'#6D28D9',a:0.04},
+    {x:0.8,y:0.3,r:250,c:'#EC4999',a:0.035},
+    {x:0.5,y:0.8,r:200,c:'#F97514',a:0.025},
+    {x:0.1,y:0.7,r:180,c:'#a855f7',a:0.03},
+  ];
+
+  function drawNebulae(){
+    nebulae.forEach(n => {
+      const ox = Math.sin(frame*0.003 + n.x)*30;
+      const oy = Math.cos(frame*0.002 + n.y)*20;
+      const grad = ctx.createRadialGradient(n.x*W+ox,n.y*H+oy,0,n.x*W+ox,n.y*H+oy,n.r);
+      grad.addColorStop(0, n.c);
+      grad.addColorStop(1, 'transparent');
+      ctx.save(); ctx.globalAlpha = n.a;
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(n.x*W+ox,n.y*H+oy,n.r,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  function loop(){
+    frame++;
+    ctx.clearRect(0,0,W,H);
+    drawNebulae();
+    particles.forEach(p=>{p.update();p.draw();});
+    comets.forEach(c=>{c.update();c.draw();});
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+function initAboutCanvas(id){
+  const canvas = document.getElementById(id);
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const W = canvas.width, H = canvas.height;
+  let t = 0;
+  
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const grad = ctx.createLinearGradient(0,0,W,H);
+    grad.addColorStop(0,'#1a0a2e'); grad.addColorStop(0.5,'#6D28D9'); grad.addColorStop(1,'#EC4999');
+    ctx.fillStyle = grad; ctx.fillRect(0,0,W,H);
+    
+    for(let i=0;i<5;i++){
+      const x = W/2 + Math.sin(t*0.01+i*1.2)*W*0.3;
+      const y = H/2 + Math.cos(t*0.008+i*0.9)*H*0.3;
+      const r = 40+Math.sin(t*0.02+i)*20;
+      const g2 = ctx.createRadialGradient(x,y,0,x,y,r);
+      g2.addColorStop(0,'rgba(249,117,20,0.4)'); g2.addColorStop(1,'transparent');
+      ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+    }
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+function animateCounters(){
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseInt(el.getAttribute('data-count'));
+    let current = 0;
+    const step = target/60;
+    const interval = setInterval(() => {
+      current += step;
+      if(current >= target){ el.textContent = target+(target===100?'%':'+'); clearInterval(interval); }
+      else el.textContent = Math.floor(current)+(target===100?'%':'+');
+    }, 20);
+  });
+}
+
+function initTicker(){
+  const items = ['Stratégie','Branding','Développement','IA & Data','Marketing','Incubation','Technologie','Performance','Innovation','Mouvement'];
+  const ticker = document.getElementById('ticker');
+  if(!ticker) return;
+  const html = [...items,...items].map(i => `<div class="ticker-item">${i}<span></span></div>`).join('');
+  ticker.innerHTML = html;
+}
+
+let currentSlide = 0, slideshowInterval;
+function initSlideshow(){
+  const slides = document.querySelectorAll('#mainSlideshow .slide');
+  const dotsContainer = document.getElementById('slideDots');
+  if(!slides.length || !dotsContainer) return;
+  dotsContainer.innerHTML = '';
+  slides.forEach((_,i) => {
+    const dot = document.createElement('div');
+    dot.className = 'slide-dot' + (i===0?' active':'');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  });
+  slideshowInterval = setInterval(() => goToSlide((currentSlide+1)%slides.length), 4000);
+}
+function goToSlide(n){
+  const slides = document.querySelectorAll('#mainSlideshow .slide');
+  const dots = document.querySelectorAll('#slideDots .slide-dot');
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide]?.classList.remove('active');
+  currentSlide = n;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide]?.classList.add('active');
+}
+
+function toggleFaq(el){
+  const item = el.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+
+function submitForm(){
+  const name = document.getElementById('f-name')?.value;
+  const email = document.getElementById('f-email')?.value;
+  if(!name || !email){ showNotif('Merci de remplir les champs requis.'); return; }
+  showNotif(i18n[lang].notifSuccess || 'Message envoyé !');
+  ['f-name','f-email','f-company','f-msg'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+}
+
+function showNotif(msg){
+  const n = document.getElementById('notif');
+  document.getElementById('notifText').textContent = msg;
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 4000);
+}
+
+function subscribeNewsletter(){
+  const v = document.getElementById('newsEmail')?.value;
+  if(v){ showNotif('✅ Merci pour votre inscription !'); document.getElementById('newsEmail').value=''; }
+}
+
+function acceptCookies(){ document.getElementById('cookieBanner').classList.add('hidden'); }
+function rejectCookies(){ document.getElementById('cookieBanner').classList.add('hidden'); }
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.style.opacity='1';
+      e.target.style.transform='translateY(0)';
+    }
+  });
+}, {threshold:0.1});
+
+function observeCards(){
+  document.querySelectorAll('.card,.section-title,.process-step,.team-card').forEach(el => {
+    el.style.opacity='0';
+    el.style.transform='translateY(24px)';
+    el.style.transition='opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initTicker();
+  initSlideshow();
+  initAboutCanvas('aboutMiniCanvas');
+  initAboutCanvas('aboutCanvas2');
+  applyLang('fr');
+  setTimeout(animateCounters, 500);
+  setTimeout(observeCards, 100);
+  navigate('home');
+});
+
+function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    if(navLinks) {
+        navLinks.classList.toggle('active');
+    }
+}
+
+function closeMenu() {
+    const navLinks = document.getElementById('navLinks');
+    if(navLinks && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+    }
+}
+
+</script>
+</body>
+</html>
