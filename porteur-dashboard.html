@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="owner_space">Espace Porteur | Crowd-Invest</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .project-status { padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; }
+        .status-active { background: rgba(0, 242, 255, 0.2); color: var(--primary); border: 1px solid var(--primary); }
+        
+        .main-grid { 
+            display: grid; 
+            grid-template-columns: 1.6fr 1fr; 
+            gap: 30px; 
+            align-items: start;
+        }
+
+        @media (max-width: 992px) {
+            .main-grid { grid-template-columns: 1fr; } 
+        }
+
+        .chat-container { 
+            border: 1px solid var(--glass-border); 
+            border-radius: 20px; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            height: 500px; 
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+        }
+        .messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .msg-admin { align-self: flex-start; background: rgba(235, 0, 40, 0.15); color: var(--text); padding: 12px; border-radius: 15px 15px 15px 2px; border: 1px solid rgba(235, 0, 40, 0.3); max-width: 85%; }
+        .msg-me { align-self: flex-end; background: var(--primary); color: #000; padding: 12px; border-radius: 15px 15px 2px 15px; max-width: 85%; font-weight: 500; }
+        .notification-dot { width: 10px; height: 10px; background: var(--secondary); border-radius: 50%; display: inline-block; margin-left: 5px; box-shadow: 0 0 10px var(--secondary); }
+        
+        .chat-input-area { padding: 15px; border-top: 1px solid var(--glass-border); display: flex; gap: 10px; }
+    </style>
+</head>
+<body>
+    <div class="liquid-bg"><div class="blob blob-1"></div></div>
+
+    <header class="glass-header">
+        <div class="logo" data-i18n="creator_space">ESPACE CRÉATEUR</div>
+        <div style="display:flex; gap:10px; align-items:center;">
+            <button onclick="toggleLang()" id="lang-btn" class="glass-panel" style="padding:5px 15px; border-radius:15px; color:var(--text); cursor:pointer; background:transparent;">FR</button>
+            <button onclick="toggleTheme()" class="glass-panel" style="padding:5px 10px; border-radius:50%; cursor:pointer; background:transparent; color:var(--text); border:1px solid var(--glass-border);">◑</button>
+            
+            <div style="width:35px; height:35px; background:var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#000; margin-left:10px;">PM</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="stats-grid">
+            <div class="glass-panel">
+                <p style="opacity:0.7; font-size:0.9rem;" data-i18n="total_raised">Total Collecté</p>
+                <h2 style="color:var(--primary);">4.250.000 <small>FCFA</small></h2>
+            </div>
+            <div class="glass-panel">
+                <p style="opacity:0.7; font-size:0.9rem;" data-i18n="investors">Investisseurs</p>
+                <h2 style="color:var(--accent);">24</h2>
+            </div>
+            <div class="glass-panel">
+                <p style="opacity:0.7; font-size:0.9rem;" data-i18n="file_status">Statut Dossier</p>
+                <h2 style="font-size: 1.2rem; color: #00ff88;" data-i18n="verified">Vérifié ✓</h2>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="projects-section">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h3 data-i18n="my_projects">Mes Projets en cours</h3>
+                    <a href="submission.html" class="btn-main" style="padding:8px 15px; font-size:0.8rem;" data-i18n="new_project">+ Nouveau</a>
+                </div>
+                
+                <div class="glass-panel" style="margin-bottom: 20px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <b style="font-size: 1.1rem;" data-i18n="project_title">🌱 Agri-Tech Douala</b>
+                        <span class="project-status status-active" data-i18n="funding_in_progress">En cours de financement</span>
+                    </div>
+                    <div class="progress-container" style="margin:20px 0;"><div class="progress-bar" style="width:65%;"></div></div>
+                    <div style="display:flex; justify-content:space-between; font-size: 0.85rem; opacity:0.8;">
+                        <span data-i18n="completion">65% complété</span>
+                        <span data-i18n="goal">Objectif: 4M FCFA</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-container">
+                <div style="padding: 15px; border-bottom: 1px solid var(--glass-border); background: rgba(255,255,255,0.03);">
+                    <h3 style="font-size: 1rem;" data-i18n="admin_discussion">Discussion Admin <span class="notification-dot"></span></h3>
+                </div>
+                <div class="messages">
+                    <div class="msg-admin" data-i18n="msg1">Bonjour, nous avons bien reçu vos documents d'identité.</div>
+                    <div class="msg-me" data-i18n="msg2">Super, merci ! Le projet est donc validé ?</div>
+                    <div class="msg-admin" data-i18n="msg3">Oui, il est désormais visible par les investisseurs VIP.</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" data-i18n-placeholder="reply_to_admin" placeholder="Répondre à l'admin..." style="flex:1; margin-bottom:0; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); padding:10px; border-radius:10px; color:var(--text);">
+                    <button class="btn-main" style="padding: 10px 15px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="logo.jpg" alt="Crowd-Invest" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">
+        <div>
+          <div style="font-weight:900;color:var(--primary);">CROWD-INVEST</div>
+          <div style="font-size:0.85rem;opacity:0.75;" data-i18n="footer_desc">Le futur de l'investissement participatif au Cameroun.</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; opacity:0.7; margin-top:12px;" data-i18n="footer_tagline">Sécurisé, transparent et local-first.</p>
+
+      <div class="social-links" style="margin-top:12px;">
+        <a href="https://t.me/tonchannel" aria-label="Telegram" target="_blank" class="social-icon">
+       
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 2L2 12.5 9.5 15 12 22 22 2z" fill="currentColor"/></svg>
+        </a>
+
+        <a href="https://twitter.com/toncompte" aria-label="X" target="_blank" class="social-icon">
+       
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9 9 0 0 1-2.86 1.1A4.52 4.52 0 0 0 12 4.77 12.83 12.83 0 0 1 1.67 2.15 4.5 4.5 0 0 0 3.08 8.6 4.42 4.42 0 0 1 .9 7.9v.06A4.52 4.52 0 0 0 4.5 12.9a4.52 4.52 0 0 1-2 .08 4.52 4.52 0 0 0 4.22 3.13A9.06 9.06 0 0 1 0 19.54 12.8 12.8 0 0 0 6.92 21c8.28 0 12.82-6.86 12.82-12.82 0-.2 0-.39-.01-.58A9.2 9.2 0 0 0 23 3z" fill="currentColor"/></svg>
+        </a>
+
+        <a href="https://github.com/tonprofile" aria-label="GitHub" target="_blank" class="social-icon">
+       
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.78-1.34-1.78-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.48.99.11-.78.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.16 0 0 1-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.29-1.54 3.29-1.22 3.29-1.22.66 1.64.24 2.86.12 3.16.77.83 1.24 1.9 1.24 3.19 0 4.58-2.8 5.6-5.47 5.9.43.36.82 1.08.82 2.18v3.23c0 .32.22.7.83.58A12 12 0 0 0 12 .5z" fill="currentColor"/></svg>
+        </a>
+
+        <a href="https://wa.me/2376XXXXXXXX" aria-label="WhatsApp" target="_blank" class="social-icon">
+        
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.52 3.48A11.81 11.81 0 0 0 12 .25 11.8 11.8 0 0 0 3.48 3.5 11.79 11.79 0 0 0 .25 12c0 2.04.54 3.95 1.57 5.6L.01 24l6.7-1.77A11.8 11.8 0 0 0 12 23.75c2.04 0 3.95-.54 5.6-1.57A11.82 11.82 0 0 0 23.75 12 11.8 11.8 0 0 0 20.52 3.48zM12 21.5c-1.87 0-3.68-.5-5.25-1.4l-.38-.23-3.98 1.05 1.05-3.88-.24-.39A9.6 9.6 0 0 1 2.5 12c0-5.2 4.22-9.42 9.5-9.42 2.53 0 4.9.98 6.7 2.78 1.8 1.8 2.78 4.17 2.78 6.7 0 5.27-4.22 9.5-9.5 9.5z" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="quick_links">Accès Rapides</h4>
+      <ul>
+        <li><a href="index.html" data-i18n="home">Accueil</a></li>
+        <li><a href="javascript:void(0)" onclick="requireAuth('investor.html')" data-i18n="invest">Investir</a>        
+        <li><a href="javascript:void(0)" onclick="requireAuth('submission.html')" data-i18n="launch_project">Lancer un projet</a></li>
+        <li><a href="javascript:void(0)" onclick="requireAuth('projects-success.html')" data-i18n="successful_projects">Projets réussis</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="good_to_know">Bon à savoir</h4>
+      <ul>
+        <li><a href="how-it-works.html" data-i18n="how_it_works">Comment ça marche ?</a></li>
+        <li><a href="terms.html" data-i18n="terms">Conditions d'utilisation</a></li>
+        <li><a href="privacy.html" data-i18n="privacy">Politique de confidentialité</a></li>
+        <li><a href="faq.html" data-i18n="faq">F.A.Q</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="our_services">Nos services</h4>
+      <ul>
+        <li><a href="services.html#company" data-i18n="company">Notre entreprise</a></li>
+        <li><a href="services.html#bot" data-i18n="bot">Bot Development</a></li>
+        <li><a href="services.html#market" data-i18n="market">Online Market</a></li>
+        <li><a href="services.html#cv" data-i18n="cv">CV Host</a></li>
+        <li><a href="services.html#flyers" data-i18n="flyers">Flyers Supply</a></li>
+        <li><a href="services.html#followup" data-i18n="followup">Project Follow-up</a></li>
+      </ul>
+
+      <div style="margin-top:12px;">
+        <div style="font-size:0.72rem; opacity:0.8; margin-bottom:8px;" data-i18n="accepted_payments">PAIEMENTS ACCEPTÉS</div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+<img data-sources='["https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg","https://via.placeholder.com/90x28?text=Visa"]' class="pay-logo" alt="Visa">
+<img data-sources='["https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg","https://via.placeholder.com/90x28?text=Mastercard"]' class="pay-logo" alt="Mastercard">
+<img data-sources='["https://cryptologos.cc/logos/binance-coin-bnb-logo.svg","https://via.placeholder.com/90x28?text=Binance"]' class="pay-logo" alt="Binance Pay">
+
+<img
+  src="https://cdn.simpleicons.org/orange/FF7900"
+  class="pay-logo"
+  alt="Orange Money"
+>
+<svg class="pay-logo" viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" aria-label="MTN MoMo">
+  <rect width="120" height="40" rx="6" fill="#FFCB05"/>
+  <text x="60" y="26" text-anchor="middle" font-size="18" fill="#000" font-family="Arial Black, Arial, sans-serif" font-weight="900">
+    MTN
+  </text>
+</svg>
+        </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom" >&copy; 2026 Crowd Funding. Tous droits réservés.</div>
+</footer>
+
+    <script src="main.js"></script>
+    <script>
+        window.texts = {
+            fr: { 
+                owner_space: 'Espace Porteur | Crowd-Invest',
+                creator_space: 'ESPACE CRÉATEUR',
+                total_raised: 'Total Collecté',
+                investors: 'Investisseurs',
+                file_status: 'Statut Dossier',
+                verified: 'Vérifié ✓',
+                my_projects: 'Mes Projets en cours',
+                new_project: '+ Nouveau',
+                project_title: '🌱 Agri-Tech Douala',
+                funding_in_progress: 'En cours de financement',
+                completion: '65% complété',
+                goal: 'Objectif: 4M FCFA',
+                admin_discussion: 'Discussion Admin',
+                msg1: 'Bonjour, nous avons bien reçu vos documents d\'identité.',
+                msg2: 'Super, merci ! Le projet est donc validé ?',
+                msg3: 'Oui, il est désormais visible par les investisseurs VIP.',
+                reply_to_admin: 'Répondre à l\'admin...',
+                footer_desc: 'Le futur de l\'investissement participatif au Cameroun.',
+                footer_tagline: 'Sécurisé, transparent et local-first.',
+                quick_links: 'Accès Rapides',
+                home: 'Accueil',
+                invest: 'Investir',
+                launch_project: 'Lancer un projet',
+                successful_projects: 'Projets réussis',
+                good_to_know: 'Bon à savoir',
+                how_it_works: 'Comment ça marche ?',
+                terms: 'Conditions d’utilisation',
+                privacy: 'Politique de confidentialité',
+                faq: 'F.A.Q',
+                our_services: 'Nos services',
+                company: 'Notre entreprise',
+                bot: 'Bot Development',
+                market: 'Online Market',
+                cv: 'CV Host',
+                flyers: 'Flyers Supply',
+                followup: 'Project Follow-up',
+                accepted_payments: 'PAIEMENTS ACCEPTÉS',
+                copyright: '&copy; 2026 Crowd Funding. Tous droits réservés.'
+            },
+            en: { 
+                owner_space: 'Owner Space | Crowd-Invest',
+                creator_space: 'CREATOR SPACE',
+                total_raised: 'Total Raised',
+                investors: 'Investors',
+                file_status: 'File Status',
+                verified: 'Verified ✓',
+                my_projects: 'My Current Projects',
+                new_project: '+ New',
+                project_title: '🌱 Agri-Tech Douala',
+                funding_in_progress: 'Funding in Progress',
+                completion: '65% completed',
+                goal: 'Goal: 4M FCFA',
+                admin_discussion: 'Admin Discussion',
+                msg1: 'Hello, we have received your identity documents.',
+                msg2: 'Great, thank you! So the project is validated?',
+                msg3: 'Yes, it is now visible to VIP investors.',
+                reply_to_admin: 'Reply to admin...',
+                footer_desc: 'The future of participatory investment in Cameroon.',
+                footer_tagline: 'Secure, transparent and local-first.',
+                quick_links: 'Quick Access',
+                home: 'Home',
+                invest: 'Invest',
+                launch_project: 'Launch a project',
+                successful_projects: 'Successful projects',
+                good_to_know: 'Good to know',
+                how_it_works: 'How it works?',
+                terms: 'Terms of use',
+                privacy: 'Privacy policy',
+                faq: 'FAQ',
+                our_services: 'Our services',
+                company: 'Our company',
+                bot: 'Bot Development',
+                market: 'Online Market',
+                cv: 'CV Host',
+                flyers: 'Flyers Supply',
+                followup: 'Project Follow-up',
+                accepted_payments: 'ACCEPTED PAYMENTS',
+                copyright: '&copy; 2026 Crowd Funding. All rights reserved.'
+            }
+        };
+
+        function updatePlaceholders() {
+            const input = document.querySelector('.chat-input-area input');
+            if (input) {
+                input.placeholder = window.texts[currentLang].reply_to_admin;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyLanguage(currentLang);
+            updatePlaceholders();
+        });
+    </script>
+</body>
+</html>

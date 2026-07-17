@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="thanks_title">Merci | Croud-Invest</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container" style="display:flex; justify-content:center; align-items:center; min-height:80vh;">
+        <div class="glass-panel text-center" style="max-width:500px;">
+            <div style="font-size:4rem;">🎉</div>
+            <h2 class="mb-20" data-i18n="thanks_heading">Merci pour votre contribution !</h2>
+            <p class="mb-20" style="opacity:0.8;" data-i18n="thanks_desc">Votre soutien aide à bâtir le Cameroun de demain. Laissez un message d'encouragement au porteur de projet.</p>
+            
+            <form id="postPaymentForm" enctype="multipart/form-data">
+  <label style="display:block; text-align:left;" data-i18n="photo_label">Photo (facultatif mais recommandé)</label>
+  <input id="post-photo" type="file" accept="image/*" style="margin-bottom:8px;">
+  <input id="post-name" type="text" placeholder="Votre Nom Complet" data-i18n-placeholder="full_name_placeholder" required>
+  <input id="post-title" type="text" placeholder="Titre / Poste (ex: Ingénieur)" data-i18n-placeholder="title_placeholder" required>
+  <input id="post-enterprise" type="text" placeholder="Entreprise (Optionnel)" data-i18n-placeholder="enterprise_placeholder">
+  <textarea id="post-review" placeholder="Votre message d'encouragement..." data-i18n-placeholder="message_placeholder" rows="4" required></textarea>
+  <button type="submit" class="btn-main" style="width:100%;" data-i18n="publish_button">Publier mon avis</button>
+</form>
+            <a href="investor.html" style="display:block; margin-top:15px; color:var(--text); text-decoration:none; font-size:0.9rem;" data-i18n="skip_step">Passer cette étape</a>
+        </div>
+    </main>
+    <footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="logo.jpg" alt="Croud-Invest" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">
+        <div>
+          <div style="font-weight:900;color:var(--primary);">CROUD-INVEST</div>
+          <div style="font-size:0.85rem;opacity:0.75;" data-i18n="footer_desc">Le futur de l'investissement participatif au Cameroun.</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; opacity:0.7; margin-top:12px;" data-i18n="footer_tagline">Sécurisé, transparent et local-first.</p>
+
+      <div class="social-links" style="margin-top:12px;">
+        <a href="https://t.me/tonchannel" aria-label="Telegram" target="_blank" class="social-icon">
+         
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 2L2 12.5 9.5 15 12 22 22 2z" fill="currentColor"/></svg>
+        </a>
+
+        <a href="https://twitter.com/toncompte" aria-label="X" target="_blank" class="social-icon">
+          
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9 9 0 0 1-2.86 1.1A4.52 4.52 0 0 0 12 4.77 12.83 12.83 0 0 1 1.67 2.15 4.5 4.5 0 0 0 3.08 8.6 4.42 4.42 0 0 1 .9 7.9v.06A4.52 4.52 0 0 0 4.5 12.9a4.52 4.52 0 0 1-2 .08 4.52 4.52 0 0 0 4.22 3.13A9.06 9.06 0 0 1 0 19.54 12.8 12.8 0 0 0 6.92 21c8.28 0 12.82-6.86 12.82-12.82 0-.2 0-.39-.01-.58A9.2 9.2 0 0 0 23 3z" fill="currentColor"/></svg>
+        </a>
+
+        <a href="https://github.com/tonprofile" aria-label="GitHub" target="_blank" class="social-icon">
+          
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.78-1.34-1.78-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.48.99.11-.78.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.16 0 0 1-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.29-1.54 3.29-1.22 3.29-1.22.66 1.64.24 2.86.12 3.16.77.83 1.24 1.9 1.24 3.19 0 4.58-2.8 5.6-5.47 5.9.43.36.82 1.08.82 2.18v3.23c0 .32.22.7.83.58A12 12 0 0 0 12 .5z" fill="currentColor"/></svg>
+        </a>
+
+        <a href="https://wa.me/2376XXXXXXXX" aria-label="WhatsApp" target="_blank" class="social-icon">
+          
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.52 3.48A11.81 11.81 0 0 0 12 .25 11.8 11.8 0 0 0 3.48 3.5 11.79 11.79 0 0 0 .25 12c0 2.04.54 3.95 1.57 5.6L.01 24l6.7-1.77A11.8 11.8 0 0 0 12 23.75c2.04 0 3.95-.54 5.6-1.57A11.82 11.82 0 0 0 23.75 12 11.8 11.8 0 0 0 20.52 3.48zM12 21.5c-1.87 0-3.68-.5-5.25-1.4l-.38-.23-3.98 1.05 1.05-3.88-.24-.39A9.6 9.6 0 0 1 2.5 12c0-5.2 4.22-9.42 9.5-9.42 2.53 0 4.9.98 6.7 2.78 1.8 1.8 2.78 4.17 2.78 6.7 0 5.27-4.22 9.5-9.5 9.5z" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="quick_links">Accès Rapides</h4>
+      <ul>
+        <li><a href="index.html" data-i18n="home">Accueil</a></li>
+        <li><a href="investor.html" data-i18n="invest">Investir</a>        
+        <li><a href="submission.html" data-i18n="launch_project">Lancer un projet</a></li>
+        <li><a href="projects-sucess.html" data-i18n="successful_projects">Projets réussis</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="good_to_know">Bon à savoir</h4>
+      <ul>
+        <li><a href="how-it-works.html" data-i18n="how_it_works">Comment ça marche ?</a></li>
+        <li><a href="terms.html" data-i18n="terms">Conditions d'utilisation</a></li>
+        <li><a href="privacy.html" data-i18n="privacy">Politique de confidentialité</a></li>
+        <li><a href="faq.html" data-i18n="faq">F.A.Q</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="our_services">Nos services</h4>
+      <ul>
+        <li><a href="services.html#company" data-i18n="company">Notre entreprise</a></li>
+        <li><a href="services.html#bot" data-i18n="bot">Bot Development</a></li>
+        <li><a href="services.html#market" data-i18n="market">Online Market</a></li>
+        <li><a href="services.html#cv" data-i18n="cv">CV Host</a></li>
+        <li><a href="services.html#flyers" data-i18n="flyers">Flyers Supply</a></li>
+        <li><a href="services.html#followup" data-i18n="followup">Project Follow-up</a></li>
+      </ul>
+
+      <div style="margin-top:12px;">
+        <div style="font-size:0.72rem; opacity:0.8; margin-bottom:8px;" data-i18n="accepted_payments">PAIEMENTS ACCEPTÉS</div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+<img data-sources='["https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg","https://via.placeholder.com/90x28?text=Visa"]' class="pay-logo" alt="Visa">
+<img data-sources='["https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg","https://via.placeholder.com/90x28?text=Mastercard"]' class="pay-logo" alt="Mastercard">
+<img data-sources='["https://cryptologos.cc/logos/binance-coin-bnb-logo.svg","https://via.placeholder.com/90x28?text=Binance"]' class="pay-logo" alt="Binance Pay">
+
+<img
+  src="https://cdn.simpleicons.org/orange/FF7900"
+  class="pay-logo"
+  alt="Orange Money"
+>
+<svg class="pay-logo" viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" aria-label="MTN MoMo">
+  <rect width="120" height="40" rx="6" fill="#FFCB05"/>
+  <text x="60" y="26" text-anchor="middle" font-size="18" fill="#000" font-family="Arial Black, Arial, sans-serif" font-weight="900">
+    MTN
+  </text>
+</svg>
+        </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom" >&copy; 2025 Croud Funding. Tous droits réservés.</div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+function fileToDataURL(file, cb){
+  if(!file){ cb(null); return; }
+  const reader = new FileReader();
+  reader.onload = () => cb(reader.result);
+  reader.onerror = () => cb(null);
+  reader.readAsDataURL(file);
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  const last = JSON.parse(localStorage.getItem('lastContribution')||'null');
+  const projectId = last ? last.projectId : (new URLSearchParams(location.search).get('project') || null);
+
+  document.getElementById('postPaymentForm').onsubmit = (e)=>{
+    e.preventDefault();
+    const review = document.getElementById('post-review').value.trim();
+    const name = document.getElementById('post-name').value.trim();
+    const enterprise = document.getElementById('post-enterprise').value.trim();
+    const title = document.getElementById('post-title').value.trim();
+    const photoFile = document.getElementById('post-photo').files[0];
+
+    if(!review || !name || !title){ alert(window.texts[currentLang].fill_required_fields || 'Veuillez remplir les champs obligatoires.'); return; }
+
+    fileToDataURL(photoFile, (dataUrl)=>{
+      const rev = {
+        id: Date.now(),
+        projectId: projectId,
+        type: 'review',
+        text: review,
+        displayName: name,
+        title: title,
+        enterprise: enterprise,
+        photoData: dataUrl, 
+        ts: Date.now()
+      };
+      const msgs = JSON.parse(localStorage.getItem('cf_msgs_v1')||'[]');
+      msgs.push(rev);
+      localStorage.setItem('cf_msgs_v1', JSON.stringify(msgs));
+
+      alert(window.texts[currentLang].review_published || 'Merci! Votre avis est publié.');
+      
+      if(projectId) window.location.href = 'details-projet.html?id=' + encodeURIComponent(projectId);
+      else window.location.href = 'investor.html';
+    });
+  };
+
+});
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  const c = JSON.parse(localStorage.getItem('lastContribution')||'null');
+  if(c) { }
+  document.getElementById('postPaymentForm').onsubmit = (e)=>{
+    e.preventDefault();
+    const review = document.getElementById('post-review').value.trim();
+    const name = document.getElementById('post-name').value.trim();
+    const enterprise = document.getElementById('post-enterprise').value.trim();
+    const title = document.getElementById('post-title').value.trim();
+    if(!review){ alert(window.texts[currentLang].review_required || 'Votre avis est requis.'); return; }
+    const pr = JSON.parse(localStorage.getItem('lastContribution')||'null');
+    const rev = { id:Date.now(), projectId: pr.projectId, type:'review', text:review, displayName: name || 'Investisseur anonyme', ts:Date.now()};
+    const msgs = JSON.parse(localStorage.getItem('cf_msgs_v1')||'[]'); msgs.push(rev); localStorage.setItem('cf_msgs_v1', JSON.stringify(msgs));
+    alert(window.texts[currentLang].review_published || 'Merci! Votre avis est publié.');
+    window.location.href = 'investor.html';
+  };
+});
+</script>
+<script>
+  window.texts = {
+    fr: {
+      thanks_title: 'Merci | Croud-Invest',
+      thanks_heading: 'Merci pour votre contribution !',
+      thanks_desc: 'Votre soutien aide à bâtir le Cameroun de demain. Laissez un message d\'encouragement au porteur de projet.',
+      photo_label: 'Photo (facultatif mais recommandé)',
+      full_name_placeholder: 'Votre Nom Complet',
+      title_placeholder: 'Titre / Poste (ex: Ingénieur)',
+      enterprise_placeholder: 'Entreprise (Optionnel)',
+      message_placeholder: 'Votre message d\'encouragement...',
+      publish_button: 'Publier mon avis',
+      skip_step: 'Passer cette étape',
+      fill_required_fields: 'Veuillez remplir les champs obligatoires.',
+      review_published: 'Merci! Votre avis est publié.',
+      review_required: 'Votre avis est requis.',
+      footer_desc: 'Le futur de l\'investissement participatif au Cameroun.',
+      footer_tagline: 'Sécurisé, transparent et local-first.',
+      quick_links: 'Accès Rapides',
+      home: 'Accueil',
+      invest: 'Investir',
+      launch_project: 'Lancer un projet',
+      successful_projects: 'Projets réussis',
+      good_to_know: 'Bon à savoir',
+      how_it_works: 'Comment ça marche ?',
+      terms: 'Conditions d’utilisation',
+      privacy: 'Politique de confidentialité',
+      faq: 'F.A.Q',
+      our_services: 'Nos services',
+      company: 'Notre entreprise',
+      bot: 'Bot Development',
+      market: 'Online Market',
+      cv: 'CV Host',
+      flyers: 'Flyers Supply',
+      followup: 'Project Follow-up',
+      accepted_payments: 'PAIEMENTS ACCEPTÉS',
+      copyright: '&copy; 2026 Croud Funding. Tous droits réservés.'
+    },
+    en: {
+      thanks_title: 'Thank You | Croud-Invest',
+      thanks_heading: 'Thank you for your contribution!',
+      thanks_desc: 'Your support helps build tomorrow\'s Cameroon. Leave an encouraging message for the project owner.',
+      photo_label: 'Photo (optional but recommended)',
+      full_name_placeholder: 'Your Full Name',
+      title_placeholder: 'Title / Position (e.g., Engineer)',
+      enterprise_placeholder: 'Company (Optional)',
+      message_placeholder: 'Your encouragement message...',
+      publish_button: 'Publish my review',
+      skip_step: 'Skip this step',
+      fill_required_fields: 'Please fill in the required fields.',
+      review_published: 'Thank you! Your review is published.',
+      review_required: 'Your review is required.',
+      footer_desc: 'The future of participatory investment in Cameroon.',
+      footer_tagline: 'Secure, transparent and local-first.',
+      quick_links: 'Quick Access',
+      home: 'Home',
+      invest: 'Invest',
+      launch_project: 'Launch a project',
+      successful_projects: 'Successful projects',
+      good_to_know: 'Good to know',
+      how_it_works: 'How it works?',
+      terms: 'Terms of use',
+      privacy: 'Privacy policy',
+      faq: 'FAQ',
+      our_services: 'Our services',
+      company: 'Our company',
+      bot: 'Bot Development',
+      market: 'Online Market',
+      cv: 'CV Host',
+      flyers: 'Flyers Supply',
+      followup: 'Project Follow-up',
+      accepted_payments: 'ACCEPTED PAYMENTS',
+      copyright: '&copy; 2026 Croud Funding. All rights reserved.'
+    }
+  };
+
+  // Mise à jour des placeholders après changement de langue
+  function updatePlaceholders() {
+    document.getElementById('post-name').placeholder = window.texts[currentLang].full_name_placeholder;
+    document.getElementById('post-title').placeholder = window.texts[currentLang].title_placeholder;
+    document.getElementById('post-enterprise').placeholder = window.texts[currentLang].enterprise_placeholder;
+    document.getElementById('post-review').placeholder = window.texts[currentLang].message_placeholder;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    applyLanguage(currentLang);
+    updatePlaceholders();
+  });
+
+  // Rafraîchir après toggleLang
+  const originalToggleLang = window.toggleLang;
+  window.toggleLang = function() {
+    originalToggleLang();
+    updatePlaceholders();
+  };
+</script>
+</body>
+</html>

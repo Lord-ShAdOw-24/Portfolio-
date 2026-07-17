@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentification | Croud-Invest</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .auth-container { width: 100%; max-width: 520px; position:relative; }
+        .hidden { display: none; }
+        .auth-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 18px; }
+        .auth-tab { cursor: pointer; opacity: 0.6; padding-bottom: 6px; border-bottom: 2px solid transparent; transition: 0.22s; }
+        .auth-tab.active { opacity: 1; border-color: var(--primary); color: var(--primary); }
+        .top-controls { display:flex; justify-content:flex-end; gap:10px; margin-bottom:12px; }
+        .glass-btn { padding:6px 12px; border-radius:12px; background:transparent; border:1px solid var(--glass-border); color:var(--text); cursor:pointer; }
+        label { display:block; margin-top:10px; margin-bottom:6px; font-size:0.95rem; }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="password"], textarea { width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--glass-border); background:var(--input-bg); color:var(--text); }
+
+        .role-row { display:flex; gap:10px; flex-wrap:wrap; }
+        .role-row .btn-main, .role-row .glass-panel { flex:1 1 120px; min-width:120px; }
+        
+        .admin-panel { border:1px dashed var(--glass-border); padding:10px; border-radius:10px; margin-top:10px; background: rgba(255,255,255,0.02); }
+        .link-back { display:inline-block; margin-top:8px; color:var(--primary); cursor:pointer; text-decoration:underline; font-size:0.9rem; }
+        @media (max-width:520px){
+            .role-row .btn-main, .role-row .glass-panel { min-width: 100%; flex-basis: 100%; }
+        }
+   
+.admin-notice { display:none; padding:8px 10px; border-radius:8px; margin-top:8px; font-size:0.92rem; }
+.admin-notice.show { display:block; animation: admin-shake 0.6s; }
+.admin-notice.error { background: rgba(235,0,40,0.06); color:#ffb4b4; border:1px solid rgba(235,0,40,0.18); }
+.admin-notice.success { background: rgba(0,255,136,0.04); color:#c8ffd1; border:1px solid rgba(0,255,136,0.12); }
+
+@keyframes admin-shake {
+  0%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}100%{transform:translateX(0)}
+}
+    </style>
+</head>
+<body>
+    <div class="liquid-bg"><div class="blob blob-1"></div></div>
+
+    <div class="auth-container glass-panel" id="authCard">
+        <div class="top-controls">
+            <button id="page-lang-btn" class="glass-btn" onclick="toggleLangPage()">FR</button>
+            <button id="page-theme-btn" class="glass-btn" onclick="toggleThemePage()">◑</button>
+        </div>
+
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="switchTab('login')" data-i18n="tab_login">Connexion</div>
+            <div class="auth-tab" onclick="switchTab('signup')" data-i18n="tab_signup">Inscription</div>
+        </div>
+
+        <div id="loginForm">
+            <h2 class="text-center mb-20" data-i18n="welcome_back">Bon retour !</h2>
+
+            <label data-i18n="label_email">Email</label>
+            <input type="email" id="login-email" data-i18n-placeholder="ph_email" placeholder="votre@email.com">
+
+            <label data-i18n="label_password">Mot de passe</label>
+            <input type="password" id="login-pass" data-i18n-placeholder="ph_password" placeholder="Mot de passe">
+
+            <div style="margin: 20px 0;">
+                <p style="font-size: 0.85rem; opacity: 0.6; margin-bottom: 10px;" data-i18n="login_as">Se connecter en tant que :</p>
+                <div class="role-row" id="roleRow">
+                    <button class="btn-main" style="flex:1; font-size:0.9rem;" onclick="handleLogin('investor')" data-i18n="btn_investor">Investisseur</button>
+                    <button class="btn-main" style="flex:1; font-size:0.9rem; background:var(--secondary);" onclick="handleLogin('project')" data-i18n="btn_project">Porteur</button>
+                    <button id="admin-show-btn" class="glass-panel" style="flex:1; font-size:0.85rem; padding:6px;" onclick="showAdminLogin()" data-i18n="btn_admin">Admin</button>
+                </div>
+
+                <div id="adminPanel" class="admin-panel hidden" aria-hidden="true">
+                    <div id="adminNotice" class="admin-notice" aria-hidden="true"></div>
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <strong data-i18n="admin_title">Admin Login</strong>
+                    <span class="link-back" onclick="hideAdminLogin()" data-i18n="admin_back">Retour</span>
+                  </div>
+                  <label data-i18n="admin_name_label">Nom de l'admin</label>
+                  <input id="admin-name" type="text" placeholder="Admin" data-i18n-placeholder="ph_admin_name">
+                  <label data-i18n="admin_key_label">Clé d'accès</label>
+                  <input id="admin-key" type="password" placeholder="Clé d'accès" data-i18n-placeholder="ph_admin_key">
+                  <div style="margin-top:10px; display:flex; gap:8px;">
+                    <button class="btn-main" style="flex:1;" onclick="handleAdminLogin()" data-i18n="admin_login_btn">Se connecter</button>
+                    <button class="glass-panel" style="flex:1;" onclick="cancelAdmin()" data-i18n="admin_cancel">Annuler</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="signupForm" class="hidden">
+            <div style="display:flex; gap:10px; margin-bottom:12px;">
+                <button class="glass-panel" style="flex:1; padding:10px;" onclick="toggleSignupRole('investor')" data-i18n="tab_investor">Investisseur</button>
+                <button class="glass-panel" style="flex:1; padding:10px;" onclick="toggleSignupRole('project')" data-i18n="tab_project">Porteur de Projet</button>
+            </div>
+
+            <div id="signupInvestor" class="hidden">
+                <h2 class="text-center mb-12" data-i18n="signup_investor_title">Devenir Investisseur</h2>
+                <label data-i18n="label_name">Nom Complet</label>
+                <input type="text" id="inv-name" data-i18n-placeholder="ph_name" placeholder="Jean Dupont">
+
+                <label data-i18n="label_email">Email</label>
+                <input type="email" id="inv-email" data-i18n-placeholder="ph_email" placeholder="email@exemple.com">
+
+                <label data-i18n="label_whatsapp">WhatsApp (téléphone)</label>
+                <input type="tel" id="inv-phone" data-i18n-placeholder="ph_whatsapp" placeholder="+2376XXXXXXXX">
+
+                <label data-i18n="label_selfie">Photo (selfie)</label>
+                <input type="file" id="inv-photo" accept="image/*">
+
+                <label data-i18n="label_doc">Document d'identité (CNI / Passeport)</label>
+                <input type="file" id="inv-doc" accept="image/*">
+
+                <div style="margin-top:14px;">
+                    <button class="btn-main" onclick="submitInvestorSignup()" data-i18n="create_investor">Créer mon compte VIP</button>
+                </div>
+            </div>
+
+            <div id="signupProject" class="hidden">
+                <h2 class="text-center mb-12" data-i18n="signup_project_title">Devenir Porteur</h2>
+
+                <div id="signupVerifyProject">
+                    <label data-i18n="label_name">Nom complet <span class="required-star">*</span></label>
+                    <input type="text" id="project-name" data-i18n-placeholder="ph_name" placeholder="Prénom Nom" required>
+
+                    <label data-i18n="label_email">Email <span class="required-star">*</span></label>
+                    <input type="email" placeholder="email@exemple.com" id="project-email" data-i18n-placeholder="ph_email" required>
+
+                    <label data-i18n="label_whatsapp">WhatsApp <span class="required-star">*</span></label>
+                    <input type="tel" id="project-whatsapp" data-i18n-placeholder="ph_whatsapp" placeholder="+237 6XX XXX XXX" required>
+
+                    <label data-i18n="label_selfie">Photo Selfie <span class="required-star">*</span></label>
+                    <input type="file" id="project-selfie" accept="image/*" required>
+
+                    <label data-i18n="label_doc">Photo CNI / Passeport <span class="required-star">*</span></label>
+                    <input type="file" id="project-doc" accept="image/*" required>
+
+                    <div style="margin-top:12px;">
+                        <button class="btn-main" style="width:100%;" onclick="handleVerify('project')" data-i18n="verify_btn">Vérifier mon identité</button>
+                    </div>
+                </div>
+
+                <div id="signupCredentialsProject" class="hidden">
+                    <label data-i18n="label_password">Mot de passe <span class="required-star">*</span></label>
+                    <input type="password" id="project-signup-password" data-i18n-placeholder="ph_password">
+                    <label data-i18n="label_confirm">Confirmer <span class="required-star">*</span></label>
+                    <input type="password" id="project-signup-confirm" data-i18n-placeholder="ph_confirm">
+                    <div style="margin-top:12px;">
+                        <button class="btn-main" style="width:100%;" onclick="handleSignup('project')" data-i18n="create_project">Créer mon compte</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+
+<script>
+const translationsPage = {
+  fr: {
+    tab_login: "Connexion", tab_signup: "Inscription",
+    welcome_back: "Bon retour !",
+    label_email: "Email", label_password: "Mot de passe", label_name: "Nom Complet",
+    label_whatsapp: "WhatsApp (téléphone)", label_selfie: "Photo (selfie)", label_doc: "Document d'identité (CNI / Passeport)",
+    login_as: "Se connecter en tant que :",
+    btn_investor: "Investisseur", btn_project: "Porteur", btn_admin: "Admin",
+    tab_investor: "Investisseur", tab_project: "Porteur de Projet",
+    signup_investor_title: "Devenir Investisseur", signup_project_title: "Devenir Porteur",
+    create_investor: "Créer mon compte VIP", verify_btn: "Vérifier mon identité", create_project: "Créer mon compte",
+    label_confirm: "Confirmer",
+    ph_email: "votre@email.com",
+    ph_password: "Mot de passe",
+    ph_confirm: "Confirmer le mot de passe",
+    ph_name: "Prénom Nom",
+    ph_whatsapp: "+2376XXXXXXXX",
+    
+    admin_title: "Connexion Admin",
+    admin_name_label: "Nom de l'admin",
+    admin_key_label: "Clé d'accès",
+    admin_login_btn: "Se connecter",
+    admin_cancel: "Annuler",
+    admin_back: "Retour",
+    ph_admin_name: "Nom Admin",
+    ph_admin_key: "Clé d'accès",
+    admin_invalid_key: "Clé d'accès invalide."
+  },
+  en: {
+    tab_login: "Login", tab_signup: "Sign up",
+    welcome_back: "Welcome back!",
+    label_email: "Email", label_password: "Password", label_name: "Full name",
+    label_whatsapp: "WhatsApp (phone)", label_selfie: "Photo (selfie)", label_doc: "ID document (CNI / Passport)",
+    login_as: "Login as:",
+    btn_investor: "Investor", btn_project: "Project owner", btn_admin: "Admin",
+    tab_investor: "Investor", tab_project: "Project owner",
+    signup_investor_title: "Become an Investor", signup_project_title: "Become a Project Owner",
+    create_investor: "Create VIP account", verify_btn: "Verify my identity", create_project: "Create account",
+    label_confirm: "Confirm",
+    ph_email: "your@email.com",
+    ph_password: "Password",
+    ph_confirm: "Confirm password",
+    ph_name: "First Last",
+    ph_whatsapp: "+2376XXXXXXXX",
+    
+    admin_title: "Admin Login",
+    admin_name_label: "Admin name",
+    admin_key_label: "Access key",
+    admin_login_btn: "Sign in",
+    admin_cancel: "Cancel",
+    admin_back: "Back",
+    ph_admin_name: "Admin name",
+    ph_admin_key: "Access key",
+    admin_invalid_key: "Invalid access key."
+  }
+};
+
+let pageLang = localStorage.getItem('lang') || 'fr';
+function applyPageTranslations(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(translationsPage[pageLang] && translationsPage[pageLang][key]) el.innerText = translationsPage[pageLang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-placeholder');
+    if(translationsPage[pageLang] && translationsPage[pageLang][key]) el.placeholder = translationsPage[pageLang][key];
+  });
+  const langBtn = document.getElementById('page-lang-btn'); if(langBtn) langBtn.innerText = pageLang.toUpperCase();
+}
+function toggleLangPage(){
+  pageLang = pageLang === 'fr' ? 'en' : 'fr';
+  localStorage.setItem('lang', pageLang);
+  applyPageTranslations();
+}
+function toggleThemePage(){
+  const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', current);
+  localStorage.setItem('theme', current);
+  document.getElementById('page-theme-btn').innerText = current === 'dark' ? '◑' : '◐';
+}
+
+function switchTab(tab){
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  const items = document.querySelectorAll('.auth-tab');
+  items.forEach(it => { 
+    
+    if(tab === 'login' && it.getAttribute('data-i18n') === 'tab_login') it.classList.add('active');
+    if(tab === 'signup' && it.getAttribute('data-i18n') === 'tab_signup') it.classList.add('active');
+  });
+  if(tab === 'login'){ document.getElementById('loginForm').classList.remove('hidden'); document.getElementById('signupForm').classList.add('hidden'); }
+  else { document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); }
+}
+
+function toggleSignupRole(role){
+  document.getElementById('signupInvestor').classList.add('hidden');
+  document.getElementById('signupProject').classList.add('hidden');
+  if(role === 'investor') document.getElementById('signupInvestor').classList.remove('hidden');
+  else document.getElementById('signupProject').classList.remove('hidden');
+}
+
+
+function showAdminLogin(){
+  document.getElementById('adminPanel').classList.remove('hidden');
+  document.getElementById('adminPanel').setAttribute('aria-hidden','false');
+
+  document.getElementById('roleRow').style.display = 'none';
+}
+function hideAdminLogin(){
+  document.getElementById('adminPanel').classList.add('hidden');
+  document.getElementById('adminPanel').setAttribute('aria-hidden','true');
+  document.getElementById('roleRow').style.display = 'flex';
+}
+function cancelAdmin(){ hideAdminLogin(); }
+
+function showAdminNotice(msg, type = 'error') {
+  const el = document.getElementById('adminNotice');
+  if(!el) { alert(msg); return; }
+  el.className = 'admin-notice show ' + (type === 'error' ? 'error' : 'success');
+  el.innerText = msg;
+  el.setAttribute('aria-hidden','false');
+
+  const timeout = (type === 'success') ? 900 : 3000;
+  setTimeout(() => { el.className = 'admin-notice'; el.setAttribute('aria-hidden','true'); }, timeout);
+}
+
+function handleAdminLogin(){
+  const name = document.getElementById('admin-name').value.trim();
+  const key = document.getElementById('admin-key').value.trim();
+  if(!name || !key){
+    showAdminNotice(pageLang === 'fr' ? 'Veuillez remplir le nom et la clé.' : 'Please fill name and key.', 'error');
+    return;
+  }
+  const TEST_KEY = 'admin123';
+  if(key === TEST_KEY){
+    showAdminNotice(pageLang === 'fr' ? 'Connexion réussie. Redirection...' : 'Signed in. Redirecting...', 'success');
+    setTimeout(()=>{
+      const sessionObj = { role: 'admin', name, id: Date.now() };
+      localStorage.setItem('userSession', JSON.stringify(sessionObj));
+      window.location.href = 'admin.html';
+    }, 700);
+  } else {
+    showAdminNotice(translationsPage[pageLang].admin_invalid_key || (pageLang === 'fr' ? 'Clé d\'accès invalide.' : 'Invalid access key.'), 'error');
+
+    const k = document.getElementById('admin-key');
+    if(k){ k.focus(); k.select(); }
+  }
+}
+
+function handleVerify(role){
+  const name = document.getElementById('project-name')?.value?.trim();
+  const email = document.getElementById('project-email')?.value?.trim();
+  const whatsapp = document.getElementById('project-whatsapp')?.value?.trim();
+  const selfie = document.getElementById('project-selfie')?.files?.[0];
+  const doc = document.getElementById('project-doc')?.files?.[0];
+  if(!name || !email || !whatsapp || !selfie || !doc){ alert(translationsPage[pageLang].verify_alert || "Remplissez tous les champs obligatoires."); return; }
+  alert("Code de vérification envoyé (test: 1234)");
+  const code = prompt("Entrez le code reçu :");
+  if(code === '1234'){
+    const pending = { name, email, whatsapp, verifiedAt: Date.now() };
+    localStorage.setItem('pendingProjectSignup', JSON.stringify(pending));
+    document.getElementById('signupVerifyProject').classList.add('hidden');
+    document.getElementById('signupCredentialsProject').classList.remove('hidden');
+  } else alert("Code incorrect");
+}
+
+function submitInvestorSignup(){
+  const name = document.getElementById('inv-name').value.trim();
+  const email = document.getElementById('inv-email').value.trim();
+  const phone = document.getElementById('inv-phone').value.trim();
+  const photo = document.getElementById('inv-photo').files[0];
+  const doc = document.getElementById('inv-doc').files[0];
+  if(!name||!email||!phone||!photo||!doc){ alert("Remplissez tous les champs obligatoires"); return; }
+  const users = JSON.parse(localStorage.getItem('cf_users_v1')||'[]');
+  const user = { id:Date.now(), name, email, phone, role:'investor', verified:false };
+  users.push(user); localStorage.setItem('cf_users_v1', JSON.stringify(users));
+  localStorage.setItem('prefillLogin', JSON.stringify({ email }));
+  alert("Demande reçue — nous vérifions vos documents. Connectez-vous.");
+  window.location.href = 'auth.html';
+}
+
+function handleSignup(role){
+  if(role !== 'project'){ alert('Type non supporté'); return; }
+  const pass = document.getElementById('project-signup-password').value || '';
+  const passc = document.getElementById('project-signup-confirm').value || '';
+  if(!pass || pass !== passc){ alert('Les mots de passe sont vides ou ne correspondent pas.'); return; }
+  const pending = JSON.parse(localStorage.getItem('pendingProjectSignup') || '{}');
+  const user = {
+    id: Date.now(),
+    role: 'project',
+    name: pending.name || 'Porteur',
+    email: pending.email || '',
+    phone: pending.whatsapp || '',
+    createdAt: Date.now()
+  };
+  const users = JSON.parse(localStorage.getItem('cf_users_v1')||'[]');
+  users.push(user); localStorage.setItem('cf_users_v1', JSON.stringify(users));
+  localStorage.setItem('prefillLogin', JSON.stringify({ email: user.email }));
+  alert("Compte créé avec succès ! Connectez-vous.");
+  window.location.href = 'auth.html';
+}
+
+function handleLogin(role){
+  const emailEl = document.getElementById('login-email');
+  const passEl = document.getElementById('login-pass');
+  const sessionObj = { role, name: role==='investor' ? 'Investisseur' : role==='project' ? 'Porteur' : 'Admin', id: Date.now() };
+  localStorage.setItem('userSession', JSON.stringify(sessionObj));
+  if(role === 'admin') window.location.href = 'admin.html';
+  else if(role === 'project') window.location.href = 'porteur-dashboard.html';
+  else window.location.href = 'investor.html';
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+  pageLang = localStorage.getItem('lang') || pageLang;
+  applyPageTranslations();
+  const prefill = JSON.parse(localStorage.getItem('prefillLogin') || 'null');
+  if(prefill && prefill.email){
+    switchTab('login');
+    document.getElementById('login-email').value = prefill.email;
+    localStorage.removeItem('prefillLogin');
+  }
+});
+</script>
+</body>
+</html>

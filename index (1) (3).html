@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowd-Invest | Investissez au Cameroun</title>
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://crowd-funding-flax-theta.vercel.app/">
+<meta property="og:title" content="Crowd-Invest">
+<meta property="og:description" content="Plateforme de financement participatif pour soutenir des projets innovants.">
+<meta property="og:image" content="https://crowd-funding-flax-theta.vercel.app/favicon.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<link rel="image_src" href="https://crowd-funding-flax-theta.vercel.app/favicon.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Crowd-Invest">
+<meta name="twitter:description" content="Plateforme de financement participatif pour soutenir des projets innovants.">
+<meta name="twitter:image" content="https://crowd-funding-flax-theta.vercel.app/favicon.png">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    
+  <style>
+      .footer-brand-pill {
+        display:flex;
+        align-items:center;
+        gap:12px;
+        background: linear-gradient(180deg, rgba(173,237,240,0.09), rgba(173,237,240,0.03));
+        padding:10px 14px;
+        border-radius:28px;
+        max-width:420px;
+        width:100%;
+        box-sizing:border-box;
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255,255,255,0.03);
+      }
+      .footer-brand-pill img {
+        width:44px;
+        height:44px;
+        border-radius:8px;
+        object-fit:cover;
+        flex-shrink:0;
+      }
+      .footer-brand-pill .brand-text {
+        display:flex;
+        flex-direction:column;
+      }
+      .footer-brand-pill .brand-text .title {
+        font-weight:900;
+        color:var(--primary);
+        line-height:1;
+        letter-spacing:0.2px;
+      }
+      .footer-brand-pill .brand-text .subtitle {
+        font-size:0.9rem;
+        opacity:0.85;
+        margin-top:2px;
+      }
+
+      @media (max-width:800px) {
+        .footer-grid { gap:18px; }
+        .footer-brand-pill { margin: 0 auto 8px auto; }
+      }
+    </style>
+</head>
+<body>
+    <div class="liquid-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <header class="glass-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+  <video src="logo.mp4" autoplay loop muted playsinline class="site-logo"></video>
+  <div style="display:flex;flex-direction:column;">
+    <div style="font-weight:900; color:var(--primary);">CROWD-INVEST</div>
+    <div style="font-size:0.75rem; opacity:0.75;">Investissez dans le Cameroun de Demain</div>
+  </div>
+</div>
+        <div class="header-actions">
+    <button id="lang-btn" onclick="toggleLang()" class="glass-btn">FR</button>
+    <button onclick="toggleTheme()" class="glass-btn"><i data-lucide="sun-moon"></i></button>
+</div>
+    </header>
+
+    <main class="container">
+        <section class="hero text-center" style="padding: 60px 0;">
+            <h1 style="font-size: 3.5rem; margin-bottom: 20px;" data-i18n="hero_title">Investissez dans le Cameroun de Demain</h1>
+            <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 40px;" data-i18n="hero_subtitle">Plateforme de crowdfunding participatif nouvelle génération.</p>
+            <div style="display: flex; gap: 20px; justify-content: center;">
+                <a href="submission.html" class="btn-main" data-i18n="cta_project">Lancer un Projet</a>
+                <a href="#projets" class="glass-panel" style="text-decoration: none; color: var(--text); padding: 12px 30px; border-radius: 14px;" data-i18n="cta_discover">Découvrir</a>
+            </div>
+            <div style="margin-top:18px; text-align:center;">
+  <button class="glass-btn" onclick="goToAuth()" style="padding:10px 18px;" data-i18n="auth_button"><i data-lucide="user"></i> Log in / Sign up</button>
+</div>
+        </section>
+
+        <section id="projets" class="mt-20">
+            <h2 class="mb-20" data-i18n="popular_projects">Projets à la Une</h2>
+            
+            <div id="projects" class="projects-grid">
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-brand-pill" role="banner" aria-label="Brand Crowd-Invest">
+        <img src="logo.jpg" alt="Crowd-Invest logo">
+        <div class="brand-text">
+          <div class="title">CROWD-INVEST</div>
+          <div class="subtitle" data-i18n="footer_desc">Le futur de l'investissement participatif au Cameroun.</div>
+        </div>
+      </div>
+
+      <p style="font-size:0.85rem; opacity:0.7; margin-top:12px;" data-i18n="footer_tagline">Sécurisé, transparent et local-first.</p>
+
+      <div class="social-links" style="margin-top:12px;">
+        <a href="https://t.me/tonchannel" aria-label="Telegram" target="_blank" class="social-icon">
+<i data-lucide="message-circle"></i>
+        </a>
+
+        <a href="https://wa.me/2376XXXXXXXX" aria-label="WhatsApp" target="_blank" class="social-icon">
+<i data-lucide="message-square"></i>
+        </a>
+
+        <a href="https://github.com/tonprofile" aria-label="GitHub" target="_blank" class="social-icon">
+<i data-lucide="github"></i>
+        </a>
+
+        <a href="https://twitter.com/toncompte" aria-label="X" target="_blank" class="social-icon">
+<i data-lucide="twitter"></i>
+        </a>
+
+        <a href="https://instagram.com" aria-label="Instagram" target="_blank" class="social-icon">
+<i data-lucide="instagram"></i>
+        </a>
+
+        <a href="https://facebook.com" aria-label="Facebook" target="_blank" class="social-icon">
+<i data-lucide="facebook"></i>
+        </a>
+
+        <a href="https://discord.com" aria-label="Discord" target="_blank" class="social-icon">
+<i data-lucide="discord"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="quick_links">Accès Rapides</h4>
+      <ul>
+        <li><a href="index.html" data-i18n="home">Accueil</a></li>
+        <li><a href="investor.html" data-i18n="invest">Investir</a></li>        
+        <li><a href="submission.html" data-i18n="launch_project">Lancer un projet</a></li>
+        <li><a href="projects-sucess.html" data-i18n="successful_projects">Projets réussis</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="good_to_know">Bon à savoir</h4>
+      <ul>
+        <li><a href="how-it-works.html" data-i18n="how_it_works">Comment ça marche ?</a></li>
+        <li><a href="terms.html" data-i18n="terms">Conditions d’utilisation</a></li>
+        <li><a href="privacy.html" data-i18n="privacy">Politique de confidentialité</a></li>
+        <li><a href="faq.html" data-i18n="faq">F.A.Q</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="other_services">Autres services</h4>
+      <ul>
+        <li><a href="services.html#company" data-i18n="our_company">Notre entreprise "WEMOVE"</a></li>
+        <li><a href="services.html#bot" data-i18n="bot">Bot Development</a></li>
+        <li><a href="services.html#market" data-i18n="market">Online Market</a></li>
+        <li><a href="services.html#cv" data-i18n="cv">CV Host</a></li>
+        <li><a href="services.html#flyers" data-i18n="flyers">Flyers Supply</a></li>
+        <li><a href="services.html#followup" data-i18n="followup">Project Follow-up</a></li>
+      </ul>
+
+      <div style="margin-top:12px;">
+        <div style="font-size:0.72rem; opacity:0.8; margin-bottom:8px;" data-i18n="accepted_payments">PAIEMENTS ACCEPTÉS</div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+      
+<img data-sources='["https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg","https://via.placeholder.com/90x28?text=Visa"]' class="pay-logo" alt="Visa">
+<img data-sources='["https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg","https://via.placeholder.com/90x28?text=Mastercard"]' class="pay-logo" alt="Mastercard">
+<img data-sources='["https://cryptologos.cc/logos/binance-coin-bnb-logo.svg","https://via.placeholder.com/90x28?text=Binance"]' class="pay-logo" alt="Binance Pay">
+
+<img
+  src="https://cdn.simpleicons.org/orange/FF7900"
+  class="pay-logo"
+  alt="Orange Money"
+>
+<svg class="pay-logo" viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" aria-label="MTN MoMo">
+  <rect width="120" height="40" rx="6" fill="#FFCB05"/>
+  <text x="60" y="26" text-anchor="middle" font-size="18" fill="#000" font-family="Arial Black, Arial, sans-serif" font-weight="900">
+    MTN
+  </text>
+</svg>
+        </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom" style="width:100%; text-align:center;">&copy; 2026 Crowd Funding. Tous droits réservés.</div>
+</footer>
+    <div id="cookie-banner" class="cookie-banner hidden">
+        <p style="font-size:0.9rem;" data-i18n="cookie_text">Nous utilisons des cookies pour optimiser votre expérience d'investissement.</p>
+        <div style="display:flex; gap:10px;">
+            <button class="btn-main" style="padding:8px 15px;" onclick="closeCookies()" data-i18n="accept">Accepter</button>
+            <button class="glass-panel" style="padding:8px 15px; border-radius:12px;" onclick="closeCookies()" data-i18n="decline">Refuser</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        window.texts = {
+            fr: {
+                hero_title: 'Investissez dans le Cameroun de Demain',
+                hero_subtitle: 'Plateforme de crowdfunding participatif nouvelle génération.',
+                cta_project: 'Lancer un Projet',
+                cta_discover: 'Découvrir',
+                popular_projects: 'Projets à la Une',
+                auth_button: '🔐 Se connecter / S’inscrire',
+                footer_desc: 'Le futur de l\'investissement participatif au Cameroun.',
+                footer_tagline: 'Sécurisé, transparent et local-first.',
+                quick_links: 'Accès Rapides',
+                home: 'Accueil',
+                invest: 'Investir',
+                launch_project: 'Lancer un projet',
+                successful_projects: 'Projets réussis',
+                good_to_know: 'Bon à savoir',
+                how_it_works: 'Comment ça marche ?',
+                terms: 'Conditions d’utilisation',
+                privacy: 'Politique de confidentialité',
+                faq: 'F.A.Q',
+                other_services: 'Autres services',
+                our_company: 'Notre entreprise "WEMOVE"',
+                bot: 'Développement de Bots',
+                market: 'Marché en ligne',
+                cv: 'Hébergement de CV',
+                flyers: 'Fourniture de Flyers',
+                followup: 'Suivi de Projets',
+                accepted_payments: 'PAIEMENTS ACCEPTÉS',
+                copyright: '&copy; 2026 Crowd Funding. Tous droits réservés.',  
+                cookie_text: 'Nous utilisons des cookies pour optimiser votre expérience d\'investissement.',
+                accept: 'Accepter',
+                decline: 'Refuser'
+            },
+            en: {
+                hero_title: 'Invest in Tomorrow\'s Cameroon',
+                hero_subtitle: 'New generation participatory crowdfunding platform.',
+                cta_project: 'Launch a Project',
+                cta_discover: 'Discover',
+                popular_projects: 'Featured Projects',
+                auth_button: '🔐 Log in / Sign up',
+                footer_desc: 'The future of participatory investment in Cameroon.',
+                footer_tagline: 'Secure, transparent and local-first.',
+                quick_links: 'Quick Access',
+                home: 'Home',
+                invest: 'Invest',
+                launch_project: 'Launch a project',
+                successful_projects: 'Successful projects',
+                good_to_know: 'Good to know',
+                how_it_works: 'How it works?',
+                terms: 'Terms of use',
+                privacy: 'Privacy policy',
+                faq: 'FAQ',
+                other_services: 'Other services',
+                our_company: 'Our company "WEMOVE"',
+                bot: 'Bot Development',
+                market: 'Online Market',
+                cv: 'CV Host',
+                flyers: 'Flyers Supply',
+                followup: 'Project Follow-up',
+                accepted_payments: 'ACCEPTED PAYMENTS',
+                copyright: '&copy; 2026 Crowd Funding. All rights reserved.',  
+                cookie_text: 'We use cookies to optimize your investment experience.',
+                accept: 'Accept',
+                decline: 'Decline'
+            }
+        };
+
+        function showMoreProjects() {
+            document.getElementById('extra-project').classList.remove('hidden');
+            document.getElementById('load-more').style.display = 'none';
+        }
+        function closeCookies() { document.getElementById('cookie-banner').classList.add('hidden'); }
+        window.onload = () => { setTimeout(() => { document.getElementById('cookie-banner').classList.remove('hidden'); }, 2000); }
+        
+        function checkAccess(url) {
+            const session = localStorage.getItem('userSession');
+            if(!session) { window.location.href = 'auth.html'; }
+            else { window.location.href = url; }
+        }
+        
+        function goToAuth() {
+            location.href = 'auth.html';
+        }
+        
+(function(){
+  document.querySelectorAll('img[data-sources]').forEach(img=>{
+    let sources;
+    try{ sources = JSON.parse(img.getAttribute('data-sources')); } catch(e){ sources = [img.getAttribute('src')||'']; }
+    let idx = 0;
+
+    img.addEventListener('error', function tryNext(){
+      if(idx >= sources.length) {
+        const initials = (img.alt || 'LOGO').split(' ').map(w=>w[0]).slice(0,3).join('').toUpperCase();
+        const bg = '#eee';
+        const fg = '#222';
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='120' height='36'><rect width='100%' height='100%' fill='${bg}' rx='6'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='14' fill='${fg}'>${initials}</text></svg>`;
+        img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+        img.removeEventListener('error', tryNext);
+        return;
+      }
+      img.src = sources[idx++];
+    });
+
+    img.dispatchEvent(new Event('error'));
+  });
+})();
+
+        
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

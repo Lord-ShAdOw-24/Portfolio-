@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="project_details_title">Détails du Projet | Crowd-Invest</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .project-header { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .star-rating { color: var(--accent); font-size: 1.5rem; cursor: pointer; }
+        .team-section { display: flex; gap: 20px; margin-top: 20px; }
+        .team-member { text-align: center; }
+        .team-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
+        .chat-box { height: 400px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 20px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 15px; }
+        .msg { max-width: 80px; padding: 12px; border-radius: 15px; position: relative; max-width: 80%; }
+        .msg-left { align-self: flex-start; background: var(--glass-border); }
+        .msg-right { align-self: flex-end; background: var(--primary); color: #000; font-weight: 500; }
+        .msg-admin { align-self: center; background: #333; color: #aaa; font-size: 0.8rem; }
+        .msg-actions { position: absolute; top: 5px; right: 10px; cursor: pointer; opacity: 0.5; }
+        .reply-tag { font-size: 0.7rem; display: block; margin-bottom: 5px; opacity: 0.7; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <header class="glass-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+  <img src="logo.jpg" alt="Crowd-Invest" class="site-logo">
+  <div style="display:flex;flex-direction:column;">
+    <div style="font-weight:900; color:var(--primary);">CROWD-INVEST</div>
+    <div style="font-size:0.75rem; opacity:0.75;" data-i18n="header_tagline">Investissez dans le Cameroun de Demain</div>
+  </div>
+</div>
+        <div class="header-actions">
+    <button id="lang-btn" onclick="toggleLang()" class="glass-btn">FR</button>
+    <button onclick="toggleTheme()" class="glass-btn">◑</button>
+</div>
+    </header>
+
+    <main class="container">
+<div class="glass-panel">
+
+  <div class="owner-panel">
+    <img id="ownerAvatar" class="owner-avatar" src="https://i.pravatar.cc/150?u=owner" alt="Initiateur">
+    <div class="owner-info">
+      <div class="owner-name" id="ownerName">Nom Initiateur</div>
+      <div class="owner-sub" id="ownerAge">Age • Ville</div>
+      <div style="opacity:0.8; font-size:0.95rem;" id="ownerRole">Fonction / Titre</div>
+    </div>
+  </div>
+
+  <div id="projectMedia" class="media-slider" style="margin-top:18px;">
+    <div class="media-track" id="mediaTrack"></div>
+
+    <div class="slider-controls">
+      <button class="slider-left" id="sliderPrev">‹</button>
+      <div class="slider-dots" id="sliderDots"></div>
+      <button class="slider-right" id="sliderNext">›</button>
+    </div>
+  </div>
+
+  <h2 id="projectTitle">Titre du Projet</h2>
+  <p id="projectShortDesc" style="opacity:0.85; margin-top:6px;">Description courte</p>
+
+  <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+    <button class="btn-main" onclick="quickSupport(currentProjectId)" data-i18n="contribute_button">Contribuer</button>
+    <a class="glass-panel" id="visitMediaBtn" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none;" data-i18n="view_media">Voir médias</a>
+  </div>
+
+  <div style="margin-top:12px;" class="progress-container">
+    <div id="projectRaisedBar" class="progress-bar"></div>
+  </div>
+
+  <div class="progress-label">
+    <div id="projectRaisedLabel">0 FCFA collectés sur 0 FCFA</div>
+    <div id="projectPercent">0%</div>
+  </div>
+
+  <div id="mediaScroll" style="display:flex; gap:10px; margin-top:14px; overflow:auto;"></div>
+
+  <div style="margin-top:14px;">
+    <h4 data-i18n="full_description">Description complète</h4>
+    <div id="projectDesc" style="line-height:1.6;"></div>
+  </div>
+
+</div>
+  <div style="display:flex; flex-direction:column; gap:16px;">
+    <div class="glass-panel reviews-carousel-wrap">
+      <h3 data-i18n="contributor_reviews">Avis des contributeurs</h3>
+      <div class="reviews-carousel" id="reviewsCarousel" tabindex="0" aria-label="Avis contributeurs">
+       
+      </div>
+      <div class="carousel-controls">
+        <button id="seeMoreBtn" class="btn-see-more" data-i18n="see_more">Voir plus</button>
+      </div>
+    </div>
+
+    <div class="glass-panel">
+            <h3 data-i18n="discussion_space">Espace de Discussion</h3>
+            <div class="chat-box" id="chatBox">
+                <div class="msg msg-left">
+                    <span class="msg-actions">⋮</span>
+                    <span data-i18n="sample_question">Quel est le retour sur investissement prévu ?</span>
+                </div>
+                <div class="msg msg-right">
+                    <span class="reply-tag" data-i18n="in_reply_to">En réponse à: Quel est le retour...</span>
+                    <span data-i18n="sample_answer">Nous prévoyons 15% après 18 mois d'exploitation.</span>
+                </div>
+                <div class="msg msg-admin" data-i18n="deleted_message">Message supprimé par l'administrateur</div>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="chatInput" data-i18n-placeholder="ask_question" placeholder="Posez une question..." style="margin-bottom:0;">
+                <button class="btn-main" onclick="chatSend()" data-i18n="send">Envoyer</button>
+            </div>
+        </div>
+  </div>
+</div>
+        </div>
+
+    </main>
+     <footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="logo.jpg" alt="Crowd-Invest" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">
+        <div>
+          <div style="font-weight:900;color:var(--primary);">CROWD-INVEST</div>
+          <div style="font-size:0.85rem;opacity:0.75;" data-i18n="footer_desc">Le futur de l'investissement participatif au Cameroun.</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; opacity:0.7; margin-top:12px;" data-i18n="footer_tagline">Sécurisé, transparent et local-first.</p>
+
+      <div class="social-links" style="margin-top:12px;">
+        <a href="https://t.me/tonchannel" aria-label="Telegram" target="_blank" class="social-icon">
+         
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 2L2 12.5 9.5 15 12 22 22 2z" fill="currentColor"/></svg>
+        </a>
+
+        <a href="https://twitter.com/toncompte" aria-label="X" target="_blank" class="social-icon">
+        
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9 9 0 0 1-2.86 1.1A4.52 4.52 0 0 0 12 4.77 12.83 12.83 0 0 1 1.67 2.15 4.5 4.5 0 0 0 3.08 8.6 4.42 4.42 0 0 1 .9 7.9v.06A4.52 4.52 0 0 0 4.5 12.9a4.52 4.52 0 0 1-2 .08 4.52 4.52 0 0 0 4.22 3.13A9.06 9.06 0 0 1 0 19.54 12.8 12.8 0 0 0 6.92 21c8.28 0 12.82-6.86 12.82-12.82 0-.2 0-.39-.01-.58A9.2 9.2 0 0 0 23 3z" fill="currentColor"/></svg>
+        </a>
+
+        <a href="https://github.com/tonprofile" aria-label="GitHub" target="_blank" class="social-icon">
+          
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.78-1.34-1.78-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.48.99.11-.78.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.16 0 0 1-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.29-1.54 3.29-1.22 3.29-1.22.66 1.64.24 2.86.12 3.16.77.83 1.24 1.9 1.24 3.19 0 4.58-2.8 5.6-5.47 5.9.43.36.82 1.08.82 2.18v3.23c0 .32.22.7.83.58A12 12 0 0 0 12 .5z" fill="currentColor"/></svg>
+        </a>
+
+        <a href="https://wa.me/2376XXXXXXXX" aria-label="WhatsApp" target="_blank" class="social-icon">
+         
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.52 3.48A11.81 11.81 0 0 0 12 .25 11.8 11.8 0 0 0 3.48 3.5 11.79 11.79 0 0 0 .25 12c0 2.04.54 3.95 1.57 5.6L.01 24l6.7-1.77A11.8 11.8 0 0 0 12 23.75c2.04 0 3.95-.54 5.6-1.57A11.82 11.82 0 0 0 23.75 12 11.8 11.8 0 0 0 20.52 3.48zM12 21.5c-1.87 0-3.68-.5-5.25-1.4l-.38-.23-3.98 1.05 1.05-3.88-.24-.39A9.6 9.6 0 0 1 2.5 12c0-5.2 4.22-9.42 9.5-9.42 2.53 0 4.9.98 6.7 2.78 1.8 1.8 2.78 4.17 2.78 6.7 0 5.27-4.22 9.5-9.5 9.5z" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="quick_links">Accès Rapides</h4>
+      <ul>
+        <li><a href="index.html" data-i18n="home">Accueil</a></li>
+        <li><a href="investor.html" data-i18n="invest">Investir</a>        
+        <li><a href="submission.html" data-i18n="launch_project">Lancer un projet</a></li>
+        <li><a href="projects-sucess.html" data-i18n="successful_projects">Projets réussis</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="good_to_know">Bon à savoir</h4>
+      <ul>
+        <li><a href="how-it-works.html" data-i18n="how_it_works">Comment ça marche ?</a></li>
+        <li><a href="terms.html" data-i18n="terms">Conditions d'utilisation</a></li>
+        <li><a href="privacy.html" data-i18n="privacy">Politique de confidentialité</a></li>
+        <li><a href="faq.html" data-i18n="faq">F.A.Q</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="our_services">Nos services</h4>
+      <ul>
+        <li><a href="services.html#company" data-i18n="company">Notre entreprise</a></li>
+        <li><a href="services.html#bot" data-i18n="bot">Bot Development</a></li>
+        <li><a href="services.html#market" data-i18n="market">Online Market</a></li>
+        <li><a href="services.html#cv" data-i18n="cv">CV Host</a></li>
+        <li><a href="services.html#flyers" data-i18n="flyers">Flyers Supply</a></li>
+        <li><a href="services.html#followup" data-i18n="followup">Project Follow-up</a></li>
+      </ul>
+
+      <div style="margin-top:12px;">
+        <div style="font-size:0.72rem; opacity:0.8; margin-bottom:8px;" data-i18n="accepted_payments">PAIEMENTS ACCEPTÉS</div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+<img data-sources='["https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg","https://via.placeholder.com/90x28?text=Visa"]' class="pay-logo" alt="Visa">
+<img data-sources='["https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg","https://via.placeholder.com/90x28?text=Mastercard"]' class="pay-logo" alt="Mastercard">
+<img data-sources='["https://cryptologos.cc/logos/binance-coin-bnb-logo.svg","https://via.placeholder.com/90x28?text=Binance"]' class="pay-logo" alt="Binance Pay">
+
+<img
+  src="https://cdn.simpleicons.org/orange/FF7900"
+  class="pay-logo"
+  alt="Orange Money"
+>
+<svg class="pay-logo" viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" aria-label="MTN MoMo">
+  <rect width="120" height="40" rx="6" fill="#FFCB05"/>
+  <text x="60" y="26" text-anchor="middle" font-size="18" fill="#000" font-family="Arial Black, Arial, sans-serif" font-weight="900">
+    MTN
+  </text>
+</svg>
+        </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom" >&copy; 2026 Crowd Funding. Tous droits réservés.</div>
+</footer>
+
+    <script src="main.js"></script>
+<script>
+(function(){
+  const FALLBACK = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80';
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      const img = en.target;
+      if(en.isIntersecting){
+        const src = img.dataset.src;
+        if(src){ img.src = src; img.removeAttribute('data-src'); }
+        io.unobserve(img);
+      }
+    });
+  }, { root: null, rootMargin: '200px', threshold: 0.01 });
+
+  window.initProjectMedia = function(projectId){
+    const proj = (typeof projects !== 'undefined') ? projects.find(p=>p.id==projectId) : null;
+    if(!proj){ console.warn('Project not found', projectId); return; }
+
+    const track = document.getElementById('mediaTrack');
+    const dots = document.getElementById('sliderDots');
+    const prevBtn = document.getElementById('sliderPrev');
+    const nextBtn = document.getElementById('sliderNext');
+    if(!track || !dots) return;
+
+    const slides = [];
+    if(Array.isArray(proj.images) && proj.images.length){
+      proj.images.forEach(url => slides.push({ type:'image', src:url }));
+    }
+    if(proj.video) slides.push({ type:'video', src:proj.video });
+
+    if(slides.length === 0) slides.push({ type:'image', src: FALLBACK });
+
+    track.innerHTML = '';
+    dots.innerHTML = '';
+    slides.forEach((s,i)=>{
+      const slide = document.createElement('div'); slide.className = 'slide';
+      const inner = document.createElement('div'); inner.className = 'media-inner';
+      
+      const blur = document.createElement('div'); blur.className = 'blur-placeholder';
+      blur.style.background = `linear-gradient(90deg, rgba(0,0,0,0.08), rgba(0,0,0,0.02))`;
+      inner.appendChild(blur);
+
+      if(s.type === 'image'){
+        const img = document.createElement('img');
+        img.alt = proj.title && proj.title[currentLang] ? proj.title[currentLang] : 'project image';
+        img.dataset.src = s.src; 
+        img.loading = 'lazy';
+        img.className = 'slide-img';
+        
+        img.onload = () => { blur.style.opacity = '0'; setTimeout(()=> blur.remove(),600); };
+
+        img.onerror = () => { img.src = FALLBACK; };
+        inner.appendChild(img);
+        io.observe(img);
+      } else if(s.type === 'video'){
+        const vid = document.createElement('video');
+        vid.controls = true;
+        vid.preload = 'metadata';
+        vid.setAttribute('playsinline','');
+        const source = document.createElement('source');
+        source.dataset.src = s.src;
+        vid.appendChild(source);
+       
+        vid.onloadeddata = ()=> { blur.style.opacity='0'; setTimeout(()=> blur.remove(),600); };
+       
+        vid.onerror = ()=> { const poster = FALLBACK; vid.poster = poster; };
+        inner.appendChild(vid);
+     
+        io.observe(vid);
+    
+        io.observe(vid);
+      }
+      slide.appendChild(inner);
+      track.appendChild(slide);
+
+     
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i===0 ? ' active' : '');
+      dot.dataset.index = i;
+      dot.ariaLabel = `Go to slide ${i+1}`;
+      dots.appendChild(dot);
+      dot.addEventListener('click', ()=> goTo(i));
+    });
+
+    let idx = 0;
+    const total = slides.length;
+    let autoplayTimer = null;
+    function update(){
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      Array.from(dots.children).forEach((d,di)=> d.classList.toggle('active', di===idx));
+    }
+    function goTo(i){
+      idx = Math.max(0, Math.min(total-1, i));
+      update();
+      resetAutoplay();
+    }
+    prevBtn.onclick = ()=> goTo(idx - 1);
+    nextBtn.onclick = ()=> goTo(idx + 1);
+      
+    function startAutoplay(){
+      if(autoplayTimer || total < 2) return;
+      autoplayTimer = setInterval(()=> { idx = (idx + 1) % total; update(); }, 4000);
+    }
+    function stopAutoplay(){ if(autoplayTimer){ clearInterval(autoplayTimer); autoplayTimer = null; } }
+    function resetAutoplay(){ stopAutoplay(); startAutoplay(); }
+
+    const slider = document.getElementById('projectMedia');
+    if(slider){
+      slider.addEventListener('mouseenter', stopAutoplay);
+      slider.addEventListener('mouseleave', startAutoplay);
+    }
+
+    update();
+    startAutoplay();
+
+    const vidSources = track.querySelectorAll('video source[data-src]');
+    vidSources.forEach(srcEl=>{
+      const videoEl = srcEl.closest('video');
+      if(!videoEl) return;
+      const obs = new IntersectionObserver((entries, o)=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){
+            const data = srcEl.dataset.src;
+            if(data && !srcEl.src){
+              srcEl.src = data;
+              videoEl.load();
+            }
+            o.disconnect();
+          }
+        });
+      }, { rootMargin: '300px' });
+      obs.observe(videoEl);
+    });
+    // intersection handling sets source.src when in view9
+    setTimeout(()=> {
+      track.querySelectorAll('img').forEach(img=>{ if(!img.complete || img.naturalWidth===0) img.src = FALLBACK; });
+    }, 2000);
+  };
+   document.addEventListener('DOMContentLoaded', ()=>{
+    if(document.getElementById('mediaTrack')){
+      const qp = new URLSearchParams(location.search);
+      const id = qp.get('id') || document.body.dataset.projectId || null;
+      if(id) window.initProjectMedia(id);
+    }
+  });
+})();let currentProjectId = null;
+let carouselAutoTimer = null;
+let loadedReviewsCount = 0;
+const REVIEWS_BATCH = 10;
+const INITIAL_LOAD = 12;
+
+function readProjectsFromStorage(){
+  const p = JSON.parse(localStorage.getItem('cf_projects_v1') || 'null');
+  return p || [];
+}
+
+function renderProjectDetails(){
+  const qp = new URLSearchParams(location.search);
+  currentProjectId = qp.get('id') || localStorage.getItem('selectedProject');
+  const projects = readProjectsFromStorage();
+  const project = projects.find(x => x.id === currentProjectId) || projects[0] || null;
+  if(!project){
+    document.getElementById('projectTitle').innerText = window.texts[currentLang].project_not_found || 'Projet introuvable';
+    return;
+  }
+
+  const owner = project.owner || { name:'Initiateur Anonyme', age:'—', city:'—', role:'' , avatar: 'https://i.pravatar.cc/150?u=' + (project.id||Date.now()) };
+  document.getElementById('ownerAvatar').src = owner.avatar;
+  document.getElementById('ownerName').innerText = owner.name;
+  document.getElementById('ownerAge').innerText = (owner.age ? owner.age + ' ' + (window.texts[currentLang].years_old || 'ans') + ' • ' : '') + (owner.city || '');
+  document.getElementById('ownerRole').innerText = owner.role || '';
+
+  document.getElementById('projectTitle').innerText = project.title ? project.title[currentLang] : 'Projet';
+  document.getElementById('projectShortDesc').innerText = project.desc ? project.desc[currentLang] : '';
+  document.getElementById('projectDesc').innerHTML = project.longDesc || (project.desc ? project.desc[currentLang] : '');
+
+  const pct = Math.min(100, Math.round((project.raised / project.goal) * 100));
+  document.getElementById('projectRaisedLabel').innerText = (project.raised? Number(project.raised).toLocaleString('fr-FR') : '0') + ' FCFA ' + (window.texts[currentLang].raised_on || 'collectés sur') + ' ' + (project.goal? Number(project.goal).toLocaleString('fr-FR') : '0') + ' FCFA';
+  document.getElementById('projectPercent').innerText = pct + '%';
+  const bar = document.getElementById('projectRaisedBar');
+  if(bar){ bar.setAttribute('data-width', pct); bar.style.width = pct + '%'; }
+
+  const mediaWrap = document.getElementById('mediaScroll');
+  mediaWrap.innerHTML = '';
+  const imgs = project.images || [];
+  imgs.forEach(src=>{
+    const el = document.createElement('img');
+    el.src = src;
+    el.style.width = '120px'; el.style.height = '80px'; el.style.objectFit = 'cover';
+    el.style.borderRadius = '8px'; el.style.cursor='pointer';
+    el.addEventListener('click', ()=> openMediaViewer(src));
+    mediaWrap.appendChild(el);
+  });
+  if(project.video){
+    const v = document.createElement('div');
+    v.style.minWidth = '180px';
+    v.innerHTML = '<video style="width:180px;height:80px;object-fit:cover;border-radius:8px;" src="'+project.video+'" controls muted preload="metadata"></video>';
+    mediaWrap.appendChild(v);
+  }
+
+  loadedReviewsCount = 0;
+  renderReviewsCarousel(true);
+
+  renderChat(currentProjectId);
+
+function fetchReviews(projectId){
+  const all = JSON.parse(localStorage.getItem('cf_msgs_v1') || '[]');
+  return all.filter(m => m.projectId === projectId && m.type === 'review' && !m.deleted).sort((a,b)=>b.ts - a.ts);
+}
+
+function renderReviewsCarousel(firstLoad){
+  const carousel = document.getElementById('reviewsCarousel');
+  carousel.innerHTML = '';
+  const all = fetchReviews(currentProjectId);
+  const initial = Math.min(all.length, Math.max(INITIAL_LOAD, 4));
+  const toLoad = (loadedReviewsCount === 0) ? initial : Math.min(all.length, loadedReviewsCount);
+  if(firstLoad) loadedReviewsCount = initial;
+  const items = all.slice(0, loadedReviewsCount);
+
+  items.forEach(r =>{
+    const card = document.createElement('div'); card.className = 'review-card';
+    const avatar = document.createElement('img'); avatar.className='review-avatar';
+    avatar.src = r.photoData || 'https://i.pravatar.cc/150?u=rev'+r.id;
+    const name = document.createElement('div'); name.className='review-name'; name.innerText = r.displayName || window.texts[currentLang].anonymous_contributor || 'Contributeur anonyme';
+    const meta = document.createElement('div'); meta.className='review-meta'; meta.innerText = ((r.title||'') + (r.enterprise ? ' • '+r.enterprise : '')).trim();
+    const text = document.createElement('div'); text.className='review-text'; text.innerText = r.text || '';
+    card.appendChild(avatar); card.appendChild(name); if(meta.innerText) card.appendChild(meta); card.appendChild(text);
+    carousel.appendChild(card);
+  });
+
+  const allLen = all.length;
+  const seeBtn = document.getElementById('seeMoreBtn');
+  if(allLen > loadedReviewsCount) { seeBtn.style.display = 'inline-block'; }
+  else { seeBtn.style.display = 'none'; }
+  startAutoScroll();
+}
+document.addEventListener('click', (e)=>{
+  if(e.target && e.target.id === 'seeMoreBtn'){
+    const all = fetchReviews(currentProjectId);
+    const remaining = all.length - loadedReviewsCount;
+    const add = Math.min(remaining, REVIEWS_BATCH);
+    if(add <= 0) return;
+    loadedReviewsCount += add;
+    renderReviewsCarousel(false);
+    const carousel = document.getElementById('reviewsCarousel');
+    setTimeout(()=>{ carousel.scrollLeft = carousel.scrollWidth; }, 250);
+  }
+});
+function startAutoScroll(){
+  stopAutoScroll();
+  const carousel = document.getElementById('reviewsCarousel');
+  if(!carousel) return;
+  let direction = 1;
+  carousel.addEventListener('mouseenter', stopAutoScroll);
+  carousel.addEventListener('mouseleave', startAutoScroll);
+  carouselAutoTimer = setInterval(()=>{
+    const cardWidth = carousel.querySelector('.review-card') ? carousel.querySelector('.review-card').clientWidth + 16 : carousel.clientWidth / 4;
+    const max = carousel.scrollWidth - carousel.clientWidth;
+    if(max <= 0) return;
+    let next = carousel.scrollLeft + direction * cardWidth;
+    if(next >= max) { next = max; direction = -1; }
+    if(next <= 0) { next = 0; direction = 1; }
+    carousel.scrollTo({left: next, behavior:'smooth'});
+  }, 2800);
+}
+
+function stopAutoScroll(){
+  if(carouselAutoTimer) { clearInterval(carouselAutoTimer); carouselAutoTimer = null; }
+}
+
+function openMediaViewer(src){
+  const w = window.open('', '_blank');
+  w.document.write('<img src="'+src+'" style="max-width:100%;height:auto;">');
+}
+
+function renderChat(projectId){
+  const box = document.getElementById('chatBox'); if(!box) return;
+  box.innerHTML = '';
+  const all = JSON.parse(localStorage.getItem('cf_msgs_v1') || '[]');
+  const msgs = all.filter(m => m.projectId === projectId && m.type !== 'review' && !m.deleted).sort((a,b)=>a.ts - b.ts);
+  msgs.forEach(m=>{
+    const div = document.createElement('div'); div.className = 'msg ' + (m.role==='admin' ? 'msg-admin' : (m.role==='investor' ? 'msg-right' : 'msg-left'));
+    let header = '<div style="font-size:0.82rem; opacity:0.8; margin-bottom:6px;">' + (m.user || '') + '</div>';
+    div.innerHTML = header + '<div>' + (m.text || '') + '</div>';
+    box.appendChild(div);
+  });
+  box.scrollTop = box.scrollHeight;
+}
+
+function chatSend(){
+  const input = document.getElementById('chatInput'); if(!input) return;
+  const text = input.value.trim(); if(!text) return;
+  const session = JSON.parse(localStorage.getItem('userSession')||'null') || { role:'guest', name:'Invité' };
+  const m = { id: Date.now(), projectId: currentProjectId, user: session.name || session.role, role: session.role || 'guest', text, ts: Date.now() };
+  const msgs = JSON.parse(localStorage.getItem('cf_msgs_v1')||'[]'); msgs.push(m); localStorage.setItem('cf_msgs_v1', JSON.stringify(msgs));
+  input.value = '';
+  renderChat(currentProjectId);
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  renderProjectDetails();
+});
+
+let currentProjectId = null;
+document.addEventListener('DOMContentLoaded', ()=>{
+  const qp = new URLSearchParams(location.search);
+  currentProjectId = qp.get('id') || localStorage.getItem('selectedProject');
+  renderProjectDetails();
+});
+
+function submitReview(){
+  const text = document.getElementById('reviewText').value.trim();
+  const name = document.getElementById('reviewName').value.trim();
+  if(!text){ alert(window.texts[currentLang].write_review_alert || 'Veuillez écrire votre avis.'); return; }
+  const session = JSON.parse(localStorage.getItem('userSession')||'null');
+  const displayName = name || (session && session.name) || window.texts[currentLang].anonymous_investor || 'Investisseur anonyme';
+  const msg = { id:Date.now(), projectId:currentProjectId, type:'review', text, displayName, ts:Date.now() };
+  const msgs = JSON.parse(localStorage.getItem('cf_msgs_v1')||'[]'); msgs.push(msg); localStorage.setItem('cf_msgs_v1', JSON.stringify(msgs));
+  document.getElementById('reviewForm').style.display='none';
+  renderReviews(currentProjectId);
+}
+
+function chatSend(){
+  const text = document.getElementById('chatInput').value.trim();
+  if(!text) return;
+  sendMessage(currentProjectId, text);
+  document.getElementById('chatInput').value = '';
+}
+    </script>
+<script>
+  window.texts = {
+    fr: {
+      project_details_title: 'Détails du Projet | Croud-Invest',
+      header_tagline: 'Investissez dans le Cameroun de Demain',
+      contribute_button: 'Contribuer',
+      view_media: 'Voir médias',
+      full_description: 'Description complète',
+      contributor_reviews: 'Avis des contributeurs',
+      see_more: 'Voir plus',
+      discussion_space: 'Espace de Discussion',
+      sample_question: 'Quel est le retour sur investissement prévu ?',
+      in_reply_to: 'En réponse à: Quel est le retour...',
+      sample_answer: 'Nous prévoyons 15% après 18 mois d\'exploitation.',
+      deleted_message: 'Message supprimé par l\'administrateur',
+      ask_question: 'Posez une question...',
+      send: 'Envoyer',
+      raised_on: 'collectés sur',
+      years_old: 'ans',
+      anonymous_contributor: 'Contributeur anonyme',
+      project_not_found: 'Projet introuvable',
+      write_review_alert: 'Veuillez écrire votre avis.',
+      anonymous_investor: 'Investisseur anonyme',
+      footer_desc: 'Le futur de l\'investissement participatif au Cameroun.',
+      footer_tagline: 'Sécurisé, transparent et local-first.',
+      quick_links: 'Accès Rapides',
+      home: 'Accueil',
+      invest: 'Investir',
+      launch_project: 'Lancer un projet',
+      successful_projects: 'Projets réussis',
+      good_to_know: 'Bon à savoir',
+      how_it_works: 'Comment ça marche ?',
+      terms: 'Conditions d’utilisation',
+      privacy: 'Politique de confidentialité',
+      faq: 'F.A.Q',
+      our_services: 'Nos services',
+      company: 'Notre entreprise',
+      bot: 'Bot Development',
+      market: 'Online Market',
+      cv: 'CV Host',
+      flyers: 'Flyers Supply',
+      followup: 'Project Follow-up',
+      accepted_payments: 'PAIEMENTS ACCEPTÉS',
+      copyright: '&copy; 2026 Croud Funding. Tous droits réservés.'
+    },
+    en: {
+      project_details_title: 'Project Details | Croud-Invest',
+      header_tagline: 'Invest in Tomorrow\'s Cameroon',
+      contribute_button: 'Contribute',
+      view_media: 'View media',
+      full_description: 'Full Description',
+      contributor_reviews: 'Contributor Reviews',
+      see_more: 'See more',
+      discussion_space: 'Discussion Space',
+      sample_question: 'What is the expected return on investment?',
+      in_reply_to: 'In reply to: What is the expected...',
+      sample_answer: 'We forecast 15% after 18 months of operation.',
+      deleted_message: 'Message deleted by administrator',
+      ask_question: 'Ask a question...',
+      send: 'Send',
+      raised_on: 'raised out of',
+      years_old: 'years old',
+      anonymous_contributor: 'Anonymous Contributor',
+      project_not_found: 'Project not found',
+      write_review_alert: 'Please write your review.',
+      anonymous_investor: 'Anonymous Investor',
+      footer_desc: 'The future of participatory investment in Cameroon.',
+      footer_tagline: 'Secure, transparent and local-first.',
+      quick_links: 'Quick Access',
+      home: 'Home',
+      invest: 'Invest',
+      launch_project: 'Launch a project',
+      successful_projects: 'Successful projects',
+      good_to_know: 'Good to know',
+      how_it_works: 'How it works?',
+      terms: 'Terms of use',
+      privacy: 'Privacy policy',
+      faq: 'FAQ',
+      our_services: 'Our services',
+      company: 'Our company',
+      bot: 'Bot Development',
+      market: 'Online Market',
+      cv: 'CV Host',
+      flyers: 'Flyers Supply',
+      followup: 'Project Follow-up',
+      accepted_payments: 'ACCEPTED PAYMENTS',
+      copyright: '&copy; 2026 Croud Funding. All rights reserved.'
+    }
+  };
+
+  // Ajout pour rafraîchir la page après changement de langue
+  window.toggleLang = function() {
+    currentLang = (currentLang === 'fr') ? 'en' : 'fr';
+    localStorage.setItem('lang', currentLang);
+    applyLanguage(currentLang);
+    renderProjectDetails();  // Rafraîchir les détails du projet avec la nouvelle langue
+  };
+
+  // Pour les placeholders
+  function updatePlaceholders() {
+    const chatInput = document.getElementById('chatInput');
+    if (chatInput) {
+      chatInput.placeholder = window.texts[currentLang].ask_question;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    applyLanguage(currentLang);
+    updatePlaceholders();
+    renderProjectDetails();
+  });
+</script>
+</body>
+</html>
