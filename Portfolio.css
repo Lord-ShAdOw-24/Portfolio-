@@ -701,6 +701,18 @@ section.block{padding:28px 0}
   overflow:hidden;
 }
 
+.whatsapp-marquee-track{
+  display:inline-block;
+  white-space:nowrap;
+  padding-left:100%;
+  animation:whatsapp-marquee-scroll 12s linear infinite;
+}
+
+@keyframes whatsapp-marquee-scroll{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-100%);}
+}
+
 .whatsapp-link{
   color:#b7ffca;
   font-weight:800;
@@ -848,10 +860,14 @@ section.block{padding:28px 0}
   background:rgba(255,255,255,.1);
 }
 
-.footer-social img{
+.footer-social svg{
   width:24px;
   height:24px;
 }
+
+.footer-social a[aria-label="WhatsApp"] svg{ color:#25D366; }
+.footer-social a[aria-label="Discord"] svg{ color:#5865F2; }
+.footer-social a[aria-label="GitHub"] svg{ color:var(--text); }
 
 .footer-bottom{
   display:flex;
