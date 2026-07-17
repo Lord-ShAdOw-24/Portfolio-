@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Initialisation d'AOS sécurisée
+  setTimeout(() => {
+    document.querySelectorAll('[data-aos]').forEach((el) => {
+      el.classList.add('aos-animate');
+    });
+  }, 4000);
+
   if (typeof AOS !== 'undefined') {
     AOS.init({
       duration: 900,
@@ -9,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 2. Sélection des éléments DOM
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navMenu');
   const scrollContainer = document.getElementById('scroll-container');
@@ -19,8 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggle = document.getElementById('themeToggle');
   const langToggle = document.getElementById('langToggle');
   const newsletterForm = document.querySelector('.newsletter form');
+  const footerYear = document.getElementById('footerYear');
 
-  // 3. Déclaration locale de l'état (protection contre les conflits globaux)
+  if (footerYear) {
+    footerYear.textContent = '© ' + new Date().getFullYear();
+  }
+
   const autoScrollState = {
     pointerDown: false,
     startX: 0,
@@ -39,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollContainer.classList.add('auto-scrolling');
   }
 
-  // 4. Système de traduction (i18n)
   const translations = {
     fr: {
       "nav.about": "À propos",
@@ -125,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "contact.bottomText": "Tu peux aussi suivre mes actus sur WhatsApp, Discord et GitHub.",
       "footer.brandTitle": "Le JUSTE",
       "footer.brandText": "Développeur web et designer graphique, orienté interfaces modernes et solutions utiles.",
-      "footer.copy": "© By NALJ. Tous droits réservés."
+      "footer.copy": "By NALJ. Tous droits réservés."
     },
     en: {
       "nav.about": "About",
@@ -211,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "contact.bottomText": "You can also follow my updates on WhatsApp, Discord, and GitHub.",
       "footer.brandTitle": "Le JUSTE",
       "footer.brandText": "Web developer and graphic designer, oriented towards modern interfaces and useful solutions.",
-      "footer.copy": "© By NALJ. All rights reserved."
+      "footer.copy": "By NALJ. All rights reserved."
     }
   };
 
@@ -237,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof AOS !== 'undefined') AOS.refresh();
   }
 
-  // 5. Thème et Langue (Vérification de sécurité)
   if (langToggle) {
     langToggle.addEventListener('click', () => {
       const currentLang = document.documentElement.getAttribute('data-lang') || 'fr';
@@ -304,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(autoScrollLoop);
   }
 
-  // 8. Menu Mobile alternatif sécurisé
   if (menuBtn && navMenu) {
     menuBtn.addEventListener('click', () => {
       navMenu.classList.toggle('open');
@@ -312,6 +317,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => navMenu.classList.remove('open'));
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') navMenu.classList.remove('open');
     });
   }
 
@@ -339,6 +348,15 @@ document.addEventListener('DOMContentLoaded', () => {
     newsletterForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const currentLang = document.documentElement.getAttribute('data-lang') || 'fr';
+      const emailInput = newsletterForm.querySelector('.email-input');
+      const email = emailInput ? emailInput.value.trim() : '';
+      const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      if (!isValidEmail) {
+        alert(currentLang === 'fr' ? 'Merci d\'entrer une adresse email valide.' : 'Please enter a valid email address.');
+        return;
+      }
+
       alert(currentLang === 'fr' ? 'Merci pour ton inscription !' : 'Thank you for subscribing!');
       newsletterForm.reset();
     });
@@ -387,7 +405,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'ArrowRight') handleDirectionClick(1);
   });
 
-  // Lancement global
   window.addEventListener('resize', updateCardStep);
   updateCardStep();
   requestAnimationFrame(autoScrollLoop);
