@@ -1,105 +1,378 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html><html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Portfolio</title>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="Portfolio.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio de Le JUSTE, développeur web et designer graphique spécialisé en applications, sites web, bots et identité visuelle." />
+  <meta name="theme-color" content="#0b1020" />
+  <title>Le JUSTE | Portfolio Développeur Web & Designer</title>  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="Portfolio.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#about">À propos</a></li>
-                <li><a href="#skills">Compétences</a></li>
-                <li><a href="#projects">Projets</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="blob three"></div>  <header class="topbar">
+    <div class="container">
+      <nav class="nav" aria-label="Navigation principale">
+        <a class="brand" href="#home">
+          <div class="logo">LJ</div>
+          <span>Le JUSTE</span>
+        </a>    <ul id="navMenu">
+      <li><a class="link" href="#about">À propos</a></li>
+      <li><a class="link" href="#skills">Compétences</a></li>
+      <li><a class="link" href="#projects">Projets</a></li>
+      <li><a class="link" href="#contact">Contact</a></li>
+    </ul>
 
-    <section id="about">
-        <h1 class="about-title">À propos</h1>
-        <p class="about-text">Salut moi c'est Le JUSTE. Je suis développeur web, spécialisé dans les applications, les sites web et les bots. Ma maîtrise du front-end a aiguisé mes compétences. Avec mes différentes compétences, je mets mes services au profit des gens un peu partout sur internet.</p>
-    </section>
-
-    <section id="skills">
-        <h1 class="skills-title">Compétences</h1>
-        <p>Développement web, développement d'applications, bots.</p>
-    </section>
-
-    <section id="projects">
-        <h2>Mes Projets</h2>
-        <div class="projects-container" id="scroll-container">
-    <div class="project-card">
-        <h3><a href="panel.html" class="project-link">Site de vente de serveurs</a></h3>
-        <p>Un site de vente de serveur Pterodactyl</p>
+    <div class="nav-actions">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Ouvrir le menu">☰</button>
+      <button class="icon-btn" id="scrollTopBtn" aria-label="Retour en haut">↑</button>
     </div>
-    <div class="project-card">
-        <h3><a href="horloge.html" class="project-link">Horloge Numérique</a></h3>
-        <p>Un site d'horloge numérique avec quelques pays inclus</p>
-    </div>
-            <div class="project-card"><h3>Site de E-Bookshop</h3><p>un site de vente de  fourniture scolaire en ligne</p></div>
-            <div class="project-card"><h3>Site de Vote</h3><p>un site de vote pour des petits projets entre amis</p></div>
-    <div class="project-card">
-        <h3><a href="calculatrice.html" class="project-link">Calculatrice Scientifique</a></h3>
-        <p>Calculatrice scientifique avec différents fonctions integrées</p>
-    </div>
-            <div class="project-card"><h3>Site de Shopping</h3><p>vente de vetements et accessoires associés</p></div>
-            <div class="project-card"><h3>Biographie Etudiée de Quelques Haute Personalités</h3><p>Notamment au Cameroun</p></div>
-    <div class="project-card">
-        <h3><a href="tictactoe.html" class="project-link">Tictactoe Game</a></h3>
-        <p>Jeu Amical</p>
-    </div>
-            <div class="project-card"><h3>Chat Bot "mini IA"</h3><p>Un bot d'interaction</p></div>
-            <div class="project-card"><h3>Bot Whatsapp Multi-Device</h3><p>Un bot de gestion whatsapp"reduction de mouvement"</p></div>
-        </div>
-        <div class="scroll-buttons">
-    <button id="scroll-left">▶</button>
-    <button id="scroll-right">◀</button>
+  </nav>
 </div>
-    </section>
 
-    <section id="contact">
-        <h1>Mes Informations</h1>
+  </header>  <main id="home">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <article class="hero-card hero-main" data-aos="fade-up">
+            <div>
+              <div class="eyebrow"><span></span> Mon Portfolio</div>
+              <h1><span class="gradient">Développeur Web.</span><br>Créatif. Précis. Moderne.</h1>
+              <p>
+                Salut, moi c’est <strong>Le JUSTE</strong>. Je suis développeur web, spécialisé dans les applications,
+                les sites web, les bots et le graphisme. J’aime construire des interfaces modernes, rapides,
+                responsives et élégantes. Je réalise aussi des créations visuelles comme des logos, flyers,
+                affiches et identités graphiques, avec une approche propre, cohérente et professionnelle.
+              </p>          <div class="hero-badges">
+            <span class="badge">Front-end Developer</span>
+            <span class="badge">UI/UX Clean</span>
+            <span class="badge">Applications</span>
+            <span class="badge">Bots & Automatisation</span>
+            <span class="badge">Graphisme & Branding</span>
+          </div>
+        </div>
+
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">Voir mes projets →</a>
+          <a href="#contact" class="btn btn-secondary">Me contacter</a>
+        </div>
+      </article>
+
+      <aside class="hero-card hero-side" data-aos="fade-up" data-aos-delay="120">
+        <div class="profile-card">
+          <div class="avatar">LJ</div>
+          <h2>Le JUSTE</h2>
+          <p>Développeur web et designer graphique, orienté interfaces modernes, solutions utiles et identité visuelle soignée.</p>
+        </div>
+
+        <div class="mini-stats">
+          <div class="stat">
+            <strong>+10</strong>
+            <span>Projets présentés</span>
+          </div>
+          <div class="stat">
+            <strong>24/7</strong>
+            <span>Présence en ligne</span>
+          </div>
+          <div class="stat">
+            <strong>UI</strong>
+            <span>Soignée & moderne</span>
+          </div>
+          <div class="stat">
+            <strong>Design</strong>
+            <span>Logos & visuels</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="block">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <div>
+        <h2>À propos</h2>
+        <p>Une présentation claire, crédible et élégante de mon profil et de ma manière de travailler.</p>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="panel" data-aos="fade-up">
+        <p class="about-text">
+          Salut, moi c’est <strong>Le JUSTE</strong>. Je suis développeur web, spécialisé dans les applications,
+          les sites web et les bots. J’aime construire des interfaces modernes, rapides, responsives et agréables
+          à utiliser. Je travaille aussi dans le graphisme, notamment la création de logos, flyers, affiches et
+          visuels de communication.
+          <br><br>
+          Mon objectif est simple : créer des expériences web et visuelles qui donnent immédiatement une impression
+          de sérieux, de qualité et de maîtrise technique. J’accorde beaucoup d’importance au design, à la cohérence,
+          à la performance et à une structure propre pour faciliter l’évolution future du projet.
+        </p>
+      </div>
+
+      <div class="panel" data-aos="fade-up" data-aos-delay="100">
+        <div class="experience-list">
+          <div class="xp">
+            <strong>Développement web</strong>
+            <span>Création de sites vitrines, portfolios, plateformes et interfaces dynamiques.</span>
+          </div>
+          <div class="xp">
+            <strong>Développement d'applications</strong>
+            <span>Conception d’interfaces, logique applicative, organisation du code et modularité.</span>
+          </div>
+          <div class="xp">
+            <strong>Bots & automatisation</strong>
+            <span>Bots d’interaction, outils de gestion et solutions pratiques pour gagner du temps.</span>
+          </div>
+          <div class="xp">
+            <strong>Graphisme & identité visuelle</strong>
+            <span>Création de logos, flyers, affiches, bannières et supports visuels cohérents.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="block">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <div>
+        <h2>Compétences</h2>
+        <p>Un aperçu visuel de mes domaines de compétence principaux.</p>
+      </div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card" data-aos="fade-up">
+        <h3>Développement web</h3>
+        <div class="bar"><span style="width:92%"></span></div>
+        <p>HTML, CSS, JavaScript, design responsive, animations et intégration moderne.</p>
+      </div>
+
+      <div class="skill-card" data-aos="fade-up" data-aos-delay="80">
+        <h3>Développement d'applications</h3>
+        <div class="bar"><span style="width:55%"></span></div>
+        <p>Construction d’interfaces, logique applicative, organisation du code et modularité.</p>
+      </div>
+
+      <div class="skill-card" data-aos="fade-up" data-aos-delay="160">
+        <h3>Bots</h3>
+        <div class="bar"><span style="width:35%"></span></div>
+        <p>Bots d’interaction, automatisation et outils de gestion pour différents usages.</p>
+      </div>
+
+      <div class="skill-card" data-aos="fade-up" data-aos-delay="240">
+        <h3>Graphisme & design</h3>
+        <div class="bar"><span style="width:75%"></span></div>
+        <p>Création de logos, flyers, affiches, visuels de marque et contenus promotionnels.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="block">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <div>
+        <h2>Mes Projets</h2>
+        <p>Une galerie de projets présentée de manière moderne, avec navigation fluide et auto-défilement.</p>
+      </div>
+    </div>
+
+    <div class="panel projects-wrap" data-aos="fade-up">
+      <div class="projects-tools">
+        <div class="project-hint">Défile automatiquement. Flèches du clavier pour changer la direction. Swipe ou glisse à la souris pour naviguer.</div>
+        <div class="scroll-buttons">
+          <button id="scroll-left" aria-label="Défiler vers la gauche">←</button>
+          <button id="scroll-right" aria-label="Défiler vers la droite">→</button>
+        </div>
+      </div>
+
+      <div class="projects-container" id="scroll-container" tabindex="0">
+  <article class="project-card">
+    <div class="project-tag">Pterodactyl</div>
+    <div class="project-title-row">
+      <span class="project-status-dot green"></span>
+      <h3><a href="panel.html" class="project-link">Site de vente de serveurs</a></h3>
+    </div>
+    <p>Un site de vente de serveur Pterodactyl, pensé pour présenter une offre claire et professionnelle.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">Crowdfunding</div>
+    <div class="project-title-row">
+      <span class="project-status-dot green"></span>
+      <h3><a href="crowd-invest.html" class="project-link">Collecte de fonds pour start-ups</a></h3>
+    </div>
+    <p>Projet de crowdfunding et d’investissement participatif au Cameroun, conçu pour connecter projets et contributeurs.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">Incubator</div>
+    <div class="project-title-row">
+      <span class="project-status-dot green"></span>
+      <h3><a href="Wemove.html" class="project-link">Wemove</a></h3>
+    </div>
+    <p><strong>Solutions en Mouvement // We Move Together</strong> Wemove accompagne les jeunes start-ups, marques et entreprises dans leur croissance grâce à des solutions créatives, innovantes et performantes — de la stratégie au produit fini.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">Utility</div>
+    <div class="project-title-row">
+      <span class="project-status-dot green"></span>
+      <h3><a href="horloge.html" class="project-link">Horloge Numérique</a></h3>
+    </div>
+    <p>Un site d'horloge numérique avec quelques pays inclus, au style simple et efficace.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">E-Bookshop</div>
+    <div class="project-title-row">
+      <span class="project-status-dot red"></span>
+      <h3>Site de E-Bookshop</h3>
+    </div>
+    <p>Un site de vente de fourniture scolaire en ligne, conçu pour une présentation propre et pratique.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">Vote</div>
+    <div class="project-title-row">
+      <span class="project-status-dot red"></span>
+      <h3>Site de Vote</h3>
+    </div>
+    <p>Un site de vote pour des petits projets entre amis, avec une logique simple et accessible.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">Calculatrice</div>
+    <div class="project-title-row">
+      <span class="project-status-dot green"></span>
+      <h3><a href="calculatrice.html" class="project-link">Calculatrice Scientifique</a></h3>
+    </div>
+    <p>Calculatrice scientifique avec différentes fonctions intégrées, propre et réactive.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">Shopping</div>
+    <div class="project-title-row">
+      <span class="project-status-dot red"></span>
+      <h3>Site de Shopping</h3>
+    </div>
+    <p>Plateforme de vente de vêtements et accessoires associés, pensée pour l’expérience utilisateur.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">Biographies</div>
+    <div class="project-title-row">
+      <span class="project-status-dot red"></span>
+      <h3>Biographie étudiée de quelques hautes personnalités</h3>
+    </div>
+    <p>Notamment au Cameroun, avec une mise en page adaptée à la lecture et à la présentation.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">Game</div>
+    <div class="project-title-row">
+      <span class="project-status-dot green"></span>
+      <h3><a href="tictactoe.html" class="project-link">Tictactoe Game</a></h3>
+    </div>
+    <p>Jeu amical, léger et divertissant, avec une interface simple et intuitive.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">Chatbot</div>
+    <div class="project-title-row">
+      <span class="project-status-dot red"></span>
+      <h3>Chat Bot "mini IA"</h3>
+    </div>
+    <p>Un bot d'interaction conçu pour donner une impression d’assistance rapide et intelligente.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">WhatsApp</div>
+    <div class="project-title-row">
+      <span class="project-status-dot green"></span>
+      <h3>Bot Whatsapp Multi-Device</h3>
+    </div>
+    <p>Un bot de gestion WhatsApp pensé pour la réduction de mouvement et l’automatisation.</p>
+  </article>
+
+  <article class="project-card">
+    <div class="project-tag">Design</div>
+    <div class="project-title-row">
+      <span class="project-status-dot green"></span>
+      <h3>Création de logos, flyers et affiches</h3>
+    </div>
+    <p>Travaux de graphisme et d’identité visuelle pour accompagner les projets web et les marques.</p>
+  </article>
+</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="block">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <div>
+        <h2>Contact</h2>
+        <p>Mes informations principales et mes canaux de contact.</p>
+      </div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card" data-aos="fade-up">
+        <h3>Mes informations</h3>
         <p>Email : <a href="mailto:kingnaljks@example.com" class="blue-link">kingnaljks@example.com</a></p>
-        <p>GitHub : <a href="https://github.com/Lord-ShAdOw-24" target="_blank" class="blue-link">github.com/Lord-ShAdOw-24</a></p>
+        <p>GitHub : <a href="https://github.com/Lord-ShAdOw-24" target="_blank" rel="noopener noreferrer" class="blue-link">github.com/Lord-ShAdOw-24</a></p>
 
-        <section id="whatsapp">
-            <marquee behavior="scroll" direction="left" scrollamount="6">
-                <a href="https://whatsapp.com/channel/0029Vb5SsZ49RZAgIU7dkJ0V" target="_blank" class="whatsapp-link">
-                    Rejoins ma chaîne WhatsApp ici !
-                </a>
-            </marquee>
-        </section>
+        <div class="whatsapp-marquee">
+          <marquee behavior="scroll" direction="left" scrollamount="6">
+            <a href="https://whatsapp.com/channel/0029Vb5SsZ49RZAgIU7dkJ0V" target="_blank" rel="noopener noreferrer" class="whatsapp-link">
+              Rejoins ma chaîne WhatsApp ici !
+            </a>
+          </marquee>
+        </div>
+      </div>
 
+      <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
         <div class="newsletter">
-            <p><strong>Soyez Informé de Mes Nouveaux Projets et ne Ratez Rien :</strong></p>
-             <p>FOLLOW ME</p>
-            <form>
-                <input type="email" placeholder="Votre email ici..." class="email-input">
-                <button type="submit">S'inscrire</button>
-            </form>
+          <p><strong>Soyez informé de mes nouveaux projets et ne ratez rien :</strong></p>
+          <p>FOLLOW ME</p>
+          <form>
+            <input type="email" placeholder="Votre email ici..." class="email-input" />
+            <button type="submit">S'inscrire</button>
+          </form>
         </div>
-    </section>
 
-    <footer>
+        <p style="margin-top:18px;">
+          Tu peux aussi suivre mes actus sur WhatsApp, Discord et GitHub.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </main>  <footer>
+    <div class="container">
+      <div class="footer-box" data-aos="fade-up">
         <div class="social-icons">
-            <a href="https://whatsapp.com/channel/0029Vb5SsZ49RZAgIU7dkJ0V" target="_blank">
-                <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp">
-            </a>
-            <a href="https://discord.gg/WjYJk2Hh" target="_blank">
-                <img src="https://img.icons8.com/color/48/000000/discord-logo.png" alt="Discord">
-            </a>
-            <a href="https://github.com/Lord-ShAdOw-24" target="_blank">
-                <img src="https://img.icons8.com/color/48/000000/github.png" alt="GitHub">
-            </a>
-        </div>
-        <p>© By NALJ. Tous droits réservés.</p>
-    </footer>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-     <script>AOS.init();</script>
-    <script src="Portfolio.js"></script>
-</body>
-    </html>
+          <a href="https://whatsapp.com/channel/0029Vb5SsZ49RZAgIU7dkJ0V" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp" />
+          </a>
+          <a href="https://discord.gg/WjYJk2Hh" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+            <img src="https://img.icons8.com/color/48/000000/discord-logo.png" alt="Discord" />
+          </a>
+          <a href="https://github.com/Lord-ShAdOw-24" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <img src="https://img.icons8.com/color/48/000000/github.png" alt="GitHub" />
+          </a>
+        </div>    <p class="copyright">© By NALJ. Tous droits réservés.</p>
+  </div>
+</div>
+
+  </footer>  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>  <script src="Portfolio.js"></script></body>
+            </html>    </html>
