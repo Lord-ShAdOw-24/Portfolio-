@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "skills.design.title": "Graphisme & design",
       "skills.design.text": "Création de logos, flyers, affiches, visuels de marque et contenus promotionnels.",
       "projects.title": "Mes Projets",
-      "projects.subtitle": "Une galerie de projets présentée de manière moderne, avec navigation fluide et auto-défilement.",
-      "projects.hint": "Défile automatiquement. Flèches du clavier pour changer la direction. Swipe ou glisse à la souris pour naviguer.",
+      "projects.subtitle": "Une galerie de mes projets présentée comme suit :",
+      "projects.hint": "MA Galerie...",
       "projects.p1.title": "Site de vente de serveurs",
       "projects.p1.desc": "Un site de vente de serveur Pterodactyl, pensé pour présenter une offre claire et professionnelle.",
       "projects.p2.title": "Collecte de fonds pour start-ups",
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "contact.bottomText": "Tu peux aussi suivre mes actus sur WhatsApp, Discord et GitHub.",
       "footer.brandTitle": "Le JUSTE",
       "footer.brandText": "Développeur web et designer graphique, orienté interfaces modernes et solutions utiles.",
-      "footer.copy": "By NALJ. Tous droits réservés."
+      "footer.copy": "By LJ. Tous droits réservés."
     },
     en: {
       "nav.about": "About",
@@ -177,8 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "skills.design.title": "Graphics & design",
       "skills.design.text": "Creation of logos, flyers, posters, brand visuals, and promotional content.",
       "projects.title": "My Projects",
-      "projects.subtitle": "A gallery of projects presented in a modern way, with fluid navigation and auto-scrolling.",
-      "projects.hint": "Scrolls automatically. Keyboard arrows to change direction. Swipe or drag with the mouse to navigate.",
+      "projects.subtitle": "A gallery of my projects presented in a modern way as follows :",
+      "projects.hint": "My gallery...",
       "projects.p1.title": "Server Sales Website",
       "projects.p1.desc": "A Pterodactyl server sales website, designed to present a clear and professional offer.",
       "projects.p2.title": "Crowdfunding for Startups",
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "contact.bottomText": "You can also follow my updates on WhatsApp, Discord, and GitHub.",
       "footer.brandTitle": "Le JUSTE",
       "footer.brandText": "Web developer and graphic designer, oriented towards modern interfaces and useful solutions.",
-      "footer.copy": "By NALJ. All rights reserved."
+      "footer.copy": "By LJ. All rights reserved."
     }
   };
 
