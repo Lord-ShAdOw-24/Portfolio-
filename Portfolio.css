@@ -997,8 +997,32 @@ section.block{padding:28px 0}
     gap:10px;
   }
 
+  #brandName{
+    position:absolute;
+    width:1px;
+    height:1px;
+    padding:0;
+    margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
+
   .nav{
     gap:10px;
+  }
+
+  .nav-actions{
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+
+  .icon-btn{
+    width:38px;
+    height:38px;
+    border-radius:12px;
   }
 
   .project-card{
@@ -1010,6 +1034,28 @@ section.block{padding:28px 0}
     align-items:flex-start;
   }
 }
+
+@media (max-width: 380px){
+  .container{
+    width:min(var(--max), calc(100% - 16px));
+  }
+
+  .nav{
+    padding:10px 12px;
+  }
+
+  .nav-actions{
+    gap:5px;
+  }
+
+  .icon-btn{
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    font-size:.85rem;
+  }
+}
+
 body[data-theme="light"] .topbar,
 body[data-theme="light"] .panel,
 body[data-theme="light"] .hero-card,
